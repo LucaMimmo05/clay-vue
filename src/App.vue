@@ -33,7 +33,7 @@
     }
     body
     {
-        background-image: linear-gradient(180deg, rgb(var(--background-color)), rgb(255, 255, 255));
+        background-color: rgb(var(--background-color));
     }
 
     #app

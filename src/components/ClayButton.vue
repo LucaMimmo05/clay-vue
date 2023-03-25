@@ -10,9 +10,9 @@
 <style lang="scss" scoped>
     .clay-button
     {
-        background-image: linear-gradient(#c3ecff, #69cdfd, #45a5fc);
+        background-image: linear-gradient(#69cdfd, #45a5fc, #1a81e0);
         background-size: 100% 200%;
-        background-position: 0px 90%;
+        background-position: 0px 10%;
         border: none;
         border-radius: 10px;
         color: white;
@@ -30,23 +30,28 @@
 
         &:hover
         {
-            box-shadow: 0px 3px 3px 0px rgba(24, 119, 202, 0.5),
+            box-shadow: 0px 4px 4px 0px rgba(24, 119, 202, 0.333),
                         inset 0px 3px 7px 0px rgb(150, 222, 255),
                         inset 0px -3px 7px 0px rgb(24, 119, 202);
 
-            transform: translateY(-1.5px);
+            transform: translateY(-2px);
         }
 
         &:active
         {
-            background-position: 0px 10%;
-            box-shadow: 0px 1.5px 3px -1.5px rgba(24, 119, 202, 0.75),
-                        inset 0px 3px 7px 0px rgb(150, 222, 255),
-                        inset 0px -3px 7px 0px rgb(24, 119, 202);
+            box-shadow: 0px 0px 1px 0px rgba(24, 119, 202, 0.75),
+                        inset 0px 3px 7px 0px rgba(24, 119, 202, 1),
+                        inset 0px -3px 7px 0px rgb(150, 222, 255, 0),
+                        0px -4px 4px -2px rgba(24, 119, 202, 0.333);
 
-            transform: translateY(0px);
+            transform: translateY(2px);
         }
 
+        &:focus
+        {
+            background-position: 0px 90%;
+            // TODO: ripple più scuro!
+        }
         &:focus-visible
         {
             box-shadow: 0px 0px 0px 2.5px rgba(252, 165, 65, 1),
