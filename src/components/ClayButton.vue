@@ -10,53 +10,84 @@
 <style lang="scss" scoped>
     .clay-button
     {
-        background-image: linear-gradient(#69cdfd, #45a5fc, #1a81e0);
-        background-size: 100% 200%;
-        background-position: 0px 10%;
+        background-image: linear-gradient(rgb(105, 205, 255), rgb(70, 165, 255));
         border: none;
         border-radius: 10px;
+        box-shadow: 0px 0px 0px 0px rgba(252, 165, 65, 0),  // outline
+                    0px 1.5px 3px -1.5px rgba(25, 140, 220, 0.75);  // shadow
+
         color: white;
         cursor: pointer;
         font-weight: bold;
         padding: 10px 20px;
-        box-shadow: 0px 1.5px 3px -1.5px rgba(24, 119, 202, 0.75),
-                    inset 0px 3px 7px 0px rgb(150, 222, 255),
-                    inset 0px -3px 7px 0px rgb(24, 119, 202);
-
         outline: none;
-        transition: background-position 333ms cubic-bezier(0.68, -0.55, 0.27, 1.55),
-                    box-shadow 333ms cubic-bezier(0.68, -0.55, 0.27, 1.55),
+        transition: box-shadow 333ms cubic-bezier(0.68, -0.55, 0.27, 1.55),
                     transform 333ms cubic-bezier(0.68, -0.55, 0.27, 1.55);
+
+        transform-style: preserve-3d;
+
+        &::before
+        {
+            background-color: rgba(87, 185, 255, 0);
+            border-radius: 10px;
+            bottom: 0px;
+            box-shadow: inset 0px 0px 2px 0px rgba(25, 140, 220, 0.5),  // inner-border
+                        inset 0px 3px 7px 0px rgb(175, 225, 255),  // top-light
+                        inset 0px -3px 7px 0px rgb(25, 140, 220);  // bottom-light
+
+            content: "";
+            left: 0px;
+            position: absolute;
+            right: 0px;
+            top: 0px;
+            transition: background-color 333ms cubic-bezier(0.68, -0.55, 0.27, 1.55),
+                        box-shadow 333ms cubic-bezier(0.68, -0.55, 0.27, 1.55);
+
+            z-index: -1;
+        }
 
         &:hover
         {
-            box-shadow: 0px 4px 4px 0px rgba(24, 119, 202, 0.333),
-                        inset 0px 3px 7px 0px rgb(150, 222, 255),
-                        inset 0px -3px 7px 0px rgb(24, 119, 202);
+            box-shadow: 0px 0px 0px 0px rgba(252, 165, 65, 0),  // outline
+                        0px 4px 4px 0px rgba(25, 140, 220, 0.333);  // shadow
 
-            transform: translateY(-2px);
-        }
+            transform: scale(1.05) translateY(-2px);
 
-        &:active
-        {
-            box-shadow: 0px 0px 1px 0px rgba(24, 119, 202, 0.75),
-                        inset 0px 3px 7px 0px rgba(24, 119, 202, 1),
-                        inset 0px -3px 7px 0px rgb(150, 222, 255, 0),
-                        0px -4px 4px -2px rgba(24, 119, 202, 0.333);
-
-            transform: translateY(2px);
+            &::before
+            {
+                background-color: rgba(255, 255, 255, 0.125);
+            }
         }
 
         &:focus
         {
-            background-position: 0px 90%;
-            // TODO: ripple più scuro!
+            &::before
+            {
+                background-color: rgba(0, 0, 0, 0.125);
+            }
         }
         &:focus-visible
         {
-            box-shadow: 0px 0px 0px 2.5px rgba(252, 165, 65, 1),
-                        inset 0px 3px 7px 0px rgb(150, 222, 255),
-                        inset 0px -3px 7px 0px rgb(24, 119, 202);
+            box-shadow: 0px 0px 0px 2.5px rgba(252, 165, 65, 1),  // outline
+                        0px 4px 4px 0px rgba(25, 140, 220, 0.333);  // shadow
+
+            transform: scale(1.05) translateY(-2px);
+        }
+
+        &:active
+        {
+            box-shadow: 0px 0px 0px 0px rgba(252, 165, 65, 0),  // outline
+                        0px 0px 2px 0px rgba(25, 140, 220, 0.75),  // shadow
+                        0px -4px 4px -2px rgba(25, 140, 220, 0.333);  // top-notch;
+
+            transform: scale(0.95) translateY(2px);
+
+            &::before
+            {
+                box-shadow: inset 0px 0px 2px 0px rgba(25, 140, 220, 1),  // inner-border
+                            inset 0px 3px 7px 0px rgb(175, 225, 255),  // top-light
+                            inset 0px -3px 7px 0px rgb(25, 140, 220);  // bottom-light
+            }
         }
     }
 </style>
