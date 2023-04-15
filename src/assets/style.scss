@@ -1,0 +1,16 @@
+:root
+{
+    --black: 0, 0, 0;
+    --white: 255, 255, 255;
+
+    --clay-color-background: 145, 192, 255;
+
+    --clay-ease-duration: 333ms;
+    --clay-ease-function: cubic-bezier(0.68, -0.55, 0.27, 1.55);
+}
+
+body
+{
+    height: 100%;
+    text-align: center;
+}
