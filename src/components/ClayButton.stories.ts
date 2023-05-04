@@ -8,6 +8,7 @@ type Story = StoryObj<ClayButtonType>;
 interface Args
 {
     label: string;
+    size: "small" | "default" | "large";
 }
 
 const meta: Meta<ClayButtonType> = {
