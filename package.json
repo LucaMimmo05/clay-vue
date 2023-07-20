@@ -26,42 +26,63 @@
   },
   "license": "Apache-2.0",
   "type": "module",
+  "files": [
+    "dist",
+    "types"
+  ],
+  "main": "./dist/clay-vue.umd.cjs",
+  "module": "./dist/clay-vue.js",
+  "exports": {
+    ".": {
+      "import": {
+        "default": "./dist/clay-vue.js",
+        "types": "./types/index.d.ts"
+      },
+      "require": {
+        "default": "./dist/clay-vue.umd.cjs",
+        "types": "./types/index.d.ts"
+      }
+    }
+  },
+  "types": "./types/index.d.ts",
   "scripts": {
     "dev": "storybook dev --port 6006 --no-open",
-    "build": "storybook build",
+    "build": "yarn build:core && yarn build:storybook",
+    "build:core": "vite build && yarn build:types",
+    "build:storybook": "storybook build --output-dir .storybook/dist",
+    "build:types": "vue-tsc --emitDeclarationOnly",
     "preview": "vite preview",
-    "check:types": "vue-tsc",
-    "lint": "eslint --ext .js,.json,.ts,.vue --ignore-path .gitignore .",
+    "lint": "eslint --ext .cjs,.js,.json,.ts,.vue --ignore-path .gitignore .",
     "lint:prod": "export NODE_ENV=\"production\" && yarn lint",
+    "check:types": "vue-tsc --noEmit",
     "ci": "yarn install --frozen-lockfile"
   },
   "dependencies": {
-    "vue": "^3.2.47"
+    "vue": "^3.3.4"
   },
   "devDependencies": {
-    "@byloth/eslint-config-typescript": "^2.5.2",
-    "@byloth/eslint-config-vue": "^2.5.2",
-    "@storybook/addon-essentials": "^7.0.7",
-    "@storybook/addon-interactions": "^7.0.7",
-    "@storybook/addon-links": "^7.0.7",
-    "@storybook/blocks": "^7.0.7",
-    "@storybook/testing-library": "^0.1.0",
-    "@storybook/vue3": "^7.0.7",
-    "@storybook/vue3-vite": "^7.0.7",
-    "@typescript-eslint/eslint-plugin": "^5.59.1",
-    "@typescript-eslint/parser": "^5.59.1",
-    "@vitejs/plugin-vue": "^4.2.1",
-    "eslint": "^8.39.0",
-    "eslint-plugin-import": "^2.27.5",
-    "eslint-plugin-storybook": "^0.6.11",
-    "eslint-plugin-vue": "^9.11.0",
+    "@byloth/eslint-config-typescript": "^2.6.2",
+    "@byloth/eslint-config-vue": "^2.6.2",
+    "@storybook/addon-essentials": "^7.1.0",
+    "@storybook/addon-interactions": "^7.1.0",
+    "@storybook/addon-links": "^7.1.0",
+    "@storybook/blocks": "^7.1.0",
+    "@storybook/testing-library": "^0.2.0",
+    "@storybook/vue3": "^7.1.0",
+    "@storybook/vue3-vite": "^7.1.0",
+    "@typescript-eslint/eslint-plugin": "^6.1.0",
+    "@typescript-eslint/parser": "^6.1.0",
+    "@vitejs/plugin-vue": "^4.2.3",
+    "eslint": "^8.45.0",
+    "eslint-plugin-storybook": "^0.6.13",
+    "eslint-plugin-vue": "^9.15.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "sass": "^1.62.1",
-    "storybook": "^7.0.7",
-    "typescript": "^5.0.4",
-    "vite": "^4.3.3",
-    "vue-eslint-parser": "^9.1.1",
-    "vue-tsc": "^1.6.1"
+    "sass": "^1.64.0",
+    "storybook": "^7.1.0",
+    "typescript": "^5.1.6",
+    "vite": "^4.4.4",
+    "vue-eslint-parser": "^9.3.1",
+    "vue-tsc": "^1.8.5"
   }
 }

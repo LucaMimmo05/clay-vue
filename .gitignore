@@ -16,7 +16,9 @@ Desktop.ini
 
 # Generated & compiled files
 #
+/.storybook/dist/
 /dist/
+/types/
 
 /tsconfig.tsbuildinfo
 
