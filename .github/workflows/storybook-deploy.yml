@@ -1,0 +1,64 @@
+name: Storybook deploy
+on:
+  push:
+    branches: [master]
+
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+jobs:
+  storybook-build:
+    name: Storybook build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Source code clone
+        uses: actions/checkout@v3
+      - name: Node.js 18 (LTS) setup
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18
+
+      - name: Dependencies installation
+        run: yarn ci
+      - name: Coding standard check
+        run: yarn lint:prod
+      - name: Types integrity check
+        run: yarn check:types
+      - name: Source code build
+        run: yarn build:storybook
+      - name: Artifact upload
+        uses: actions/upload-artifact@v3
+        with:
+          name: byloth-clay_vue-storybook
+          path: .storybook/dist
+
+  storybook-deploy:
+    name: GitHub Pages deploy
+    needs: storybook-build
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      pages: write
+      id-token: write
+
+    steps:
+      - name: Artifact download
+        uses: actions/download-artifact@v3
+        with:
+          name: byloth-clay_vue-storybook
+
+      - name: GitHub Pages setup
+        uses: actions/configure-pages@v3
+      - name: Artifact upload
+        uses: actions/upload-pages-artifact@v2
+        with:
+          path: "."
+
+      - id: deployment
+        name: GitHub Pages deployment
+        uses: actions/deploy-pages@v2
+
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
