@@ -1,5 +1,6 @@
 <script lang="ts" setup>
-    import { computed, inject } from "vue";
+    import { computed } from "vue";
+    // import { computed, inject } from "vue";
 
     const props = defineProps({
         small: {
@@ -17,9 +18,12 @@
         "clay-button--large": props.large
     }));
 
+    // TODO: Actively use this.
+    /*
     const theme = inject<"light" | "dark">("theme", "light");
 
     console.log(theme);
+    */
 </script>
 
 <template>
