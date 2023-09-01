@@ -12,6 +12,11 @@ Desktop.ini
 
 # Downloadable & installable modules & components
 #
+/.pnp.cjs
+/.pnp.loader.mjs
+/.yarnrc.yml
+
+/.yarn/
 /node_modules/
 
 # Generated & compiled files

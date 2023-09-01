@@ -19,6 +19,8 @@ jobs:
         with:
           node-version: 18
 
+      - name: YARN upgrade
+        run: yarn set version stable
       - name: Dependencies installation
         run: yarn ci
       - name: Coding standard check

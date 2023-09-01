@@ -53,16 +53,17 @@
     "build:types": "vue-tsc --emitDeclarationOnly",
     "preview": "vite preview",
     "lint": "eslint --ext .cjs,.js,.json,.ts,.vue --ignore-path .gitignore .",
-    "lint:prod": "export NODE_ENV=\"production\" && yarn lint",
+    "lint:prod": "NODE_ENV=\"production\" yarn lint",
     "check:types": "vue-tsc --noEmit",
-    "ci": "yarn install --frozen-lockfile"
+    "ci": "yarn install --immutable"
   },
   "dependencies": {
     "vue": "^3.3.4"
   },
   "devDependencies": {
-    "@byloth/eslint-config-typescript": "^2.6.2",
-    "@byloth/eslint-config-vue": "^2.6.2",
+    "@byloth/eslint-config": "^2.6.3",
+    "@byloth/eslint-config-typescript": "^2.6.3",
+    "@byloth/eslint-config-vue": "^2.6.3",
     "@storybook/addon-essentials": "^7.4.0",
     "@storybook/addon-interactions": "^7.4.0",
     "@storybook/addon-links": "^7.4.0",
@@ -73,6 +74,7 @@
     "@typescript-eslint/eslint-plugin": "^6.5.0",
     "@typescript-eslint/parser": "^6.5.0",
     "@vitejs/plugin-vue": "^4.3.4",
+    "@vue/compiler-core": "^3.3.4",
     "eslint": "^8.48.0",
     "eslint-plugin-storybook": "^0.6.13",
     "eslint-plugin-vue": "^9.17.0",
@@ -84,5 +86,6 @@
     "vite": "^4.4.9",
     "vue-eslint-parser": "^9.3.1",
     "vue-tsc": "^1.8.8"
-  }
+  },
+  "packageManager": "yarn@3.6.3"
 }
