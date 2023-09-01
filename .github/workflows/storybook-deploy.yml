@@ -22,7 +22,7 @@ jobs:
       - name: YARN upgrade
         run: yarn set version stable
       - name: Dependencies installation
-        run: yarn ci
+        run: yarn install
       - name: Coding standard check
         run: yarn lint:prod
       - name: Types integrity check

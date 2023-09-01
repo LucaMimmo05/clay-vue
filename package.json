@@ -54,8 +54,7 @@
     "preview": "vite preview",
     "lint": "eslint --ext .cjs,.js,.json,.ts,.vue --ignore-path .gitignore .",
     "lint:prod": "NODE_ENV=\"production\" yarn lint",
-    "check:types": "vue-tsc --noEmit",
-    "ci": "yarn install --immutable"
+    "check:types": "vue-tsc --noEmit"
   },
   "dependencies": {
     "vue": "^3.3.4"
