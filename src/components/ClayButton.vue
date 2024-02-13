@@ -1,6 +1,8 @@
 <script lang="ts" setup>
     import { computed } from "vue";
-    // import { computed, inject } from "vue";
+    import { useTheme } from "@/utils";
+
+    const $theme = useTheme();
 
     const props = defineProps({
         small: {
@@ -18,16 +20,13 @@
         "clay-button--large": props.large
     }));
 
-    // TODO: Actively use this.
-    /*
-    const theme = inject<"light" | "dark">("theme", "light");
-
-    console.log(theme);
-    */
+    const onClick = () => console.log($theme.colorScheme.value);
 </script>
 
 <template>
-    <button class="clay-button" :class="classes">
+    <button class="clay-button"
+            :class="classes"
+            @click="onClick">
         <slot></slot>
     </button>
 </template>

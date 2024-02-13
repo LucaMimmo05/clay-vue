@@ -1,34 +1,25 @@
-import { defineComponent } from "vue";
-
 import type { Preview } from "@storybook/vue3";
 
-import "../src/assets/style.scss";
+import "@/assets/style.scss";
+import { useTheme } from "@/utils";
 
 const preview: Preview = {
     decorators: [(Story, context) =>
     {
-        const StoryComponent = Story();
+        const $theme = useTheme();
+        const { theme } = context.globals;
 
-        const theme = context.globals.theme;
+        const body = document.querySelector<HTMLBodyElement>("body");
+        if (!body) { return Story(); }
 
-        return defineComponent({
-            components: { StoryComponent },
-            provide: () => ({ theme }),
-            mounted: () =>
-            {
-                const backgroundColor = (theme === "dark") ? "#333333" : "#F8F8F8";
+        $theme.setColorScheme(theme, body);
 
-                let preview: HTMLElement = document.querySelector<HTMLDivElement>(".sbdocs-preview");
-                if (preview === null)
-                {
-                    preview = document.querySelector<HTMLBodyElement>("body.sb-show-main");
-                }
+        const backgroundColor = (theme === "dark") ? "#333333" : "#F8F8F8";
 
-                preview.style.backgroundColor = backgroundColor;
-                preview.style.transition = "background-color var(--clay-ease-duration) var(--clay-ease-function)";
-            },
-            template: `<StoryComponent />`
-        });
+        body.style.backgroundColor = backgroundColor;
+        body.style.transition = "background-color var(--clay-ease-duration) var(--clay-ease-function)";
+
+        return Story();
     }],
     globalTypes: {
         theme: {
