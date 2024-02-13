@@ -1,8 +1,5 @@
 <script lang="ts" setup>
     import { computed } from "vue";
-    import { useTheme } from "@/utils";
-
-    const $theme = useTheme();
 
     const props = defineProps({
         small: {
@@ -19,14 +16,10 @@
         "clay-button--small": props.small,
         "clay-button--large": props.large
     }));
-
-    const onClick = () => console.log($theme.colorScheme.value);
 </script>
 
 <template>
-    <button class="clay-button"
-            :class="classes"
-            @click="onClick">
+    <button class="clay-button" :class="classes">
         <slot></slot>
     </button>
 </template>
@@ -34,9 +27,7 @@
 <style lang="scss">
     :root
     {
-        --clay-button-color-shade-light: 105, 205, 255;
-        --clay-button-color-shade-dark: 70, 165, 255;
-
+        --clay-button-color-background: 87, 185, 255;
         --clay-button-color-outline: 255, 185, 87;
         --clay-button-color-shadow: 25, 140, 220;
 
@@ -49,8 +40,9 @@
 
     .clay-button
     {
-        background-image: linear-gradient(rgb(var(--clay-button-color-shade-light)),
-                                          rgb(var(--clay-button-color-shade-dark)));
+        background-color: rgb(var(--clay-button-color-background));
+        background-image: linear-gradient(rgba(var(--white), 0.25), rgba(var(--black), 0.25));
+        background-blend-mode: overlay;
         border: none;
         border-radius: var(--clay-button-roundness);
         box-shadow: 0px 0px 0px 0px rgba(var(--clay-button-color-outline), 0),
@@ -63,7 +55,9 @@
         outline: none;
         padding: var(--clay-button-spacing);
         position: relative;
-        transition: box-shadow var(--clay-ease-duration) var(--clay-ease-function),
+        transition: background-color var(--clay-ease-duration) var(--clay-ease-function),
+                    box-shadow var(--clay-ease-duration) var(--clay-ease-function),
+                    color var(--clay-ease-duration) var(--clay-ease-function),
                     transform var(--clay-ease-duration) var(--clay-ease-function);
 
         perspective: 0px;
@@ -126,6 +120,29 @@
         &.clay-button--large
         {
             font-size: 1.5em;
+        }
+    }
+
+    body[dark]
+    {
+        --clay-button-color-background: 0, 111, 191;
+        --clay-button-color-outline: 255, 185, 87;
+        --clay-button-color-shadow: 0, 0, 0;
+
+        .clay-button
+        {
+            box-shadow: 0px 0px 0px 0px rgba(var(--clay-button-color-outline), 0),
+                        0px 1.5px 3px -1.5px rgba(var(--clay-button-color-shadow), 0.5);
+
+            &:hover
+            {
+                --clay-button-color-background: 47, 168, 255;
+                --clay-button-color-shadow: 47, 168, 255;
+
+                box-shadow: 0px 0px 0px 0px rgba(var(--clay-button-color-outline), 0),
+                            0px 0px 8px 0px rgba(var(--clay-button-color-shadow), 0.666);
+
+            }
         }
     }
 </style>

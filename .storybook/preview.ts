@@ -14,11 +14,6 @@ const preview: Preview = {
 
         $theme.setColorScheme(theme, body);
 
-        const backgroundColor = (theme === "dark") ? "#333333" : "#F8F8F8";
-
-        body.style.backgroundColor = backgroundColor;
-        body.style.transition = "background-color var(--clay-ease-duration) var(--clay-ease-function)";
-
         return Story();
     }],
     globalTypes: {

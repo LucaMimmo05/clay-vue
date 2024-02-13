@@ -3,14 +3,35 @@
     --black: 0, 0, 0;
     --white: 255, 255, 255;
 
-    --clay-color-background: 145, 192, 255;
+    --clay-light-color-background: 248, 248, 248;
+    --clay-dark-color-background: 51, 51, 51;
 
     --clay-ease-duration: 333ms;
     --clay-ease-function: cubic-bezier(0.68, -0.55, 0.27, 1.55);
+
+    @media (prefers-color-scheme: light)
+    {
+        --clay-color-background: var(--clay-light-color-background);
+    }
+    @media (prefers-color-scheme: dark)
+    {
+        --clay-color-background: var(--clay-dark-color-background);
+    }
 }
 
 body
 {
+    background-color: rgb(var(--clay-color-background));
     height: 100%;
     text-align: center;
+    transition: background-color var(--clay-ease-duration) var(--clay-ease-function);
+
+    &[light]
+    {
+        --clay-color-background: var(--clay-light-color-background);
+    }
+    &[dark]
+    {
+        --clay-color-background: var(--clay-dark-color-background);
+    }
 }

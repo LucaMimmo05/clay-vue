@@ -2,7 +2,7 @@ import { ref, readonly } from "vue";
 
 import type { ColorScheme } from "./types";
 
-const _scheme = ref<ColorScheme>("normal");
+const _scheme = ref<ColorScheme>("light");
 const scheme = readonly(_scheme);
 
 const getScheme = (body?: HTMLBodyElement) =>
@@ -10,9 +10,8 @@ const getScheme = (body?: HTMLBodyElement) =>
     const _get = (be: HTMLBodyElement) =>
     {
         if (be.hasAttribute("dark")) { return "dark"; }
-        if (be.hasAttribute("light")) { return "light"; }
 
-        return "normal";
+        return "light";
     };
 
     if (body) { return _get(body); }
@@ -20,7 +19,7 @@ const getScheme = (body?: HTMLBodyElement) =>
     const _body = document.querySelector<HTMLBodyElement>("body");
     if (_body) { return _get(_body); }
 
-    return "normal";
+    return "light";
 };
 const setScheme = (colorScheme: ColorScheme, body?: HTMLBodyElement) =>
 {
@@ -33,19 +32,12 @@ const setScheme = (colorScheme: ColorScheme, body?: HTMLBodyElement) =>
 
             _scheme.value = "dark";
         }
-        else if (cs === "light")
+        else
         {
             be.removeAttribute("dark");
             be.setAttribute("light", "");
 
             _scheme.value = "light";
-        }
-        else
-        {
-            be.removeAttribute("dark");
-            be.removeAttribute("light");
-
-            _scheme.value = "normal";
         }
     };
 
