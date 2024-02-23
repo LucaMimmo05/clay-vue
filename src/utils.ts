@@ -50,6 +50,6 @@ const setScheme = (colorScheme: ColorScheme, body?: HTMLBodyElement) =>
 export const useTheme = () => ({
     colorScheme: scheme,
 
-    // getColorScheme: getScheme,
+    getColorScheme: getScheme,
     setColorScheme: setScheme
 });
