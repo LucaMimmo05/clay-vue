@@ -86,7 +86,7 @@
             box-shadow: 0px 0px 0px 0px rgba(var(--clay-button-color-outline), 0),
                         0px 4px 4px 0px rgba(var(--clay-button-color-shadow), 0.333);
 
-            transform: translateY(-2px) scale(1.05);
+            transform: translateY(-2px) scale(1.1);
         }
 
         &:focus-visible
@@ -94,7 +94,7 @@
             box-shadow: 0px 0px 0px 2.5px rgba(var(--clay-button-color-outline), 1),
                         0px 4px 4px 0px rgba(var(--clay-button-color-shadow), 0.333);
 
-            transform: translateY(-2px) scale(1.05);
+            transform: translateY(-2px) scale(1.1);
         }
 
         &:active
@@ -103,7 +103,7 @@
                         0px 0px 2px 0px rgba(var(--clay-button-color-shadow), 0.75),
                         0px -4px 4px -2px rgba(var(--clay-button-color-shadow), 0.333);
 
-            transform: translateY(2px) scale(0.95);
+            transform: translateY(4px) scaleX(1.2) scaleY(0.9);
 
             &::before
             {
