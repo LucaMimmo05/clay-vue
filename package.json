@@ -56,31 +56,31 @@
     "lint:prod": "NODE_ENV=\"production\" yarn lint",
     "check:types": "vue-tsc --noEmit"
   },
-  "packageManager": "yarn@4.1.1",
+  "packageManager": "yarn@4.2.2",
   "dependencies": {
-    "vue": "^3.4.23"
+    "vue": "^3.4.27"
   },
   "devDependencies": {
-    "@byloth/eslint-config-nuxt": "^2.7.0",
-    "@storybook/addon-essentials": "^8.0.8",
-    "@storybook/addon-interactions": "^8.0.8",
-    "@storybook/addon-links": "^8.0.8",
-    "@storybook/blocks": "^8.0.8",
+    "@byloth/eslint-config-nuxt": "^2.8.1",
+    "@storybook/addon-essentials": "^8.1.1",
+    "@storybook/addon-interactions": "^8.1.1",
+    "@storybook/addon-links": "^8.1.1",
+    "@storybook/blocks": "^8.1.1",
     "@storybook/testing-library": "^0.2.2",
-    "@storybook/vue3": "^8.0.8",
-    "@storybook/vue3-vite": "^8.0.8",
-    "@types/node": "^20.12.7",
-    "@typescript-eslint/eslint-plugin": "^7.7.0",
-    "@typescript-eslint/parser": "^7.7.0",
+    "@storybook/vue3": "^8.1.1",
+    "@storybook/vue3-vite": "^8.1.1",
+    "@types/node": "^20.12.12",
+    "@typescript-eslint/eslint-plugin": "^7.9.0",
+    "@typescript-eslint/parser": "^7.9.0",
     "@vitejs/plugin-vue": "^5.0.4",
     "eslint": "^8.57.0",
     "eslint-plugin-storybook": "^0.8.0",
-    "eslint-plugin-vue": "^9.25.0",
-    "sass": "^1.75.0",
-    "storybook": "^8.0.8",
+    "eslint-plugin-vue": "^9.26.0",
+    "sass": "^1.77.2",
+    "storybook": "^8.1.1",
     "typescript": "^5.4.5",
-    "vite": "^5.2.9",
+    "vite": "^5.2.11",
     "vue-eslint-parser": "^9.4.2",
-    "vue-tsc": "^2.0.13"
+    "vue-tsc": "^2.0.19"
   }
 }

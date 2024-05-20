@@ -14,7 +14,6 @@ Desktop.ini
 #
 /.pnp.cjs
 /.pnp.loader.mjs
-/.yarnrc.yml
 
 /.yarn/
 /node_modules/
