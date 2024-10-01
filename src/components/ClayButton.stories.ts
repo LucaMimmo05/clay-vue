@@ -2,25 +2,16 @@ import type { Meta, StoryObj } from "@storybook/vue3";
 
 import ClayButton from "./ClayButton.vue";
 
-type ClayButtonType = typeof ClayButton;
-type Story = StoryObj<ClayButtonType>;
-
-interface Args
+interface StoryArgs
 {
     label: string;
     size: "small" | "default" | "large";
 }
 
-const meta: Meta<ClayButtonType> = {
+const meta: Meta<StoryArgs> = {
     title: "ClayButton",
-    component: ClayButton
-};
-
-export const Primary: Story = {
-    args: {
-        label: "Click me!",
-        size: "default"
-    },
+    component: ClayButton,
+    tags: ["autodocs"],
     argTypes: {
         label: {
             name: "Text",
@@ -45,15 +36,22 @@ export const Primary: Story = {
             control: {
                 type: "select",
                 labels: {
-                    "small": "Small",
-                    "default": "Default",
-                    "large": "Large"
+                    small: "Small",
+                    default: "Default",
+                    large: "Large"
                 }
             },
             options: ["small", "default", "large"]
         }
+    }
+};
+
+export const Primary: StoryObj<StoryArgs> = {
+    args: {
+        label: "Click me!",
+        size: "default"
     },
-    render: (args: Args) => ({
+    render: (args: StoryArgs) => ({
         components: { ClayButton },
         setup: () => ({ args }),
         template: `

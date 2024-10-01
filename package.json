@@ -1,6 +1,6 @@
 {
   "name": "@byloth/clay-vue",
-  "version": "1.0.0-rc.2",
+  "version": "1.0.0-rc.3",
   "description": "Fluffy, friendly & 3D: reusable Vue components based on the Claymorphism UI design style. 🪔",
   "keywords": [
     "Vue.js",
@@ -35,52 +35,55 @@
   "exports": {
     ".": {
       "import": {
-        "default": "./dist/clay-vue.js",
-        "types": "./types/index.d.ts"
+        "types": "./types/index.d.ts",
+        "default": "./dist/clay-vue.js"
       },
       "require": {
-        "default": "./dist/clay-vue.umd.cjs",
-        "types": "./types/index.d.ts"
+        "types": "./types/index.d.ts",
+        "default": "./dist/clay-vue.umd.cjs"
       }
     }
   },
   "types": "./types/index.d.ts",
   "scripts": {
     "dev": "storybook dev --port 6006 --no-open",
-    "build": "yarn build:core && yarn build:storybook",
-    "build:core": "vite build && yarn build:types",
+    "build": "pnpm build:core && pnpm build:storybook",
+    "build:core": "vite build && pnpm build:types",
     "build:storybook": "storybook build --output-dir .storybook/dist",
-    "build:types": "vue-tsc --emitDeclarationOnly",
+    "build:types": "vue-tsc --build --force --emitDeclarationOnly",
     "preview": "vite preview",
-    "lint": "eslint --ext .cjs,.js,.json,.ts,.vue --ignore-path .gitignore .",
-    "lint:prod": "NODE_ENV=\"production\" yarn lint",
-    "check:types": "vue-tsc --noEmit"
+    "lint": "eslint --ext .cjs,.js,.jsx,.mjs,.json,.cts,.ts,.tsx,.mts,.vue --ignore-path .gitignore .",
+    "typecheck": "vue-tsc --build --force --noEmit",
+    "prepare": "husky"
   },
-  "packageManager": "yarn@4.2.2",
   "dependencies": {
-    "vue": "^3.4.27"
+    "vue": "^3.5.10"
   },
   "devDependencies": {
-    "@byloth/eslint-config-nuxt": "^2.8.1",
-    "@storybook/addon-essentials": "^8.1.1",
-    "@storybook/addon-interactions": "^8.1.1",
-    "@storybook/addon-links": "^8.1.1",
-    "@storybook/blocks": "^8.1.1",
-    "@storybook/testing-library": "^0.2.2",
-    "@storybook/vue3": "^8.1.1",
-    "@storybook/vue3-vite": "^8.1.1",
-    "@types/node": "^20.12.12",
-    "@typescript-eslint/eslint-plugin": "^7.9.0",
-    "@typescript-eslint/parser": "^7.9.0",
-    "@vitejs/plugin-vue": "^5.0.4",
-    "eslint": "^8.57.0",
-    "eslint-plugin-storybook": "^0.8.0",
-    "eslint-plugin-vue": "^9.26.0",
-    "sass": "^1.77.2",
-    "storybook": "^8.1.1",
-    "typescript": "^5.4.5",
-    "vite": "^5.2.11",
-    "vue-eslint-parser": "^9.4.2",
-    "vue-tsc": "^2.0.19"
-  }
+    "@byloth/eslint-config-nuxt": "^2.8.3",
+    "@chromatic-com/storybook": "^2.0.2",
+    "@storybook/addon-essentials": "^8.3.4",
+    "@storybook/addon-interactions": "^8.3.4",
+    "@storybook/addon-links": "^8.3.4",
+    "@storybook/addon-onboarding": "^8.3.4",
+    "@storybook/blocks": "^8.3.4",
+    "@storybook/test": "^8.3.4",
+    "@storybook/vue3": "^8.3.4",
+    "@storybook/vue3-vite": "^8.3.4",
+    "@types/node": "^20.16.10",
+    "@typescript-eslint/eslint-plugin": "^7.18.0",
+    "@typescript-eslint/parser": "^7.18.0",
+    "@vitejs/plugin-vue": "^5.1.4",
+    "eslint": "^8.57.1",
+    "eslint-plugin-storybook": "^0.9.0",
+    "eslint-plugin-vue": "^9.28.0",
+    "husky": "^9.1.6",
+    "sass": "^1.79.4",
+    "storybook": "^8.3.4",
+    "typescript": "^5.6.2",
+    "vite": "^5.4.8",
+    "vue-eslint-parser": "^9.4.3",
+    "vue-tsc": "^2.1.6"
+  },
+  "packageManager": "pnpm@9.11.0+sha512.0a203ffaed5a3f63242cd064c8fb5892366c103e328079318f78062f24ea8c9d50bc6a47aa3567cabefd824d170e78fa2745ed1f16b132e16436146b7688f19b"
 }

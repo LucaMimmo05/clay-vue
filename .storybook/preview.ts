@@ -16,6 +16,7 @@ const preview: Preview = {
 
         return Story();
     }],
+
     globalTypes: {
         theme: {
             name: "Theme",
@@ -31,8 +32,8 @@ const preview: Preview = {
             }
         }
     },
+
     parameters: {
-        actions: { argTypesRegex: "^on[A-Z].*" },
         backgrounds: { disable: true },
         controls: {
             matchers: {
@@ -40,7 +41,9 @@ const preview: Preview = {
                 date: /Date$/
             }
         }
-    }
+    },
+
+    tags: ["autodocs"]
 };
 
 export default preview;
