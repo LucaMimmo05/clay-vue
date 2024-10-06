@@ -1,18 +1,19 @@
 import type { Preview } from "@storybook/vue3";
 
 import "@/assets/style.scss";
-import { useTheme } from "@/utils";
+import type { ColorScheme } from "@/types";
+
+const _setColorScheme = (colorScheme: ColorScheme, body: HTMLBodyElement) => { body.style.colorScheme = colorScheme; };
 
 const preview: Preview = {
     decorators: [(Story, context) =>
     {
-        const $theme = useTheme();
         const { theme } = context.globals;
 
-        const body = document.querySelector<HTMLBodyElement>("body");
-        if (!body) { return Story(); }
+        const body = window.parent.document.querySelector<HTMLBodyElement>("body");
+        if (!(body)) { return Story(); }
 
-        $theme.setColorScheme(theme, body);
+        _setColorScheme(theme, body);
 
         return Story();
     }],

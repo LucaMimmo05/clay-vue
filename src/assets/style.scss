@@ -22,16 +22,17 @@
 body
 {
     background-color: rgb(var(--clay-color-background));
+    color-scheme: normal;
     height: 100%;
     text-align: center;
     transition: background-color var(--clay-ease-duration) var(--clay-ease-function);
 
     &[light]
     {
-        --clay-color-background: var(--clay-light-color-background);
+        color-scheme: light;
     }
     &[dark]
     {
-        --clay-color-background: var(--clay-dark-color-background);
+        color-scheme: dark;
     }
 }

@@ -1,55 +1,37 @@
-import { ref, readonly } from "vue";
+import { computed, ref } from "vue";
 
 import type { ColorScheme } from "./types";
 
 const _scheme = ref<ColorScheme>("light");
-const scheme = readonly(_scheme);
 
-const getScheme = (body?: HTMLBodyElement) =>
+const _mediaQuery = window.matchMedia("(prefers-color-scheme: dark)");
+if (_mediaQuery.matches) { _scheme.value = "dark"; }
+
+const _onSchemaChange = (e: MediaQueryListEvent) =>
 {
-    const _get = (be: HTMLBodyElement) =>
-    {
-        if (be.hasAttribute("dark")) { return "dark"; }
-
-        return "light";
-    };
-
-    if (body) { return _get(body); }
-
-    const _body = document.querySelector<HTMLBodyElement>("body");
-    if (_body) { return _get(_body); }
-
-    return "light";
+    if (e.matches) { _scheme.value = "dark"; }
+    else { _scheme.value = "light"; }
 };
-const setScheme = (colorScheme: ColorScheme, body?: HTMLBodyElement) =>
-{
-    const _set = (be: HTMLBodyElement, cs: ColorScheme) =>
-    {
-        if (cs === "dark")
-        {
-            be.removeAttribute("light");
-            be.setAttribute("dark", "");
 
-            _scheme.value = "dark";
+_mediaQuery.addEventListener("change", _onSchemaChange);
+
+const scheme = computed({
+    get: () => _scheme.value,
+    set: (value: ColorScheme) =>
+    {
+        const _body = document.querySelector<HTMLBodyElement>("body")!;
+
+        if (value === "dark")
+        {
+            _body.removeAttribute("light");
+            _body.setAttribute("dark", "");
         }
         else
         {
-            be.removeAttribute("dark");
-            be.setAttribute("light", "");
-
-            _scheme.value = "light";
+            _body.removeAttribute("dark");
+            _body.setAttribute("light", "");
         }
-    };
-
-    if (body) { return _set(body, colorScheme); }
-
-    const _body = document.querySelector<HTMLBodyElement>("body");
-    if (_body) { return _set(_body, colorScheme); }
-};
-
-export const useTheme = () => ({
-    colorScheme: scheme,
-
-    getColorScheme: getScheme,
-    setColorScheme: setScheme
+    }
 });
+
+export const useTheme = () => ({ colorScheme: scheme });

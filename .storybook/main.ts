@@ -7,7 +7,6 @@ const config: StorybookConfig = {
     ],
 
     addons: [
-        "@storybook/addon-onboarding",
         "@storybook/addon-links",
         "@storybook/addon-essentials",
         "@chromatic-com/storybook",
@@ -19,7 +18,7 @@ const config: StorybookConfig = {
         options: { }
     },
 
-    docs: {}
+    docs: { defaultName: "Documentation" }
 };
 
 export default config;

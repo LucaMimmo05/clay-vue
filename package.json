@@ -57,19 +57,18 @@
     "prepare": "husky"
   },
   "dependencies": {
-    "vue": "^3.5.10"
+    "vue": "^3.5.11"
   },
   "devDependencies": {
     "@byloth/eslint-config-nuxt": "^2.8.3",
     "@chromatic-com/storybook": "^2.0.2",
-    "@storybook/addon-essentials": "^8.3.4",
-    "@storybook/addon-interactions": "^8.3.4",
-    "@storybook/addon-links": "^8.3.4",
-    "@storybook/addon-onboarding": "^8.3.4",
-    "@storybook/blocks": "^8.3.4",
-    "@storybook/test": "^8.3.4",
-    "@storybook/vue3": "^8.3.4",
-    "@storybook/vue3-vite": "^8.3.4",
+    "@storybook/addon-essentials": "^8.3.5",
+    "@storybook/addon-interactions": "^8.3.5",
+    "@storybook/addon-links": "^8.3.5",
+    "@storybook/blocks": "^8.3.5",
+    "@storybook/test": "^8.3.5",
+    "@storybook/vue3": "^8.3.5",
+    "@storybook/vue3-vite": "^8.3.5",
     "@types/node": "^20.16.10",
     "@typescript-eslint/eslint-plugin": "^7.18.0",
     "@typescript-eslint/parser": "^7.18.0",
@@ -79,7 +78,7 @@
     "eslint-plugin-vue": "^9.28.0",
     "husky": "^9.1.6",
     "sass": "^1.79.4",
-    "storybook": "^8.3.4",
+    "storybook": "^8.3.5",
     "typescript": "^5.6.2",
     "vite": "^5.4.8",
     "vue-eslint-parser": "^9.4.3",
