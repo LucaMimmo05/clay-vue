@@ -1,6 +1,6 @@
 import type { Preview } from "@storybook/vue3";
 
-import "@/assets/style.scss";
+import "@/assets/scss/main.scss";
 import type { ColorScheme } from "@/types";
 
 const _setColorScheme = (colorScheme: ColorScheme, body: HTMLBodyElement) => { body.style.colorScheme = colorScheme; };

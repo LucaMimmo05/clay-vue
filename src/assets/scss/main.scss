@@ -1,3 +1,6 @@
+@use "./utils";
+@use "./variables";
+
 :root
 {
     --black: 0, 0, 0;
@@ -6,8 +9,8 @@
     --clay-light-color-background: 248, 248, 248;
     --clay-dark-color-background: 51, 51, 51;
 
-    --clay-ease-duration: 333ms;
-    --clay-ease-function: cubic-bezier(0.68, -0.55, 0.27, 1.55);
+    --clay-ease-duration: #{variables.$ease-duration};
+    --clay-ease-function: #{variables.$ease-function};
 
     @media (prefers-color-scheme: light)
     {

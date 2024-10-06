@@ -25,11 +25,20 @@
 </template>
 
 <style lang="scss">
+    @use "sass:color";
+
+    @use "@/assets/scss/utils";
+    @use "@/assets/scss/variables";
+
+    $button-color-background: variables.$primary-color;
+    $button-color-outline: color.complement($button-color-background);
+    $button-color-shadow: color.adjust($button-color-background, $lightness: -25%);
+
     :root
     {
-        --clay-button-color-background: 87, 185, 255;
-        --clay-button-color-outline: 255, 185, 87;
-        --clay-button-color-shadow: 25, 140, 220;
+        --clay-button-color-background: #{utils.to-rgb-list($button-color-background)};
+        --clay-button-color-outline: #{utils.to-rgb-list($button-color-outline)};
+        --clay-button-color-shadow: #{utils.to-rgb-list($button-color-shadow)};
 
         --clay-button-spacing-x: 0.5em;
         --clay-button-spacing-y: 1em;
@@ -123,11 +132,16 @@
 
     @media (prefers-color-scheme: dark)
     {
+        $button-color-background: color.adjust(variables.$primary-color, $lightness: -30%);
+        $button-color-background-glow: color.adjust($button-color-background, $lightness: 20%);
+        $button-color-outline: color.complement($button-color-background-glow);
+        $button-color-shadow: rgb(0, 0, 0);
+
         :root
         {
-            --clay-button-color-background: 0, 111, 191;
-            --clay-button-color-outline: 255, 185, 87;
-            --clay-button-color-shadow: 0, 0, 0;
+            --clay-button-color-background: #{utils.to-rgb-list($button-color-background)};
+            --clay-button-color-outline: #{utils.to-rgb-list($button-color-outline)};
+            --clay-button-color-shadow: #{utils.to-rgb-list($button-color-shadow)};
         }
 
         .clay-button
@@ -135,11 +149,16 @@
             box-shadow: 0px 0px 0px 0px rgba(var(--clay-button-color-outline), 0),
                         0px 0.1em 0.2em -0.1em rgba(var(--clay-button-color-shadow), 0.5);
 
+            &:hover,
+            &:focus-visible,
+            &:active
+            {
+                --clay-button-color-background: #{utils.to-rgb-list($button-color-background-glow)};
+                --clay-button-color-shadow: #{utils.to-rgb-list($button-color-background-glow)};
+            }
+
             &:hover
             {
-                --clay-button-color-background: 47, 168, 255;
-                --clay-button-color-shadow: 47, 168, 255;
-
                 box-shadow: 0px 0px 0px 0px rgba(var(--clay-button-color-outline), 0),
                             0px 0px 0.5em 0px rgba(var(--clay-button-color-shadow), 0.25),
                             0px 0.25em 0.5em 0px rgba(var(--clay-button-color-shadow), 0.25);
@@ -147,18 +166,12 @@
             }
             &:focus-visible
             {
-                --clay-button-color-background: 47, 168, 255;
-                --clay-button-color-shadow: 47, 168, 255;
-
                 box-shadow: 0px 0px 0px 0.15em rgba(var(--clay-button-color-outline), 1),
                             0px 0px 0.5em 0px rgba(var(--clay-button-color-shadow), 0.25),
                             0px 0.25em 0.5em 0px rgba(var(--clay-button-color-shadow), 0.25);
             }
             &:active
             {
-                --clay-button-color-background: 47, 168, 255;
-                --clay-button-color-shadow: 47, 168, 255;
-
                 box-shadow: 0px 0px 0px 0px rgba(var(--clay-button-color-outline), 0),
                             0px 0px 0.25em 0px rgba(var(--clay-button-color-shadow), 0.25),
                             0px -0.25em 0.25em 0px rgba(var(--clay-button-color-shadow), 0.25);
