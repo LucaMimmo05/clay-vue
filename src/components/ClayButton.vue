@@ -95,19 +95,19 @@
             box-shadow: 0px 0px 0px 0px rgba(var(--clay-button-color-outline), 0),
                         0px 0.25em 0.25em 0px rgba(var(--clay-button-color-shadow), 0.333);
 
-            transform: translateY(-0.125em) scale(1.1);
+            transform: translateY(-0.0625em) scale(1.1);
         }
         &:focus-visible
         {
             box-shadow: 0px 0px 0px 0.15em rgba(var(--clay-button-color-outline), 1),
                         0px 0.25em 0.25em 0px rgba(var(--clay-button-color-shadow), 0.333);
 
-            transform: translateY(-0.125em) scale(1.1);
+            transform: translateY(-0.0625em) scale(1.1);
         }
         &:active
         {
             box-shadow: 0px 0px 0px 0px rgba(var(--clay-button-color-outline), 0),
-                        0px 0px 0.125em 0px rgba(var(--clay-button-color-shadow), 0.75),
+                        0px 0px 0.125em 0px rgba(var(--clay-button-color-shadow), 0.5),
                         0px -0.25em 0.25em 0px rgba(var(--clay-button-color-shadow), 0.333);
 
             transform: translateY(0.25em) scaleX(1.2) scaleY(0.9);

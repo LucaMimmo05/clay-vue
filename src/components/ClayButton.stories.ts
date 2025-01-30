@@ -1,3 +1,4 @@
+import { fn } from "@storybook/test";
 import type { Meta, StoryObj } from "@storybook/vue3";
 
 import ClayButton from "./ClayButton.vue";
@@ -6,6 +7,7 @@ interface StoryArgs
 {
     label: string;
     size: "small" | "default" | "large";
+    click: () => void;
 }
 
 const meta: Meta<StoryArgs> = {
@@ -43,14 +45,19 @@ const meta: Meta<StoryArgs> = {
             },
             options: ["small", "default", "large"]
         }
+    },
+    args: {
+        label: "Click me!",
+        size: "default",
+        click: fn()
     }
 };
 
 export const Primary: StoryObj<StoryArgs> = {
-    args: {
-        label: "Click me!",
-        size: "default"
-    },
+    // args: {
+    //     label: "Click me!",
+    //     size: "default"
+    // },
     render: (args: StoryArgs) => ({
         components: { ClayButton },
         setup: () => ({ args }),
