@@ -1,5 +1,6 @@
 <script lang="ts" setup>
-    import { computed } from "vue";
+    import { computed, onMounted, ref } from "vue";
+    import type { Timeout } from "@/types";
 
     const props = defineProps({
         small: {
@@ -12,14 +13,62 @@
         }
     });
 
+    const active = ref(false);
     const classes = computed((): Record<string, boolean> => ({
         "clay-button--small": props.small,
-        "clay-button--large": props.large
+        "clay-button--large": props.large,
+        "clay-button--active": active.value
     }));
+
+    const $el = ref<HTMLButtonElement | null>(null);
+
+    let _easeDuration = 333;
+    let _timestamp = 0;
+    let _timeoutId: Timeout | null = null;
+
+    const onMouseDown = (event: MouseEvent): void =>
+    {
+        active.value = true;
+
+        if (!(_timeoutId)) { _timestamp = event.timeStamp; }
+    };
+    const onMouseUp = (event: MouseEvent): void =>
+    {
+        const elapsed = event.timeStamp - _timestamp;
+        if (elapsed > _easeDuration)
+        {
+            active.value = false;
+
+            return;
+        }
+
+        _timeoutId = setTimeout((): void =>
+        {
+            active.value = false;
+            _timeoutId = null;
+
+        }, (_easeDuration - elapsed));
+    };
+
+    onMounted((): void =>
+    {
+        // eslint-disable-next-line no-console
+        if (!($el.value)) { return console.warn("The button element is not mounted yet."); }
+
+        const computedStyle = window.getComputedStyle($el.value);
+        const propertyValue = computedStyle.getPropertyValue("--clay-ease-duration");
+
+        _easeDuration = parseFloat(propertyValue);
+
+        window.addEventListener("mouseup", onMouseUp);
+    });
 </script>
 
 <template>
-    <button class="clay-button" :class="classes">
+    <button ref="$el"
+            class="clay-button"
+            :class="classes"
+            @mousedown="onMouseDown">
         <slot></slot>
     </button>
 </template>
@@ -27,7 +76,6 @@
 <style lang="scss">
     @use "sass:color";
 
-    @use "@/assets/scss/utils";
     @use "@/assets/scss/variables";
 
     $button-color-background: variables.$primary-color;
@@ -36,9 +84,9 @@
 
     :root
     {
-        --clay-button-color-background: #{utils.to-rgb-list($button-color-background)};
-        --clay-button-color-outline: #{utils.to-rgb-list($button-color-outline)};
-        --clay-button-color-shadow: #{utils.to-rgb-list($button-color-shadow)};
+        --clay-button-color-background: #{$button-color-background};
+        --clay-button-color-outline: #{$button-color-outline};
+        --clay-button-color-shadow: #{$button-color-shadow};
 
         --clay-button-spacing-x: 0.5em;
         --clay-button-spacing-y: 1em;
@@ -49,13 +97,14 @@
 
     .clay-button
     {
-        background-color: rgb(var(--clay-button-color-background));
-        background-image: linear-gradient(rgba(var(--white), 0.25), rgba(var(--black), 0.25));
+        background-color: var(--clay-button-color-background);
+
+        background-image: linear-gradient(rgba(from var(--white) r g b / 0.25), rgba(from var(--black) r g b / 0.25));
         background-blend-mode: overlay;
         border: none;
         border-radius: var(--clay-button-roundness);
-        box-shadow: 0px 0px 0px 0px rgba(var(--clay-button-color-outline), 0),
-                    0px 0.1em 0.2em -0.1em rgba(var(--clay-button-color-shadow), 0.75);
+        box-shadow: 0px 0px 0px 0px rgba(from var(--clay-button-color-outline) r g b / 0),
+                    0px 0.1em 0.2em -0.1em rgba(from var(--clay-button-color-shadow) r g b / 0.75);
 
         color: white;
         cursor: pointer;
@@ -75,9 +124,9 @@
         {
             border-radius: var(--clay-button-roundness);
             bottom: 0px;
-            box-shadow: inset 0px 0px 0.125em 0px rgba(var(--black), 0.25),
-                        inset 0px 0.2em 0.45em 0px rgba(var(--white), 0.25),
-                        inset 0px -0.2em 0.45em 0px rgba(var(--black), 0.25);
+            box-shadow: inset 0px 0px 0.125em 0px rgba(from var(--black) r g b / 0.25),
+                        inset 0px 0.2em 0.45em 0px rgba(from var(--white) r g b / 0.25),
+                        inset 0px -0.2em 0.45em 0px rgba(from var(--black) r g b / 0.25);
 
             content: "";
             left: 0px;
@@ -92,31 +141,32 @@
 
         &:hover
         {
-            box-shadow: 0px 0px 0px 0px rgba(var(--clay-button-color-outline), 0),
-                        0px 0.25em 0.25em 0px rgba(var(--clay-button-color-shadow), 0.333);
+            box-shadow: 0px 0px 0px 0px rgba(from var(--clay-button-color-outline) r g b / 0),
+                        0px 0.25em 0.25em 0px rgba(from var(--clay-button-color-shadow) r g b / 0.333);
 
             transform: translateY(-0.0625em) scale(1.1);
         }
         &:focus-visible
         {
-            box-shadow: 0px 0px 0px 0.15em rgba(var(--clay-button-color-outline), 1),
-                        0px 0.25em 0.25em 0px rgba(var(--clay-button-color-shadow), 0.333);
+            box-shadow: 0px 0px 0px 0.15em rgba(from var(--clay-button-color-outline) r g b / 1),
+                        0px 0.25em 0.25em 0px rgba(from var(--clay-button-color-shadow) r g b / 0.333);
 
             transform: translateY(-0.0625em) scale(1.1);
         }
-        &:active
+        &:active,
+        &.clay-button--active
         {
-            box-shadow: 0px 0px 0px 0px rgba(var(--clay-button-color-outline), 0),
-                        0px 0px 0.125em 0px rgba(var(--clay-button-color-shadow), 0.5),
-                        0px -0.25em 0.25em 0px rgba(var(--clay-button-color-shadow), 0.333);
+            box-shadow: 0px 0px 0px 0px rgba(from var(--clay-button-color-outline) r g b / 0),
+                        0px 0px 0.125em 0px rgba(from var(--clay-button-color-shadow) r g b / 0.5),
+                        0px -0.25em 0.25em 0px rgba(from var(--clay-button-color-shadow) r g b / 0.333);
 
             transform: translateY(0.25em) scaleX(1.2) scaleY(0.9);
 
             &::before
             {
-                box-shadow: inset 0px 0px 0.125em 0px rgba(var(--black), 0.25),
-                            inset 0px 0.2em 0.45em 0px rgba(var(--black), 0),
-                            inset 0px -0.2em 0.45em 0px rgba(var(--black), 0.25);
+                box-shadow: inset 0px 0px 0.125em 0px rgba(from var(--black) r g b / 0.25),
+                            inset 0px 0.2em 0.45em 0px rgba(from var(--black) r g b / 0),
+                            inset 0px -0.2em 0.45em 0px rgba(from var(--black) r g b / 0.25);
             }
         }
 
@@ -139,42 +189,42 @@
 
         :root
         {
-            --clay-button-color-background: #{utils.to-rgb-list($button-color-background)};
-            --clay-button-color-outline: #{utils.to-rgb-list($button-color-outline)};
-            --clay-button-color-shadow: #{utils.to-rgb-list($button-color-shadow)};
+            --clay-button-color-background: #{$button-color-background};
+            --clay-button-color-outline: #{$button-color-outline};
+            --clay-button-color-shadow: #{$button-color-shadow};
         }
 
         .clay-button
         {
-            box-shadow: 0px 0px 0px 0px rgba(var(--clay-button-color-outline), 0),
-                        0px 0.1em 0.2em -0.1em rgba(var(--clay-button-color-shadow), 0.5);
-
+            box-shadow: 0px 0px 0px 0px rgba(from var(--clay-button-color-outline) r g b / 0),
+                        0px 0.1em 0.2em -0.1em rgba(from var(--clay-button-color-shadow) r g b / 0.5);
             &:hover,
             &:focus-visible,
-            &:active
+            &:active,
+            &.clay-button--active
             {
-                --clay-button-color-background: #{utils.to-rgb-list($button-color-background-glow)};
-                --clay-button-color-shadow: #{utils.to-rgb-list($button-color-background-glow)};
+                --clay-button-color-background: #{$button-color-background-glow};
+                --clay-button-color-shadow: #{$button-color-background-glow};
             }
 
             &:hover
             {
-                box-shadow: 0px 0px 0px 0px rgba(var(--clay-button-color-outline), 0),
-                            0px 0px 0.5em 0px rgba(var(--clay-button-color-shadow), 0.25),
-                            0px 0.25em 0.5em 0px rgba(var(--clay-button-color-shadow), 0.25);
-
+                box-shadow: 0px 0px 0px 0px rgba(from var(--clay-button-color-outline) r g b / 0),
+                            0px 0px 0.5em 0px rgba(from var(--clay-button-color-shadow) r g b / 0.25),
+                            0px 0.25em 0.5em 0px rgba(from var(--clay-button-color-shadow) r g b / 0.25);
             }
             &:focus-visible
             {
-                box-shadow: 0px 0px 0px 0.15em rgba(var(--clay-button-color-outline), 1),
-                            0px 0px 0.5em 0px rgba(var(--clay-button-color-shadow), 0.25),
-                            0px 0.25em 0.5em 0px rgba(var(--clay-button-color-shadow), 0.25);
+                box-shadow: 0px 0px 0px 0.15em rgba(from var(--clay-button-color-outline) r g b / 1),
+                            0px 0px 0.5em 0px rgba(from var(--clay-button-color-shadow) r g b / 0.25),
+                            0px 0.25em 0.5em 0px rgba(from var(--clay-button-color-shadow) r g b / 0.25);
             }
-            &:active
+            &:active,
+            &.clay-button--active
             {
-                box-shadow: 0px 0px 0px 0px rgba(var(--clay-button-color-outline), 0),
-                            0px 0px 0.25em 0px rgba(var(--clay-button-color-shadow), 0.25),
-                            0px -0.25em 0.25em 0px rgba(var(--clay-button-color-shadow), 0.25);
+                box-shadow: 0px 0px 0px 0px rgba(from var(--clay-button-color-outline) r g b / 0),
+                            0px 0px 0.25em 0px rgba(from var(--clay-button-color-shadow) r g b / 0.25),
+                            0px -0.25em 0.25em 0px rgba(from var(--clay-button-color-shadow) r g b / 0.25);
             }
         }
     }
