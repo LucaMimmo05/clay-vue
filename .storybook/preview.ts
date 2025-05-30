@@ -1,4 +1,4 @@
-import type { Preview } from "@storybook/vue3";
+import type { Preview } from "@storybook/vue3-vite";
 
 import "@/assets/scss/main.scss";
 import type { ColorScheme } from "@/types";
