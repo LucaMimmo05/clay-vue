@@ -15,9 +15,9 @@
         value: "Enter text here..."
     });
 
-    const emit = defineEmits<{
-        "update:value": [value: string];
-    }>();
+    // const emit = defineEmits<{
+    //     "update:value": [value: string];
+    // }>();
 
     const $el = ref<HTMLInputElement | null>(null);
 
