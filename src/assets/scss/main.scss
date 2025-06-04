@@ -1,5 +1,5 @@
 @use "./variables";
-
+@import url('https://fonts.googleapis.com/css2?family=Baloo+2:wght@400..800&display=swap');
 :root
 {
     --black: rgb(0, 0, 0);
@@ -30,7 +30,7 @@ body
     height: 100%;
     text-align: center;
     transition: background-color var(--clay-ease-duration) var(--clay-ease-function);
-
+    font-family: variables.$font-family;
     &[light]
     {
         color-scheme: light;

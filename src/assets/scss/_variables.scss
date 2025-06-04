@@ -1,10 +1,11 @@
+@use "sass:string";
 /**
  * Colors
  */
 
 $primary-color: rgb(87, 185, 255);
 
-
+$font-family: string.unquote("Baloo 2, Roboto, Helvetica, Arial, sans-serif");
 /**
  * Easing
  */
