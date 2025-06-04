@@ -12,38 +12,38 @@ const meta: Meta<StoryArgs> = {
     tags: ["autodocs"],
     argTypes: {
         placeholder: {
-            name: "Segnaposto",
+            name: "Text",
             type: { name: "string", required: false },
-            description: "Testo visualizzato come segnaposto nell'input.",
+            description: "Text of the input placeholder.",
             table: {
-                category: "Props",
-                defaultValue: { summary: "Inserisci testo..." },
+                category: "Component's",
+                defaultValue: { summary: "Enter text here..." },
                 type: { summary: "string" }
             },
             control: "text"
         },
         size: {
-            name: "Dimensione",
+            name: "Size",
             type: { name: "string", required: false },
-            description: "Dimensione dell'input.",
+            description: "Size of input.",
             table: {
-                category: "Props",
+                category: "Component's",
                 defaultValue: { summary: "default" },
                 type: { summary: "small | default | large" }
             },
             control: {
                 type: "select",
                 labels: {
-                    small: "Piccolo",
+                    small: "Small",
                     default: "Default",
-                    large: "Grande"
+                    large: "Large"
                 }
             },
             options: ["small", "default", "large"]
         }
     },
     args: {
-        placeholder: "Inserisci testo...",
+        placeholder: "Enter text here...",
         size: "default"
     }
 };
