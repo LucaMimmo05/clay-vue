@@ -47,6 +47,7 @@
     :root
     {
         --clay-input-color-background: #{$input-color-background};
+        --clay-input-color-background-dark: #{$input-color-background};
         --clay-input-color-outline: #{$input-color-outline};
         --clay-input-color-shadow: #{$input-color-shadow};
 
@@ -112,5 +113,31 @@
         --clay-input-spacing-x: 0.75em;
         --clay-input-spacing-y: 1.25em;
         font-size: 1.125em;
+    }
+
+    @media (prefers-color-scheme: dark) {
+        .clay-input {
+            background-color: var(--clay-input-color-background-dark);
+            box-shadow:
+                inset 2px 2px 5px rgba(0,0,0,0.8),
+                inset -2px -2px 5px rgba(255,255,255,0.10),
+                0 1px 2px 0 rgba(0,0,0,0.7);
+
+            transition: background-color var(--clay-ease-duration) var(--clay-ease-function),
+                    box-shadow var(--clay-ease-duration) var(--clay-ease-function),
+                    color var(--clay-ease-duration) var(--clay-ease-function),
+                    transform var(--clay-ease-duration) var(--clay-ease-function);
+
+            &::placeholder {
+                color: #aaa;
+            }
+
+            &:focus-visible {
+                box-shadow:
+                    0px 0px 0px 0px rgba(from var(--clay-input-color-outline) r g b / 0),
+                    0px 0px 0.25em 0px rgba(from var(--clay-input-color-shadow) r g b / 0.25),
+                    0px -0.25em 0.25em 0px rgba(from var(--clay-input-color-shadow) r g b / 0.25);
+            }
+        }
     }
 </style>
