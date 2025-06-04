@@ -12,7 +12,7 @@
         small: false,
         large: false,
         placeholder: "",
-        value: "Enter text here..."
+        value: ""
     });
 
     // const emit = defineEmits<{
@@ -118,25 +118,19 @@
     @media (prefers-color-scheme: dark) {
         .clay-input {
             background-color: var(--clay-input-color-background-dark);
-            box-shadow:
-                inset 2px 2px 5px rgba(0,0,0,0.8),
-                inset -2px -2px 5px rgba(255,255,255,0.10),
-                0 1px 2px 0 rgba(0,0,0,0.7);
+            box-shadow: 0px 2px 6px 0px #323131 inset;
 
-            transition: background-color var(--clay-ease-duration) var(--clay-ease-function),
-                    box-shadow var(--clay-ease-duration) var(--clay-ease-function),
-                    color var(--clay-ease-duration) var(--clay-ease-function),
-                    transform var(--clay-ease-duration) var(--clay-ease-function);
+            transition: background-color var(--clay-ease-duration-dark-theme-input) var(--clay-ease-function),
+                    box-shadow var(--clay-ease-duration-dark-theme-input) var(--clay-ease-function),
+                    color var(--clay-ease-duration-dark-theme-input) var(--clay-ease-function),
+                    transform var(--clay-ease-duration-dark-theme-input) var(--clay-ease-function);
 
             &::placeholder {
                 color: #aaa;
             }
 
             &:focus-visible {
-                box-shadow:
-                    0px 0px 0px 0px rgba(from var(--clay-input-color-outline) r g b / 0),
-                    0px 0px 0.25em 0px rgba(from var(--clay-input-color-shadow) r g b / 0.25),
-                    0px -0.25em 0.25em 0px rgba(from var(--clay-input-color-shadow) r g b / 0.25);
+                box-shadow: 0px 4px 4px 0px rgba(129, 128, 128, 0.47) inset, 0px 4px 4px 0px rgba(255, 255, 255, 0.35);
             }
         }
     }

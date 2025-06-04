@@ -1,37 +1,8 @@
-<script setup lang="ts">
-import { ref, computed } from "vue";
-
-interface Props {
-  small?: boolean;
-  large?: boolean;
-  placeholder?: string;
-  value?: string;
-}
-
-const props = withDefaults(defineProps<Props>(), {
-  small: false,
-  large: false,
-  placeholder: "",
-  value: "Enter text here..."
-});
-
-// const emit = defineEmits<{
-//   "update:value": [value: string];
-// }>();
-
-// Rinominato per evitare warning ESLint (variabili non usate)
-const _el = ref<HTMLInputElement | null>(null);
-
-const _classes = computed(() => ({
-  "clay-input--small": props.small,
-  "clay-input--large": props.large
-}));
-</script>
 
 <template>
-  <div class="clay-card">
-    <slot></slot>
-  </div>
+    <div class="clay-card">
+        <slot></slot>
+    </div>
 </template>
 
 <style lang="scss">
@@ -43,23 +14,39 @@ $input-color-outline: color.complement($input-color-background);
 $input-color-shadow: color.adjust($input-color-background, $lightness: -25%);
 
 :root {
-  --clay-input-color-background: #{$input-color-background};
-  --clay-input-color-background-dark: #{$input-color-background};
-  --clay-input-color-outline: #{$input-color-outline};
-  --clay-input-color-shadow: #{$input-color-shadow};
-
-  --clay-input-spacing-x: 1em;
-  --clay-input-spacing-y: 1em;
-  --clay-input-spacing: var(--clay-input-spacing-x) var(--clay-input-spacing-y);
-
-  --clay-input-roundness: var(--clay-input-spacing-x);
+  --clay-card-color-background: #{$input-color-background};
+  --clay-card-color-background-dark: #{$input-color-background};
+  --clay-card-color-outline: #{$input-color-outline};
+  --clay-card-color-shadow: #{$input-color-shadow};
+  --clay-card-spacing-x:7rem;
+  --clay-card-spacing-y:8rem;
+  --clay-card-spacing: var(--clay-card-spacing-x) var(--clay-card-spacing-y);
+  --clay-card-roundness: var(--clay-card-spacing-x);
 }
 
 .clay-card {
   border-radius: 1em;
   background: #fff;
-  padding: 2em;
-  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
-  min-width: 200px;
+  padding: var(--clay-card-spacing);
+  box-shadow: 0px 4px 16px 0px rgba(0, 0, 0, 0.51), 0px 3px 22px 0px rgba(0, 0, 0, 0.06) inset;
 }
+.clay-card--small {
+        --clay-card-spacing-x: 0.375em;
+        --clay-card-spacing-y: 0.75em;
+        font-size: 0.875em;
+    }
+
+.clay-card--large {
+        --clay-card-spacing-x: 0.75em;
+        --clay-card-spacing-y: 1.25em;
+         font-size: 1.125em;
+    }
+@media (prefers-color-scheme: dark) {
+        .clay-card {
+          border-radius: 1em;
+          background: #fff;
+          padding: var(--clay-card-spacing);
+          box-shadow: 0px 4px 16px 0px rgba(255, 255, 255, 0.41), 0px 3px 24px 0px rgba(0, 0, 0, 0.66) inset;
+        }
+    }
 </style>

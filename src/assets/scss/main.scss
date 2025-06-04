@@ -11,6 +11,7 @@
     --clay-primary-color: #{variables.$primary-color};
 
     --clay-ease-duration: #{variables.$ease-duration};
+    --clay-ease-duration-dark-theme-input: #{variables.$ease-duration-dark-theme-input};
     --clay-ease-function: #{variables.$ease-function};
 
     @media (prefers-color-scheme: light)
