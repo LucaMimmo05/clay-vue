@@ -29,4 +29,16 @@ export const Primary: StoryObj<StoryArgs> = {
     })
 };
 
+export const Glass: StoryObj<StoryArgs> = {
+    render: (args: StoryArgs) => ({
+        components: { ClayCard },
+        setup: () => ({ args }),
+        template: `
+            <ClayCard :class="'clay-card--' + args.size + ' clay-card--glass'">
+                {{ args.content }}
+            </ClayCard>
+        `
+    })
+};
+
 export default meta;

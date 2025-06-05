@@ -1,6 +1,5 @@
-
 <template>
-    <div class="clay-card">
+    <div class="clay-card" v-bind="$attrs">
         <slot></slot>
     </div>
 </template>
@@ -41,12 +40,41 @@ $input-color-shadow: color.adjust($input-color-background, $lightness: -25%);
         --clay-card-spacing-y: 1.25em;
          font-size: 1.125em;
     }
+
+.clay-card.clay-card--glass {
+  border-radius: 11px;
+  background:
+  linear-gradient(90deg, rgba(255, 255, 255, 0.05) 0%, rgba(255, 255, 255, 0.01) 100%),
+  rgba(255, 255, 255, 0.10);
+  box-shadow:
+  12px 8px 16px 0px rgba(119, 119, 119, 0.25) inset,
+  -10px -10px 20px 0px rgba(119, 119, 119, 0.5) inset,
+  12px 12px 36px 0px rgba(0, 0, 0, 0.50);
+  backdrop-filter: blur(3.25px);
+  -webkit-backdrop-filter: blur(3.25px);
+  padding: var(--clay-card-spacing, 2em 2em);
+}
+
 @media (prefers-color-scheme: dark) {
-        .clay-card {
-          border-radius: 1em;
-          background: #fff;
-          padding: var(--clay-card-spacing);
-          box-shadow: 0px 4px 16px 0px rgba(255, 255, 255, 0.41), 0px 3px 24px 0px rgba(0, 0, 0, 0.66) inset;
-        }
-    }
+  .clay-card {
+    border-radius: 1em;
+    background: #fff;
+    padding: var(--clay-card-spacing);
+    box-shadow: 0px 4px 16px 0px rgba(255, 255, 255, 0.41), 0px 3px 24px 0px rgba(0, 0, 0, 0.66) inset;
+  }
+
+  .clay-card.clay-card--glass {
+    border-radius: 11px;
+    background:
+    linear-gradient(90deg, rgba(255, 255, 255, 0.05) 0%, rgba(255, 255, 255, 0.01) 100%),
+    rgba(255, 255, 255, 0.10);
+    box-shadow:
+    12px 8px 16px 0px rgba(0, 0, 0, 0.25) inset,
+    -10px -10px 20px 0px rgba(0, 0, 0, 0.50) inset,
+    12px 12px 36px 0px rgba(0, 0, 0, 0.50);
+    backdrop-filter: blur(3.25px);
+    -webkit-backdrop-filter: blur(3.25px);
+    padding: var(--clay-card-spacing, 2em 2em);
+  }
+}
 </style>
