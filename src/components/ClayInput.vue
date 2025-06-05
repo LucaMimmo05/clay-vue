@@ -138,6 +138,7 @@ $input-color-shadow-dark-inner: color.adjust($input-color-background-dark, $ligh
         var(--clay-ease-function), transform var(--clay-ease-duration-dark-theme-input)
         var(--clay-ease-function);
         box-shadow: 0px 4px 6px 0px var(--clay-input-color-shadow-not-active-dark-theme) inset;
+        color: #fff;
         &::placeholder {
             color:#fff;
         }
