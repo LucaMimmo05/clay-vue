@@ -41,17 +41,18 @@
 
 @use "@/assets/scss/variables";
 
-$input-color-background: variables.$primary-color;
+$input-color-background: variables.$primary-color-input-light;
+$input-color-background-dark: variables.$primary-color-input-dark;
 $input-color-outline: color.complement($input-color-background);
 $input-color-shadow: color.adjust($input-color-background, $lightness: -30%);
 $input-color-shadow-inner: color.adjust($input-color-background, $lightness: -10%);
-$input-color-shadow-not-active-dark-theme: color.adjust($input-color-background, $lightness: -40%);
+$input-color-shadow-not-active-dark-theme: color.adjust($input-color-background-dark, $lightness: -10%);
 $input-color-shadow-active: color.adjust($input-color-background, $lightness: -30%);
-$input-color-shadow-dark: color.adjust($input-color-background, $lightness: -20%);
-$input-color-shadow-dark-inner: color.adjust($input-color-background, $lightness: -5%);
+$input-color-shadow-dark: color.adjust($input-color-background-dark, $lightness: -20%);
+$input-color-shadow-dark-inner: color.adjust($input-color-background-dark, $lightness: -5%);
 :root {
     --clay-input-color-background: #{$input-color-background};
-    --clay-input-color-background-dark: #{$input-color-background};
+    --clay-input-color-background-dark: #{$input-color-background-dark};
     --clay-input-color-outline: #{$input-color-outline};
     --clay-input-color-shadow: #{$input-color-shadow};
     --clay-input-color-shadow-not-active-dark-theme: #{$input-color-shadow-not-active-dark-theme};
@@ -74,13 +75,12 @@ $input-color-shadow-dark-inner: color.adjust($input-color-background, $lightness
     position: relative;
     box-shadow: 0px 2px 10px 0px var(--clay-input-color-shadow) inset;
     background: var(--clay-input-color-background);
-
+    color: black;
     transition: background-color var(--clay-ease-duration) var(--clay-ease-function),
     box-shadow var(--clay-ease-duration) var(--clay-ease-function),
     color var(--clay-ease-duration) var(--clay-ease-function),
 
     transform var(--clay-ease-duration) var(--clay-ease-function);
-    color: white;
 
     &::before {
         border-radius: var(--clay-input-roundness);
@@ -110,10 +110,11 @@ $input-color-shadow-dark-inner: color.adjust($input-color-background, $lightness
     &:focus-visible {
         box-shadow: 0px 4px 4px 0px var(--clay-input-color-shadow-inner) inset, 0px 4px 4px 0px
         var(--clay-input-shadow-active);
+        transform: translateY(-0.0000004rem) scale(1.1);
     }
 
     &::placeholder {
-        color: #fff;
+        color: black;
     }
 }
 .clay-input--small {
@@ -129,6 +130,7 @@ $input-color-shadow-dark-inner: color.adjust($input-color-background, $lightness
 }
 
 @media (prefers-color-scheme: dark) {
+    $button-color-outline: color.complement($button-color-background-glow);
     .clay-input {
         background-color: var(--clay-input-color-background-dark);
         transition: background-color var(--clay-ease-duration-dark-theme-input)
