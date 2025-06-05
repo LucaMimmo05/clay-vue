@@ -130,7 +130,6 @@ $input-color-shadow-dark-inner: color.adjust($input-color-background-dark, $ligh
 }
 
 @media (prefers-color-scheme: dark) {
-    $button-color-outline: color.complement($button-color-background-glow);
     .clay-input {
         background-color: var(--clay-input-color-background-dark);
         transition: background-color var(--clay-ease-duration-dark-theme-input)
