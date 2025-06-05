@@ -60,4 +60,11 @@ export const Primary: StoryObj<StoryArgs> = {
     })
 };
 
+export const Large: StoryObj<StoryArgs> = {
+    args: {
+        size: "large",
+        placeholder: "Large input"
+    }
+};
+
 export default meta;
