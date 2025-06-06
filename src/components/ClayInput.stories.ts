@@ -1,70 +1,44 @@
-import type { Meta, StoryObj } from "@storybook/vue3-vite";
+import type { Meta, StoryObj } from "@storybook/vue3";
 import ClayInput from "./ClayInput.vue";
 
-interface StoryArgs {
-    placeholder: string;
-    size: "small" | "default" | "large";
-}
-
-const meta: Meta<StoryArgs> = {
-    title: "ClayInput",
+const meta: Meta<typeof ClayInput> = {
+    title: "Inputs/ClayInput",
     component: ClayInput,
-    tags: ["autodocs"],
+    parameters: {
+        layout: "centered"
+    },
     argTypes: {
         placeholder: {
-            name: "Text",
-            type: { name: "string", required: false },
-            description: "Text of the input placeholder.",
-            table: {
-                category: "Component's",
-                defaultValue: { summary: "Enter text here..." },
-                type: { summary: "string" }
-            },
             control: "text"
         },
-        size: {
-            name: "Size",
-            type: { name: "string", required: false },
-            description: "Size of input.",
-            table: {
-                category: "Component's",
-                defaultValue: { summary: "default" },
-                type: { summary: "small | default | large" }
-            },
-            control: {
-                type: "select",
-                labels: {
-                    small: "Small",
-                    default: "Default",
-                    large: "Large"
-                }
-            },
-            options: ["small", "default", "large"]
+        small: {
+            control: "boolean"
+        },
+        large: {
+            control: "boolean"
         }
-    },
-    args: {
-        placeholder: "Enter text here...",
-        size: "default"
-    }
-};
-
-export const Primary: StoryObj<StoryArgs> = {
-    render: (args: StoryArgs) => ({
-        components: { ClayInput },
-        setup: () => ({ args }),
-        template: `
-            <ClayInput :placeholder="args.placeholder"
-                       :small="args.size === 'small'"
-                       :large="args.size === 'large'" />
-        `
-    })
-};
-
-export const Large: StoryObj<StoryArgs> = {
-    args: {
-        size: "large",
-        placeholder: "Large input"
     }
 };
 
 export default meta;
+type Story = StoryObj<typeof meta>;
+
+export const Default: Story = {
+    args: {
+        placeholder: "Enter text here..."
+    }
+};
+
+export const Small: Story = {
+    args: {
+        placeholder: "Small input",
+        small: true
+    }
+};
+
+export const Large: Story = {
+    args: {
+        placeholder: "Large input",
+        large: true
+    }
+};
