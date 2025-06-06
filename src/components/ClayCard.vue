@@ -58,20 +58,25 @@ $input-color-shadow: color.adjust($input-color-background, $lightness: -25%);
 @media (prefers-color-scheme: dark) {
   .clay-card {
     border-radius: 1em;
-    background: #fff;
+    background-color: var(--clay-input-color-background-dark);
+    transition:
+      background-color var(--clay-ease-duration-dark-theme-input) var(--clay-ease-function),
+      box-shadow var(--clay-ease-duration-dark-theme-input) var(--clay-ease-function),
+      color var(--clay-ease-duration-dark-theme-input) var(--clay-ease-function),
+      transform var(--clay-ease-duration-dark-theme-input) var(--clay-ease-function);
+    box-shadow: 0px 4px 6px 0px var(--clay-input-color-shadow-not-active-dark-theme) inset;
     padding: var(--clay-card-spacing);
-    box-shadow: 0px 4px 16px 0px rgba(255, 255, 255, 0.41), 0px 3px 24px 0px rgba(0, 0, 0, 0.66) inset;
   }
 
   .clay-card.clay-card--glass {
     border-radius: 11px;
     background:
-    linear-gradient(90deg, rgba(255, 255, 255, 0.05) 0%, rgba(255, 255, 255, 0.01) 100%),
-    rgba(255, 255, 255, 0.10);
+      linear-gradient(90deg, rgba(255, 255, 255, 0.05) 0%, rgba(255, 255, 255, 0.01) 100%),
+      rgba(255, 255, 255, 0.10);
     box-shadow:
-    12px 8px 16px 0px rgba(0, 0, 0, 0.25) inset,
-    -10px -10px 20px 0px rgba(0, 0, 0, 0.50) inset,
-    12px 12px 36px 0px rgba(0, 0, 0, 0.50);
+      12px 8px 16px 0px rgba(0, 0, 0, 0.25) inset,
+      -10px -10px 20px 0px rgba(0, 0, 0, 0.50) inset,
+      12px 12px 36px 0px rgba(0, 0, 0, 0.50);
     backdrop-filter: blur(3.25px);
     -webkit-backdrop-filter: blur(3.25px);
     padding: var(--clay-card-spacing, 2em 2em);
