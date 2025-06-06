@@ -1,6 +1,6 @@
 <template>
     <div class="clay-card" v-bind="$attrs">
-        <slot></slot>
+        <h1>funziona</h1>
     </div>
 </template>
 
@@ -24,62 +24,73 @@ $input-color-shadow: color.adjust($input-color-background, $lightness: -25%);
 }
 
 .clay-card {
-  border-radius: 1em;
-  background: #fff;
   padding: var(--clay-card-spacing);
-  box-shadow: 0px 4px 16px 0px rgba(0, 0, 0, 0.51), 0px 3px 22px 0px rgba(0, 0, 0, 0.06) inset;
+  border-radius: 11px;
+  background:
+    linear-gradient(180deg, rgba(0, 0, 0, 0.00) 0%, rgba(0, 0, 0, 0.10) 50%, rgba(0, 0, 0, 0.20) 100%), #FFF;
+  box-shadow:
+      0px -2px 4px 0px rgba(0, 0, 0, 0.50) inset, 
+      0px -8px 16px 0px rgba(0, 0, 0, 0.25) inset,
+      0px 40px 48px 0px rgba(0, 0, 0, 0.60);
 }
-.clay-card--small {
-        --clay-card-spacing-x: 0.375em;
-        --clay-card-spacing-y: 0.75em;
-        font-size: 0.875em;
+.clay-card--Vicino {
+box-shadow:
+      0px -2px 4px 0px rgba(0, 0, 0, 0.50) inset, 
+      0px -8px 16px 0px rgba(0, 0, 0, 0.25) inset,
+      0px 10px 10px 0px rgba(0, 0, 0, 0.60);
     }
 
-.clay-card--large {
-        --clay-card-spacing-x: 0.75em;
-        --clay-card-spacing-y: 1.25em;
-         font-size: 1.125em;
+.clay-card--Alto {
+box-shadow:
+      0px -2px 4px 0px rgba(0, 0, 0, 0.50) inset, 
+      0px -8px 16px 0px rgba(0, 0, 0, 0.25) inset,
+      0px 80px 80px 0px rgba(0, 0, 0, 0.60);
     }
 
 .clay-card.clay-card--glass {
-  border-radius: 11px;
-  background:
-  linear-gradient(90deg, rgba(255, 255, 255, 0.05) 0%, rgba(255, 255, 255, 0.01) 100%),
-  rgba(255, 255, 255, 0.10);
-  box-shadow:
-  12px 8px 16px 0px rgba(119, 119, 119, 0.25) inset,
-  -10px -10px 20px 0px rgba(119, 119, 119, 0.5) inset,
-  12px 12px 36px 0px rgba(0, 0, 0, 0.50);
-  backdrop-filter: blur(3.25px);
-  -webkit-backdrop-filter: blur(3.25px);
-  padding: var(--clay-card-spacing, 2em 2em);
+padding: var(--clay-card-spacing);
+border-radius: 11px;
+background: linear-gradient(180deg, rgba(0, 0, 0, 0.00) -3.72%, rgba(0, 0, 0, 0.10) 48.14%, rgba(0, 0, 0, 0.20) 100%), rgba(255, 255, 255, 0.00);
+box-shadow:
+ 0px -2px 4px 0px rgba(0, 0, 0, 0.50) inset, 
+ 0px -8px 16px 0px rgba(0, 0, 0, 0.25) inset, 
+ 0px 40px 48px 0px rgba(0, 0, 0, 0.60);
 }
 
 @media (prefers-color-scheme: dark) {
   .clay-card {
-    border-radius: 1em;
-    background-color: var(--clay-input-color-background-dark);
-    transition:
-      background-color var(--clay-ease-duration-dark-theme-input) var(--clay-ease-function),
-      box-shadow var(--clay-ease-duration-dark-theme-input) var(--clay-ease-function),
-      color var(--clay-ease-duration-dark-theme-input) var(--clay-ease-function),
-      transform var(--clay-ease-duration-dark-theme-input) var(--clay-ease-function);
-    box-shadow: 0px 4px 6px 0px var(--clay-input-color-shadow-not-active-dark-theme) inset;
-    padding: var(--clay-card-spacing);
-  }
+  padding: var(--clay-card-spacing);
+   border-radius: 11px;
+  background:
+    linear-gradient(180deg, rgba(0, 0, 0, 0.00) 0%, rgba(0, 0, 0, 0.10) 50%, rgba(0, 0, 0, 0.20) 100%), #242323;
+  box-shadow:
+        0px -2px 16px 0px rgba(0, 0, 0, 0.50) inset, 
+        0px -8px 16px 0px rgba(0, 0, 0, 0.25) inset,
+        0px 40px 48px 0px rgba(0, 0, 0, 0.60);
+  } 
 
   .clay-card.clay-card--glass {
+    padding: var(--clay-card-spacing);
     border-radius: 11px;
-    background:
-      linear-gradient(90deg, rgba(255, 255, 255, 0.05) 0%, rgba(255, 255, 255, 0.01) 100%),
-      rgba(255, 255, 255, 0.10);
+    background: linear-gradient(180deg, rgba(0, 0, 0, 0.00) -3.72%, rgba(0, 0, 0, 0.10) 48.14%, rgba(0, 0, 0, 0.20) 100%), rgba(36, 35, 35, 0.00);
     box-shadow:
-      12px 8px 16px 0px rgba(0, 0, 0, 0.25) inset,
-      -10px -10px 20px 0px rgba(0, 0, 0, 0.50) inset,
-      12px 12px 36px 0px rgba(0, 0, 0, 0.50);
-    backdrop-filter: blur(3.25px);
-    -webkit-backdrop-filter: blur(3.25px);
-    padding: var(--clay-card-spacing, 2em 2em);
+      0px -2px 4px 0px rgba(0, 0, 0, 0.50) inset, 
+      0px -8px 16px 0px rgba(0, 0, 0, 0.25) inset, 
+      0px 40px 48px 0px rgba(0, 0, 0, 0.60);
   }
+
+  .clay-card--Vicino {
+box-shadow:
+      0px -2px 4px 0px rgba(0, 0, 0, 0.50) inset, 
+      0px -8px 16px 0px rgba(0, 0, 0, 0.25) inset,
+      0px 10px 10px 0px rgba(0, 0, 0, 0.60);
+    }
+
+.clay-card--Alto {
+box-shadow:
+      0px -2px 4px 0px rgba(0, 0, 0, 0.50) inset, 
+      0px -8px 16px 0px rgba(0, 0, 0, 0.25) inset,
+      0px 80px 80px 0px rgba(0, 0, 0, 0.60);
+    }
 }
 </style>

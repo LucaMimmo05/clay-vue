@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from "@storybook/vue3-vite";
 import ClayCard from "./ClayCard.vue";
 
 interface StoryArgs {
-size: "small" | "default" | "large";
+size: "Vicino" | "Default" | "Alto";
 }
 
 const meta: Meta<StoryArgs> = {
@@ -11,9 +11,9 @@ const meta: Meta<StoryArgs> = {
     tags: ["autodocs"],
     argTypes: {
         size: {
-            name: "Size",
+            name: "Altezza",
             control: { type: "select" },
-            options: ["small", "default", "large"]
+            options: ["Vicino", "Default", "Alto"]
         } }
 };
 
