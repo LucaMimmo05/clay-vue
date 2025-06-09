@@ -1,6 +1,5 @@
 <template>
     <div class="clay-card" v-bind="$attrs">
-        <h1>funziona</h1>
     </div>
 </template>
 
@@ -33,6 +32,17 @@ $input-color-shadow: color.adjust($input-color-background, $lightness: -25%);
       0px -8px 16px 0px rgba(0, 0, 0, 0.25) inset,
       0px 40px 48px 0px rgba(0, 0, 0, 0.60);
 }
+
+.clay-card.clay-card--glass {
+padding: var(--clay-card-spacing);
+border-radius: 11px;
+background: linear-gradient(180deg, rgba(0, 0, 0, 0.00) -3.72%, rgba(0, 0, 0, 0.10) 48.14%, rgba(0, 0, 0, 0.20) 100%), rgba(255, 255, 255, 0.00);
+box-shadow:
+ 0px -2px 4px 0px rgba(0, 0, 0, 0.50) inset, 
+ 0px -8px 16px 0px rgba(0, 0, 0, 0.25) inset, 
+ 0px 40px 48px 0px rgba(0, 0, 0, 0.60);
+}
+
 .clay-card--Vicino {
 box-shadow:
       0px -2px 4px 0px rgba(0, 0, 0, 0.50) inset, 
@@ -46,16 +56,6 @@ box-shadow:
       0px -8px 16px 0px rgba(0, 0, 0, 0.25) inset,
       0px 80px 80px 0px rgba(0, 0, 0, 0.60);
     }
-
-.clay-card.clay-card--glass {
-padding: var(--clay-card-spacing);
-border-radius: 11px;
-background: linear-gradient(180deg, rgba(0, 0, 0, 0.00) -3.72%, rgba(0, 0, 0, 0.10) 48.14%, rgba(0, 0, 0, 0.20) 100%), rgba(255, 255, 255, 0.00);
-box-shadow:
- 0px -2px 4px 0px rgba(0, 0, 0, 0.50) inset, 
- 0px -8px 16px 0px rgba(0, 0, 0, 0.25) inset, 
- 0px 40px 48px 0px rgba(0, 0, 0, 0.60);
-}
 
 @media (prefers-color-scheme: dark) {
   .clay-card {
@@ -92,5 +92,19 @@ box-shadow:
       0px -8px 16px 0px rgba(0, 0, 0, 0.25) inset,
       0px 80px 80px 0px rgba(0, 0, 0, 0.60);
     }
+}
+
+.clay-card.clay-card--glass.clay-card--Vicino {
+  box-shadow:
+    0px -2px 4px 0px rgba(0, 0, 0, 0.50) inset, 
+    0px -8px 16px 0px rgba(0, 0, 0, 0.25) inset,
+    0px 10px 10px 0px rgba(0, 0, 0, 0.60);
+}
+
+.clay-card.clay-card--glass.clay-card--Alto {
+  box-shadow:
+    0px -2px 4px 0px rgba(0, 0, 0, 0.50) inset, 
+    0px -8px 16px 0px rgba(0, 0, 0, 0.25) inset,
+    0px 80px 80px 0px rgba(0, 0, 0, 0.60);
 }
 </style>
