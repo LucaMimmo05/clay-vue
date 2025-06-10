@@ -1,9 +1,9 @@
-import ClayDropDown from "./ClayDropDown.vue";
+import ClayDropdown from "./ClayDropdown.vue";
 import type { Meta, StoryObj } from "@storybook/vue3";
 
-const meta: Meta<typeof ClayDropDown> = {
-    title: "ClayDropDown",
-    component: ClayDropDown,
+const meta: Meta<typeof ClayDropdown> = {
+    title: "ClayDropdown",
+    component: ClayDropdown,
     parameters: {
         layout: "centered"
     },

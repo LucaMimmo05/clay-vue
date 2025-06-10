@@ -94,19 +94,23 @@
 @use "@/assets/scss/variables";
 
 $dropdown-color-background: #57b9ff;
+$dropdown-color-background-hover: rgba(247, 250, 252, 0.9);
 $dropdown-color-outline: color.complement($dropdown-color-background);
 $dropdown-color-shadow: color.adjust($dropdown-color-background, $lightness: -30%);
 
 $dropdown-color-background-dark: #2c2e30;
+$dropdown-color-background-hover-dark: rgba(68, 68, 68, 0.7);
 $dropdown-color-outline-dark: color.complement($dropdown-color-background-dark);
 $dropdown-color-shadow-dark: color.adjust($dropdown-color-background-dark, $lightness: -30%);
 
 :root {
     --clay-dropdown-color-background: #{$dropdown-color-background};
+    --clay-dropdown-color-background-hover: #{$dropdown-color-background-hover};
     --clay-dropdown-color-outline: #{$dropdown-color-outline};
     --clay-dropdown-color-shadow: #{$dropdown-color-shadow};
 
     --clay-dropdown-color-background-dark: #{$dropdown-color-background-dark};
+    --clay-dropdown-color-background-hover-dark: #{$dropdown-color-background-hover-dark};
     --clay-dropdown-color-outline-dark: #{$dropdown-color-outline-dark};
     --clay-dropdown-color-shadow-dark: #{$dropdown-color-shadow-dark};
 
@@ -125,7 +129,6 @@ $dropdown-color-shadow-dark: color.adjust($dropdown-color-background-dark, $ligh
     --clay-dropdown-shadow-hover: 0px 2px 6px 0px rgba(0, 0, 0, 0.3) inset, 0px 2px 4px 0px rgba(142, 138, 138, 0.8);
     --clay-dropdown-shadow-active: 0px 1px 3px 0px rgba(0, 0, 0, 0.4) inset, 0px 1px 2px 0px rgba(142, 138, 138, 0.9);
 
-    /* Dark theme shadows */
     --clay-dropdown-shadow-base-dark: 0px 3px 8px 0px rgba(0, 0, 0, 0.6) inset, 0px 3px 6px 0px rgba(0, 0, 0, 0.4);
     --clay-dropdown-shadow-focus-dark: 0px 4px 10px 0px rgba(0, 0, 0, 0.7) inset, 0px 4px 8px 0px rgba(0, 0, 0, 0.5);
     --clay-dropdown-shadow-hover-dark: 0px 3px 9px 0px rgba(0, 0, 0, 0.65) inset, 0px 3px 7px 0px rgba(0, 0, 0, 0.45);
@@ -161,10 +164,8 @@ $dropdown-color-shadow-dark: color.adjust($dropdown-color-background-dark, $ligh
     box-shadow: var(--clay-dropdown-shadow-base);
     background-color: var(--clay-dropdown-color-background);
     transition: background-color var(--clay-dropdown-transition-duration) var(--clay-dropdown-transition-timing),
-    box-shadow var(--clay-dropdown-transition-duration)
-    var(--clay-dropdown-transition-timing),
-    color var(--clay-dropdown-transition-duration)
-    var(--clay-dropdown-transition-timing),
+    box-shadow var(--clay-dropdown-transition-duration) var(--clay-dropdown-transition-timing),
+    color var(--clay-dropdown-transition-duration) var(--clay-dropdown-transition-timing),
     transform var(--clay-dropdown-transition-duration-fast) var(--clay-dropdown-transition-timing);
 
     &:focus {
@@ -182,12 +183,10 @@ $dropdown-color-shadow-dark: color.adjust($dropdown-color-background-dark, $ligh
         box-shadow: var(--clay-dropdown-shadow-active);
         transform: scale(var(--clay-dropdown-scale-active));
         transition: background-color var(--clay-dropdown-transition-duration-instant)
-        var(--clay-dropdown-transition-timing-out),
-        box-shadow var(--clay-dropdown-transition-duration-instant)
-        var(--clay-dropdown-transition-timing-out),
-        color var(--clay-dropdown-transition-duration-instant)
-        var(--clay-dropdown-transition-timing-out),
-        transform var(--clay-dropdown-transition-duration-instant) var(--clay-dropdown-transition-timing-out);
+        var(--clay-dropdown-transition-timing-out), box-shadow var(--clay-dropdown-transition-duration-instant)
+        var(--clay-dropdown-transition-timing-out), color var(--clay-dropdown-transition-duration-instant)
+        var(--clay-dropdown-transition-timing-out), transform var(--clay-dropdown-transition-duration-instant)
+        var(--clay-dropdown-transition-timing-out);
     }
 }
 
@@ -241,8 +240,8 @@ $dropdown-color-shadow-dark: color.adjust($dropdown-color-background-dark, $ligh
     var(--clay-dropdown-transition-timing-out);
 
     &:hover {
-        background-color: var(--clay-dropdown-color-background);
-        color: white;
+        background-color: var(--clay-dropdown-color-background-hover);
+        color: #2d3748;
     }
 
     &--selected {
@@ -251,6 +250,7 @@ $dropdown-color-shadow-dark: color.adjust($dropdown-color-background-dark, $ligh
 
         &:hover {
             background-color: var(--clay-dropdown-color-background);
+            color: white;
         }
     }
 
@@ -278,8 +278,7 @@ $dropdown-color-shadow-dark: color.adjust($dropdown-color-background-dark, $ligh
 
 .dropdown-enter-active,
 .dropdown-leave-active {
-    transition: opacity var(--clay-dropdown-transition-duration-fast)
-    var(--clay-dropdown-transition-timing),
+    transition: opacity var(--clay-dropdown-transition-duration-fast) var(--clay-dropdown-transition-timing),
     transform var(--clay-dropdown-transition-duration-fast) var(--clay-dropdown-transition-timing);
 }
 
@@ -311,16 +310,16 @@ $dropdown-color-shadow-dark: color.adjust($dropdown-color-background-dark, $ligh
 
     .clay-dropdown__list {
         background-color: #1a1a1a;
-        box-shadow: 0px 6px 16px rgba(0, 0, 0, 0.4), inset 0px 2px 6px 0px
-        rgba(0, 0, 0, 0.3), inset 0px -2px 6px 0px rgba(0, 0, 0, 0.2);
+        box-shadow: 0px 6px 16px rgba(0, 0, 0, 0.4), inset 0px 2px 6px 0px rgba(0, 0, 0, 0.3),
+        inset 0px -2px 6px 0px rgba(0, 0, 0, 0.2);
     }
 
     .clay-option {
         color: #e0e0e0;
 
         &:hover {
-            background-color: var(--clay-dropdown-color-background-dark);
-            color: white;
+            background-color: var(--clay-dropdown-color-background-hover-dark);
+            color: #e2e8f0;
         }
     }
 
@@ -330,6 +329,7 @@ $dropdown-color-shadow-dark: color.adjust($dropdown-color-background-dark, $ligh
 
         &:hover {
             background-color: var(--clay-dropdown-color-background-dark);
+            color: white;
         }
     }
 }
