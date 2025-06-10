@@ -1,112 +1,245 @@
 <template>
-  <ClayCard class="clay-alert" v-bind="$attrs">
-    <span class="clay-alert__icon-wrapper">
-      <span class="clay-alert__badge">
-        <svg :class="`clay-alert__badge-svg clay-alert__badge-svg--${type}`" xmlns="http://www.w3.org/2000/svg"
-          width="150" height="150" viewBox="0 0 300 300" fill="none" shape-rendering="geometricPrecision">
-          <g filter="url(#badge-shadow)">
-            <circle cx="150" cy="150" r="138" :stroke="badgeColor" stroke-width="20" stroke-linecap="round"
-              stroke-linejoin="round" />
-          </g>
-          <defs>
-            <filter id="badge-shadow" x="0" y="0" width="300" height="300" filterUnits="userSpaceOnUse"
-              color-interpolation-filters="sRGB">
-              <feFlood flood-opacity="0" result="BackgroundImageFix" />
-              <feBlend mode="normal" in="SourceGraphic" in2="BackgroundImageFix" result="shape" />
-              <feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0
+    <ClayCard class="clay-alert" v-bind="$attrs">
+        <button v-if="showCloseButton"
+                class="clay-alert__close-button"
+                aria-label="Close"
+                @click="$emit('close')">
+            <svg class="clay-alert__close-icon"
+                 viewBox="0 0 24 24"
+                 width="24"
+                 height="24">
+                <g>
+                    <line x1="6"
+                          y1="6"
+                          x2="18"
+                          y2="18"
+                          stroke="var(--clay-alert-color-error)"
+                          stroke-width="2"
+                          stroke-linecap="round" />
+                    <line x1="18"
+                          y1="6"
+                          x2="6"
+                          y2="18"
+                          stroke="var(--clay-alert-color-error)"
+                          stroke-width="2"
+                          stroke-linecap="round" />
+                </g>
+            </svg>
+        </button>
+        <span class="clay-alert__icon-wrapper">
+            <span class="clay-alert__badge">
+                <svg :class="`clay-alert__badge-svg clay-alert__badge-svg--${type}`"
+                     xmlns="http://www.w3.org/2000/svg"
+                     width="150"
+                     height="150"
+                     viewBox="0 0 300 300"
+                     fill="none"
+                     shape-rendering="geometricPrecision">
+                    <g filter="url(#badge-shadow)">
+                        <circle cx="150"
+                                cy="150"
+                                r="138"
+                                :stroke="badgeColor"
+                                stroke-width="20"
+                                stroke-linecap="round"
+                                stroke-linejoin="round" />
+                    </g>
+                    <defs>
+                        <filter id="badge-shadow"
+                                x="0"
+                                y="0"
+                                width="300"
+                                height="300"
+                                filterUnits="userSpaceOnUse"
+                                color-interpolation-filters="sRGB">
+                            <feFlood flood-opacity="0" result="BackgroundImageFix" />
+                            <feBlend mode="normal"
+                                     in="SourceGraphic"
+                                     in2="BackgroundImageFix"
+                                     result="shape" />
+                            <feColorMatrix in="SourceAlpha"
+                                           type="matrix"
+                                           values="0 0 0 0 0
                         0 0 0 0 0
                         0 0 0 0 0
-                        0 0 0 1 0" result="hardAlpha" />
-              <feOffset dy="10" />
-              <feGaussianBlur stdDeviation="3" />
-              <feComposite in2="hardAlpha" operator="arithmetic" k2="-1" k3="1" />
-              <feColorMatrix type="matrix" values="0 0 0 0 0
+                        0 0 0 1 0"
+                                           result="hardAlpha" />
+                            <feOffset dy="var(--clay-alert-shadow-offset-y)" />
+                            <feGaussianBlur stdDeviation="var(--clay-alert-shadow-blur)" />
+                            <feComposite in2="hardAlpha"
+                                         operator="arithmetic"
+                                         k2="-1"
+                                         k3="1" />
+                            <feColorMatrix type="matrix"
+                                           values="0 0 0 0 0
                         0 0 0 0 0
                         0 0 0 0 0
-                        0 0 0 0.4 0" />
-              <feBlend mode="normal" in2="shape" result="effect1_innerShadow" />
-            </filter>
-          </defs>
-        </svg>
-        <span class="clay-alert__icon-content">
-          <svg v-if="type === 'success'" class="clay-alert__icon" viewBox="0 0 300 300" width="150" height="150"
-            shape-rendering="geometricPrecision">
-            <polyline points="90 160 140 220 220 110" fill="none" :stroke="badgeColor" stroke-width="24"
-              stroke-linecap="round" stroke-linejoin="round" filter="url(#badge-shadow)" />
-          </svg>
-          <svg v-else-if="type === 'error'" class="clay-alert__icon" viewBox="0 0 300 300" width="150" height="150"
-            shape-rendering="geometricPrecision">
-            <g filter="url(#badge-shadow)">
-              <line x1="110" y1="110" x2="190" y2="190" :stroke="badgeColor" stroke-width="24" stroke-linecap="round" />
-              <line x1="190" y1="110" x2="110" y2="190" :stroke="badgeColor" stroke-width="24" stroke-linecap="round" />
-            </g>
-          </svg>
-          <svg v-else-if="type === 'warning'" class="clay-alert__icon" viewBox="0 0 300 300" width="150" height="150"
-            shape-rendering="geometricPrecision">
-            <line x1="150" y1="90" x2="150" y2="190" :stroke="badgeColor" stroke-width="24" stroke-linecap="round"
-              filter="url(#badge-shadow)" />
-            <circle cx="150" cy="230" r="16" :fill="badgeColor" filter="url(#badge-shadow)" />
-          </svg>
+                        0 0 0 var(--clay-alert-shadow-opacity) 0" />
+                            <feBlend mode="normal"
+                                     in2="shape"
+                                     result="effect1_innerShadow" />
+                        </filter>
+                    </defs>
+                </svg>
+                <span class="clay-alert__icon-content">
+                    <svg v-if="type === 'success'"
+                         class="clay-alert__icon"
+                         viewBox="0 0 300 300"
+                         width="150"
+                         height="150"
+                         shape-rendering="geometricPrecision">
+                        <polyline points="90 160 140 220 220 110"
+                                  fill="none"
+                                  :stroke="badgeColor"
+                                  stroke-width="24"
+                                  stroke-linecap="round"
+                                  stroke-linejoin="round"
+                                  filter="url(#badge-shadow)" />
+                    </svg>
+                    <svg v-else-if="type === 'error'"
+                         class="clay-alert__icon"
+                         viewBox="0 0 300 300"
+                         width="150"
+                         height="150"
+                         shape-rendering="geometricPrecision">
+                        <g filter="url(#badge-shadow)">
+                            <line x1="110"
+                                  y1="110"
+                                  x2="190"
+                                  y2="190"
+                                  :stroke="badgeColor"
+                                  stroke-width="24"
+                                  stroke-linecap="round" />
+                            <line x1="190"
+                                  y1="110"
+                                  x2="110"
+                                  y2="190"
+                                  :stroke="badgeColor"
+                                  stroke-width="24"
+                                  stroke-linecap="round" />
+                        </g>
+                    </svg>
+                    <svg v-else-if="type === 'warning'"
+                         class="clay-alert__icon"
+                         viewBox="0 0 300 300"
+                         width="150"
+                         height="150"
+                         shape-rendering="geometricPrecision">
+                        <line x1="150"
+                              y1="90"
+                              x2="150"
+                              y2="190"
+                              :stroke="badgeColor"
+                              stroke-width="24"
+                              stroke-linecap="round"
+                              filter="url(#badge-shadow)" />
+                        <circle cx="150"
+                                cy="230"
+                                r="16"
+                                :fill="badgeColor"
+                                filter="url(#badge-shadow)" />
+                    </svg>
+                </span>
+            </span>
         </span>
-      </span>
-    </span>
-    <span class="clay-alert__label">{{ type }}</span>
-    <div class="clay-alert__content">
-      <span class="clay-alert__message">
-        {{ message || defaultMessage }}
-      </span>
-      <ClayButton class="clay-alert__button">ok</ClayButton>
-    </div>
-  </ClayCard>
+        <span class="clay-alert__label">{{ type }}</span>
+        <div class="clay-alert__content">
+            <span class="clay-alert__message">
+                <slot>
+                    {{ message || defaultMessage }}
+                </slot>
+            </span>
+            <div class="clay-alert__buttons">
+                <ClayButton v-if="showCancelButton" class="clay-alert__button clay-alert__button--cancel">
+                    Cancel
+                </ClayButton>
+                <ClayButton class="clay-alert__button">
+                    OK
+                </ClayButton>
+            </div>
+        </div>
+    </ClayCard>
 </template>
 
 <script setup lang="ts">
-import { computed } from "vue";
-import ClayCard from "./ClayCard.vue";
-import ClayButton from "./ClayButton.vue";
+    import { computed } from "vue";
+    import ClayCard from "./ClayCard.vue";
+    import ClayButton from "./ClayButton.vue";
 
-const props = defineProps({
-  type: {
-    type: String,
-    default: "success",
-    validator: (v: string) => ["success", "error", "warning"].includes(v),
-  },
-  message: {
-    type: String,
-    default: "",
-  },
-});
+    const emit = defineEmits(["close"]);
 
-const badgeColor = computed(() => {
-  switch (props.type) {
-    case "success":
-      return "#21ba45";
-    case "error":
-      return "#db2828";
-    case "warning":
-      return "#f2c037";
-    default:
-      return "#21ba45";
-  }
-});
+    const props = defineProps({
+        type: {
+            type: String,
+            default: "success",
+            validator: (v: string) => ["success", "error", "warning"].includes(v)
+        },
+        message: {
+            type: String,
+            default: ""
+        },
+        showCancelButton: {
+            type: Boolean,
+            default: false
+        },
+        showCloseButton: {
+            type: Boolean,
+            default: false
+        }
+    });
 
-const defaultMessage = computed(() => {
-  if (props.message) return props.message;
+    const badgeColor = computed(() =>
+    {
+        switch (props.type)
+        {
+            case "success":
+                return "var(--clay-alert-color-success)";
+            case "error":
+                return "var(--clay-alert-color-error)";
+            case "warning":
+                return "var(--clay-alert-color-warning)";
+            default:
+                return "var(--clay-alert-color-success)";
+        }
+    });
 
-  switch (props.type) {
-    case "success":
-      return "✅ Operazione completata con successo.";
-    case "error":
-      return "❌ Errore durante l'operazione.";
-    case "warning":
-      return "⚠️ Attenzione: azione potenzialmente rischiosa.";
-    default:
-      return "";
-  };
-});
+    const defaultMessage = computed(() =>
+    {
+        if (props.message) { return props.message; }
+
+        switch (props.type)
+        {
+            case "success":
+                return "✅ Operation completed successfully.";
+            case "error":
+                return "❌ Error during operation.";
+            case "warning":
+                return "⚠️ Warning: potentially risky action.";
+            default:
+                return "";
+        };
+    });
 </script>
 
 <style lang="scss">
+:root {
+  /* Colors */
+  --clay-alert-color-success: #21ba45;
+  --clay-alert-color-error: #db2828;
+  --clay-alert-color-warning: #f2c037;
+
+  --clay-alert-color-cancel: #ff4d4f;
+  --clay-alert-color-cancel-hover: #ff7875;
+  --clay-alert-color-cancel-active: #e04344;
+
+  /* Shadows */
+  --clay-alert-shadow-opacity: 0.4;
+  --clay-alert-shadow-offset-y: 10px;
+  --clay-alert-shadow-blur: 3px;
+  --clay-alert-text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+  --clay-alert-text-shadow-dark: 0 1px 2px rgba(0, 0, 0, 0.5);
+}
+
 .clay-alert__badge-svg,
 .clay-alert__icon {
   shape-rendering: geometricPrecision;
@@ -122,6 +255,7 @@ const defaultMessage = computed(() => {
   align-items: center;
   margin-bottom: 1.5em;
 }
+
 .clay-alert__badge {
   position: relative;
   display: flex;
@@ -130,12 +264,14 @@ const defaultMessage = computed(() => {
   width: 150px;
   height: 150px;
 }
+
 .clay-alert__badge-svg {
   position: absolute;
   top: 0;
   left: 0;
   z-index: 1;
 }
+
 .clay-alert__icon-content {
   position: absolute;
   top: 0;
@@ -147,11 +283,13 @@ const defaultMessage = computed(() => {
   align-items: center;
   z-index: 2;
 }
+
 .clay-alert__icon {
   width: 96px;
   height: 96px;
   display: block;
 }
+
 .clay-alert__label {
   font-size: 1.5em;
   font-weight: 600;
@@ -161,32 +299,117 @@ const defaultMessage = computed(() => {
   width: 100%;
   display: block;
   margin-bottom: 2em;
+  text-shadow: var(--clay-alert-text-shadow) inset;
 }
+
 .clay-alert__message {
   font-size: 1.1em;
   color: #333;
   text-align: center;
   margin-bottom: 1.5em;
-  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+  text-shadow: var(--clay-alert-text-shadow) inset;
 }
+
 .clay-alert__content {
   display: flex;
   flex-direction: column;
   align-items: center;
 }
-.clay-alert__button {
+
+.clay-alert__buttons {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  gap: 1em;
   margin-top: 1em;
+  width: 100%;
+}
+
+.clay-alert__button {
   width: 110px;
   height: 40px;
 }
 
+.clay-alert__button--cancel {
+  --clay-button-color-background: var(--clay-alert-color-cancel) !important;
+  --clay-button-color-outline: var(--clay-alert-color-cancel) !important;
+  --clay-button-color-shadow: var(--clay-alert-color-cancel) !important;
+  color: #fff !important;
+}
+
+.clay-alert__button--cancel:hover,
+.clay-alert__button--cancel:focus-visible {
+  --clay-button-color-background: color-mix(in srgb, var(--clay-alert-color-cancel) 90%, #fff 10%);
+  --clay-button-color-shadow: var(--clay-alert-color-cancel);
+}
+
+.clay-alert__button--cancel:active,
+.clay-alert__button--cancel.clay-button--active {
+  --clay-button-color-background: var(--clay-alert-color-cancel);
+  --clay-button-color-shadow: var(--clay-alert-color-cancel);
+}
+
+.clay-alert__close-button {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 5px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 10;
+  border-radius: 50%;
+  width: 36px;
+  height: 36px;
+  transition: background-color 0.2s ease;
+}
+
+.clay-alert__close-button:hover {
+  background-color: rgba(from var(--clay-alert-color-error) r g b / 0.1);
+}
+
+.clay-alert__close-icon {
+  width: 20px;
+  height: 20px;
+}
+
 @media (prefers-color-scheme: dark) {
+  :root {
+    --clay-alert-color-cancel: #b71c1c;
+    --clay-alert-color-cancel-hover: #ff3333;
+    --clay-alert-color-cancel-active: #ff4444;
+  }
+
   .clay-alert__label {
     color: #fff;
+    text-shadow: var(--clay-alert-text-shadow) inset;
   }
+
   .clay-alert__message {
-  color: #eee;
-  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
+    color: #eee;
+    text-shadow: var(--clay-alert-text-shadow-dark) inset;
+  }
+
+  .clay-alert__button--cancel {
+    --clay-button-color-background: var(--clay-alert-color-cancel) !important;
+    --clay-button-color-outline: var(--clay-alert-color-cancel) !important;
+    --clay-button-color-shadow: var(--clay-alert-color-cancel) !important;
+    color: #fff !important;
+  }
+
+  .clay-alert__button--cancel:hover,
+  .clay-alert__button--cancel:focus-visible {
+    --clay-button-color-background: var(--clay-alert-color-cancel-hover);
+    --clay-button-color-shadow: var(--clay-alert-color-cancel-hover);
+  }
+
+  .clay-alert__button--cancel:active,
+  .clay-alert__button--cancel.clay-button--active {
+    --clay-button-color-background: var(--clay-alert-color-cancel-active);
+    --clay-button-color-shadow: var(--clay-alert-color-cancel-active);
   }
 }
 </style>
