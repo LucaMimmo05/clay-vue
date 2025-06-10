@@ -1,22 +1,25 @@
 <template>
-  <div :class="['clay-alert', `clay-alert--${type}`]" v-bind="$attrs">
-    <div class="clay-alert__content">
-      <span class="clay-alert__label">{{ type }}</span>
-      <ClayButton class="clay-alert__button">okay</ClayButton>
+    <div :class="['clay-alert', `clay-alert--${type}`]" v-bind="$attrs">
+        <div class="clay-alert__content">
+            <span class="clay-alert__label">{{ type }}</span>
+            <ClayButton class="clay-alert__button">
+                okay
+            </ClayButton>
+        </div>
     </div>
-  </div>
 </template>
 
 <script setup lang="ts">
-import ClayButton from "./ClayButton.vue";
+    import ClayButton from "./ClayButton.vue";
 
-const props = defineProps({
-  type: {
-    type: String,
-    default: "success",
-    validator: (v: string) => ["success", "error", "warning"].includes(v),
-  },
-});
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    const props = defineProps({
+        type: {
+            type: String,
+            default: "success",
+            validator: (v: string) => ["success", "error", "warning"].includes(v)
+        }
+    });
 </script>
 
 <style lang="scss">
