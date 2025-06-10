@@ -1,5 +1,7 @@
 import type { Meta, StoryObj } from "@storybook/vue3-vite";
 import ClayAlert from "./ClayAlert.vue";
+import ClayToast from "./ClayToast.vue";
+import { ref, onMounted } from "vue";
 
 interface StoryArgs {
   size: "small" | "default" | "large";
@@ -62,6 +64,25 @@ export const Primary: StoryObj<StoryArgs> = {
       </ClayAlert>
     `
     })
+};
+
+export const Toast: StoryObj = {
+    render: (args) => ({
+        components: { ClayToast },
+        setup: () => ({ args }),
+        template: `
+            <ClayToast
+                :type="args.type"
+                :message="args.content"
+                :duration=""
+                @close="() => console.log('Toast closed')"
+            />
+        `
+    }),
+    args: {
+        type: "success",
+        content: "Operazione completata! Questo è un toast."
+    }
 };
 
 export default meta;

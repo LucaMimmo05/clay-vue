@@ -376,6 +376,17 @@
   height: 20px;
 }
 
+.clay-alert__button--cancel:focus-visible,
+.clay-alert__close-button:focus-visible {
+  outline: none;
+  --clay-button-color-outline: #33ffff;
+  --clay-button-color-shadow: #33ffff;
+  box-shadow:
+    0 0 0 0.15em rgba(51,255,255,1),
+    0 0 0.5em 0 rgba(51,255,255,0.25),
+    0 0.25em 0.5em 0 rgba(51,255,255,0.25);
+}
+
 @media (prefers-color-scheme: dark) {
   :root {
     --clay-alert-color-cancel: #b71c1c;
