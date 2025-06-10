@@ -1,5 +1,6 @@
 <template>
     <div class="clay-card" v-bind="$attrs">
+        <slot></slot>
     </div>
 </template>
 
