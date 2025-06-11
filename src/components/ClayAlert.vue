@@ -35,49 +35,38 @@
                      viewBox="0 0 300 300"
                      fill="none"
                      shape-rendering="geometricPrecision">
-                    <g filter="url(#badge-shadow)">
+                    <g>
                         <circle cx="150"
                                 cy="150"
                                 r="138"
                                 :stroke="badgeColor"
                                 stroke-width="20"
-                                stroke-linecap="round"
-                                stroke-linejoin="round" />
+                                fill="none"
+                                filter="url(#inner-shadow)" />
                     </g>
                     <defs>
-                        <filter id="badge-shadow"
+                        <filter id="inner-shadow"
                                 x="0"
                                 y="0"
                                 width="300"
                                 height="300"
-                                filterUnits="userSpaceOnUse"
-                                color-interpolation-filters="sRGB">
-                            <feFlood flood-opacity="0" result="BackgroundImageFix" />
-                            <feBlend mode="normal"
-                                     in="SourceGraphic"
-                                     in2="BackgroundImageFix"
-                                     result="shape" />
-                            <feColorMatrix in="SourceAlpha"
-                                           type="matrix"
-                                           values="0 0 0 0 0
-                        0 0 0 0 0
-                        0 0 0 0 0
-                        0 0 0 1 0"
-                                           result="hardAlpha" />
-                            <feOffset dy="var(--clay-alert-shadow-offset-y)" />
-                            <feGaussianBlur stdDeviation="var(--clay-alert-shadow-blur)" />
-                            <feComposite in2="hardAlpha"
-                                         operator="arithmetic"
-                                         k2="-1"
-                                         k3="1" />
-                            <feColorMatrix type="matrix"
-                                           values="0 0 0 0 0
-                        0 0 0 0 0
-                        0 0 0 0 0
-                        0 0 0 var(--clay-alert-shadow-opacity) 0" />
-                            <feBlend mode="normal"
-                                     in2="shape"
-                                     result="effect1_innerShadow" />
+                                filterUnits="userSpaceOnUse">
+                            <feOffset dx="0" dy="6" />
+                            <feGaussianBlur stdDeviation="10" result="offset-blur" />
+                            <feComposite in="SourceGraphic"
+                                         in2="offset-blur"
+                                         operator="out"
+                                         result="inverse" />
+                            <feFlood flood-color="#000"
+                                     flood-opacity="1.0"
+                                     result="color" />
+                            <feComposite in="color"
+                                         in2="inverse"
+                                         operator="in"
+                                         result="shadow" />
+                            <feComposite in="shadow"
+                                         in2="SourceGraphic"
+                                         operator="over" />
                         </filter>
                     </defs>
                 </svg>
@@ -94,7 +83,7 @@
                                   stroke-width="24"
                                   stroke-linecap="round"
                                   stroke-linejoin="round"
-                                  filter="url(#badge-shadow)" />
+                                  filter="url(#inner-shadow)" />
                     </svg>
                     <svg v-else-if="type === 'error'"
                          class="clay-alert__icon"
@@ -102,7 +91,7 @@
                          width="150"
                          height="150"
                          shape-rendering="geometricPrecision">
-                        <g filter="url(#badge-shadow)">
+                        <g filter="url(#inner-shadow)">
                             <line x1="110"
                                   y1="110"
                                   x2="190"
@@ -132,12 +121,12 @@
                               :stroke="badgeColor"
                               stroke-width="24"
                               stroke-linecap="round"
-                              filter="url(#badge-shadow)" />
+                              filter="url(#inner-shadow)" />
                         <circle cx="150"
                                 cy="230"
                                 r="16"
                                 :fill="badgeColor"
-                                filter="url(#badge-shadow)" />
+                                filter="url(#inner-shadow)" />
                     </svg>
                 </span>
             </span>

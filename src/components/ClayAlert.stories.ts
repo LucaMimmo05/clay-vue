@@ -1,7 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/vue3-vite";
 import ClayAlert from "./ClayAlert.vue";
-import ClayToast from "./ClayToast.vue";
-import { ref, onMounted } from "vue";
 
 interface StoryArgs {
   size: "small" | "default" | "large";
@@ -12,7 +10,7 @@ interface StoryArgs {
 }
 
 const meta: Meta<StoryArgs> = {
-    title: "ClayAlert",
+    title: "Notification/ClayAlert",
     component: ClayAlert,
     tags: ["autodocs"],
     argTypes: {
@@ -47,6 +45,8 @@ const meta: Meta<StoryArgs> = {
     }
 };
 
+export default meta;
+
 export const Primary: StoryObj<StoryArgs> = {
     render: (args: StoryArgs) => ({
         components: { ClayAlert },
@@ -65,24 +65,3 @@ export const Primary: StoryObj<StoryArgs> = {
     `
     })
 };
-
-export const Toast: StoryObj = {
-    render: (args) => ({
-        components: { ClayToast },
-        setup: () => ({ args }),
-        template: `
-            <ClayToast
-                :type="args.type"
-                :message="args.content"
-                :duration=""
-                @close="() => console.log('Toast closed')"
-            />
-        `
-    }),
-    args: {
-        type: "success",
-        content: "Operazione completata! Questo è un toast."
-    }
-};
-
-export default meta;

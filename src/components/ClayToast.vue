@@ -1,96 +1,109 @@
 <template>
-  <transition name="toast-fade">
-    <div
-      v-if="visible"
-      class="clay-toast"
-      :class="`clay-toast--${props.type}`"
-      :style="toastStyle"
-      role="alert"
-      aria-live="polite"
-    >
-      <span class="clay-toast__message">
-        <slot>{{ message }}</slot>
-      </span>
-      <button
-        class="clay-toast__close"
-        @click="close"
-        aria-label="Chiudi"
-      >
-        <svg width="18" height="18" viewBox="0 0 24 24">
-          <line x1="6" y1="6" x2="18" y2="18" stroke="#db2828" stroke-width="2" stroke-linecap="round"/>
-          <line x1="18" y1="6" x2="6" y2="18" stroke="#db2828" stroke-width="2" stroke-linecap="round"/>
-        </svg>
-      </button>
-      <div
-        class="clay-toast__progress"
-        :style="progressStyle"
-      ></div>
-    </div>
-  </transition>
+    <transition name="toast-fade">
+        <div v-if="visible"
+             class="clay-toast"
+             :class="`clay-toast--${props.type}`"
+             :style="toastStyle"
+             role="alert"
+             aria-live="polite">
+            <span class="clay-toast__message">
+                <slot>{{ message }}</slot>
+            </span>
+            <button class="clay-toast__close"
+                    aria-label="Chiudi"
+                    @click="close">
+                <svg width="18"
+                     height="18"
+                     viewBox="0 0 24 24">
+                    <line x1="6"
+                          y1="6"
+                          x2="18"
+                          y2="18"
+                          stroke="#db2828"
+                          stroke-width="2"
+                          stroke-linecap="round" />
+                    <line x1="18"
+                          y1="6"
+                          x2="6"
+                          y2="18"
+                          stroke="#db2828"
+                          stroke-width="2"
+                          stroke-linecap="round" />
+                </svg>
+            </button>
+            <div class="clay-toast__progress"
+                 :style="progressStyle"></div>
+        </div>
+    </transition>
 </template>
 
 <script setup lang="ts">
-import { ref, computed, onMounted } from "vue";
+    import { ref, computed, onMounted } from "vue";
 
-const props = defineProps({
-  type: {
-    type: String,
-    default: "success",
-    validator: (v: string) => ["success", "error", "warning"].includes(v)
-  },
-  message: {
-    type: String,
-    default: ""
-  },
-  duration: {
-    type: Number,
-    default: 30000
-  },
-  variant: {
-    type: String,
-    default: "default",
-    validator: (v: string) => ["default", "glass"].includes(v)
-  }
-});
+    const props = defineProps({
+        type: {
+            type: String,
+            default: "success",
+            validator: (v: string) => ["success", "error", "warning"].includes(v)
+        },
+        message: {
+            type: String,
+            default: ""
+        },
+        duration: {
+            type: Number,
+            default: 30000
+        },
+        variant: {
+            type: String,
+            default: "default",
+            validator: (v: string) => ["default", "glass"].includes(v)
+        }
+    });
 
-const emit = defineEmits(["close"]);
+    const emit = defineEmits(["close"]);
 
-const visible = ref(true);
+    const visible = ref(true);
 
-const colors = {
-  success: "#21ba45",
-  error: "#db2828",
-  warning: "#f2c037"
-};
+    const colors = {
+        success: "#21ba45",
+        error: "#db2828",
+        warning: "#f2c037"
+    };
 
-const toastStyle = computed(() => ({}));
-const progress = ref(100);
-let intervalId: number | null = null;
+    const toastStyle = computed(() => ({}));
+    const progress = ref(100);
+    let intervalId: number | null = null;
 
-const progressStyle = computed(() => ({
-  width: progress.value + '%',
-  background: colors[props.type as keyof typeof colors],
-}));
+    const progressStyle = computed(() => ({
+        width: progress.value + "%",
+        background: colors[props.type as keyof typeof colors]
+    }));
 
-onMounted(() => {
-  if (props.duration > 0) {
-    const step = 100 / (props.duration / 20);
-    intervalId = window.setInterval(() => {
-      progress.value -= step;
-      if (progress.value <= 0) {
-        progress.value = 0;
-        close();
-        if (intervalId) clearInterval(intervalId);
-      }
-    }, 20);
-  }
-});
+    onMounted(() =>
+    {
+        if (props.duration > 0)
+        {
+            const step = 100 / (props.duration / 20);
+            intervalId = window.setInterval(() =>
+            {
+                progress.value -= step;
+                if (progress.value <= 0)
+                {
+                    progress.value = 0;
+                    close();
+                    if (intervalId) { clearInterval(intervalId); }
+                }
+            }, 20);
+        }
+    });
 
-function close() {
-  visible.value = false;
-  emit("close");
-  if (intervalId) clearInterval(intervalId);
-}
+    function close()
+    {
+        visible.value = false;
+        emit("close");
+        if (intervalId) { clearInterval(intervalId); }
+    }
 </script>
 
 <style scoped lang="scss">
