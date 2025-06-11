@@ -93,13 +93,13 @@
 @use "sass:color";
 @use "@/assets/scss/variables";
 
-$dropdown-color-background: #57b9ff;
-$dropdown-color-background-hover: rgba(247, 250, 252, 0.9);
+$dropdown-color-background: variables.$primary-color;
+$dropdown-color-background-hover: rgba(238, 238, 238, 0.9);
 $dropdown-color-outline: color.complement($dropdown-color-background);
 $dropdown-color-shadow: color.adjust($dropdown-color-background, $lightness: -30%);
 
 $dropdown-color-background-dark: #2c2e30;
-$dropdown-color-background-hover-dark: rgba(68, 68, 68, 0.7);
+$dropdown-color-background-hover-dark: rgba(42, 42, 42, 0.9);
 $dropdown-color-outline-dark: color.complement($dropdown-color-background-dark);
 $dropdown-color-shadow-dark: color.adjust($dropdown-color-background-dark, $lightness: -30%);
 
@@ -119,9 +119,9 @@ $dropdown-color-shadow-dark: color.adjust($dropdown-color-background-dark, $ligh
     --clay-dropdown-spacing: var(--clay-dropdown-spacing-x) var(--clay-dropdown-spacing-y);
     --clay-dropdown-roundness: var(--clay-dropdown-spacing-x);
 
-    --clay-dropdown-scale-hover: 1.07;
-    --clay-dropdown-scale-focus: 1.01;
-    --clay-dropdown-scale-active: 0.98;
+    --clay-dropdown-scale-hover: 1.1;
+    --clay-dropdown-scale-focus: 0.50;
+    --clay-dropdown-scale-active: 1.00;
 
     --clay-dropdown-shadow-base: 0px 2px 5.1px 0px rgba(0, 0, 0, 0.25) inset, 0px 2px 4px 0px rgba(142, 138, 138, 0.75);
     --clay-dropdown-shadow-focus: 0px 2px 5.1px 0px rgba(0, 0, 0, 0.35) inset, 0px 2px 4px 0px
