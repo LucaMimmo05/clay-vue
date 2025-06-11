@@ -1,9 +1,11 @@
 <template>
-    <ClayCard class="clay-alert" v-bind="$attrs">
+    <ClayCard v-if="visible"
+              class="clay-alert"
+              v-bind="$attrs">
         <button v-if="showCloseButton"
                 class="clay-alert__close-button"
                 aria-label="Close"
-                @click="$emit('close')">
+                @click="closeAlert">
             <svg class="clay-alert__close-icon"
                  viewBox="0 0 24 24"
                  width="24"
@@ -151,7 +153,7 @@
 </template>
 
 <script setup lang="ts">
-    import { computed } from "vue";
+    import { ref, computed } from "vue";
     import ClayCard from "./ClayCard.vue";
     import ClayButton from "./ClayButton.vue";
 
@@ -176,6 +178,14 @@
             default: false
         }
     });
+
+    const visible = ref(true);
+
+    function closeAlert()
+    {
+        visible.value = false;
+        emit("close");
+    }
 
     const badgeColor = computed(() =>
     {

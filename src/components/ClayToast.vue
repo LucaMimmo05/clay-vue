@@ -2,7 +2,10 @@
     <transition name="toast-fade">
         <div v-if="visible"
              class="clay-toast"
-             :class="`clay-toast--${props.type}`"
+             :class="[
+                 `clay-toast--${props.type}`,
+                 { 'clay-toast--glass': props.variant === 'glass' }
+             ]"
              :style="toastStyle"
              role="alert"
              aria-live="polite">
@@ -38,7 +41,7 @@
 </template>
 
 <script setup lang="ts">
-    import { ref, computed, onMounted } from "vue";
+    import { ref, computed, onMounted, watch } from "vue";
 
     const props = defineProps({
         type: {
@@ -52,7 +55,7 @@
         },
         duration: {
             type: Number,
-            default: 30000
+            default: 3000
         },
         variant: {
             type: String,
@@ -80,8 +83,10 @@
         background: colors[props.type as keyof typeof colors]
     }));
 
-    onMounted(() =>
+    function startTimer()
     {
+        if (intervalId) { clearInterval(intervalId); }
+        progress.value = 100;
         if (props.duration > 0)
         {
             const step = 100 / (props.duration / 20);
@@ -96,6 +101,14 @@
                 }
             }, 20);
         }
+    }
+
+    onMounted(startTimer);
+
+    watch([() => props.duration, () => props.message], () =>
+    {
+        visible.value = true;
+        startTimer();
     });
 
     function close()
@@ -125,26 +138,36 @@
   user-select: none;
   border: none;
   color: #222;
-  background: #fff;
+  background: linear-gradient(120deg, #fff 70%, #f3f3f7 100%);
   box-shadow:
-    0 8px 32px 0 rgba(0,0,0,0.28),
-    0 2px 8px 0 rgba(0,0,0,0.18),
-    0 0 0 2px #fff6 inset,
+    0 4px 24px 0 rgba(0,0,0,0.18),
+    0 8px 32px 0 rgba(0,0,0,0.12),
+    0 16px 48px 8px rgba(0,0,0,0.18),
     0 1.5px 8px 0 #fff8,
-    0 16px 48px 8px rgba(0,0,0,0.35),
-    0 1.5px 8px 0 #0002,
-    inset 0 2px 16px 0 #0002,
-    inset 0 -2px 16px 0 #0003;
-  transition: box-shadow 0.2s, background 0.2s;
+    0 0 0 2px #fff6 inset,
+    inset 0 2px 16px 0 #fff8,
+    inset 0 -4px 16px 0 #0002,
+    inset 0 0 24px 0 rgba(0,0,0,0.13),
+    inset 0 1.5px 8px 0 #fff4,
+    inset 0 -1.5px 8px 0 #0002;
 
-  &.clay-toast--success {
-    border-left: 6px solid #21ba45;
-  }
-  &.clay-toast--error {
-    border-left: 6px solid #db2828;
-  }
-  &.clay-toast--warning {
-    border-left: 6px solid #f2c037;
+  &.clay-toast--glass {
+    background:
+      linear-gradient(135deg, rgba(255,255,255,0.45) 0%, rgba(255,255,255,0.12) 100%),
+      rgba(255,255,255,0.22);
+    backdrop-filter: blur(14px) saturate(2.2);
+    border: 2px solid rgba(120,120,120,0.18);
+    box-shadow:
+      0 8px 32px 0 rgba(0,0,0,0.28),
+      0 2px 8px 0 rgba(0,0,0,0.18),
+      0 0 0 2px #fff8 inset,
+      0 1.5px 8px 0 #fff8,
+      0 16px 48px 8px rgba(0,0,0,0.35),
+      0 1.5px 8px 0 #0002,
+      inset 0 2px 16px 0 #fff6,
+      inset 0 -2px 16px 0 #0002,
+      inset 0 0 24px 0 rgba(0,0,0,0.10);
+    color: #222;
   }
 
   &::after {
@@ -160,6 +183,22 @@
     z-index: 0;
     pointer-events: none;
   }
+}
+
+.clay-toast--glass::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  pointer-events: none;
+  z-index: 1;
+  background: linear-gradient(
+    to bottom,
+    rgba(255,255,255,0.18) 0%,
+    rgba(255,255,255,0.04) 40%,
+    rgba(0,0,0,0.10) 100%
+  );
+  mix-blend-mode: lighten;
 }
 
 .clay-toast__close {
@@ -203,13 +242,22 @@
       0 0 0 2px #2226 inset,
       0 1.5px 8px 0 #fff1,
       0 16px 48px 8px rgba(0,0,0,0.85),
-      0 1.5px 8px 0 #0008;
+      0 1.5px 8px 0 #0008,
+      inset 0 2px 16px 0 #fff3,
+      inset 0 -4px 16px 0 #0008,
+      inset 0 0 24px 0 rgba(0,0,0,0.22);
     text-shadow: 0 2px 8px #0008, 0 1px 2px #fff2;
     border: none;
   }
-  .clay-toast--success { border-left: 6px solid #21ba45; }
-  .clay-toast--error { border-left: 6px solid #db2828; }
-  .clay-toast--warning { border-left: 6px solid #f2c037; }
+  .clay-toast::before {
+    background: linear-gradient(
+      to bottom,
+      rgba(255,255,255,0.10) 0%,
+      rgba(255,255,255,0.03) 40%,
+      rgba(0,0,0,0.18) 100%
+    );
+    mix-blend-mode: lighten;
+  }
 }
 
 .toast-fade-enter-active,
