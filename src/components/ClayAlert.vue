@@ -243,6 +243,10 @@
   --clay-alert-text-shadow-dark: 0 1px 2px rgba(0, 0, 0, 0.5);
 }
 
+.clay-alert {
+  font-family: 'Baloo 2', cursive, sans-serif;
+}
+
 .clay-alert__badge-svg,
 .clay-alert__icon {
   shape-rendering: geometricPrecision;

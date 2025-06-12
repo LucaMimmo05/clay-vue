@@ -137,6 +137,7 @@
 
 <style scoped lang="scss">
 .clay-toast {
+  font-family: 'Baloo 2', cursive, sans-serif;
   min-width: 320px;
   max-width: 420px;
   padding: 1.2em 2.5em 1.2em 1.5em;
