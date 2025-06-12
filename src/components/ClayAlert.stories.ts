@@ -65,3 +65,31 @@ export const Primary: StoryObj<StoryArgs> = {
     `
     })
 };
+
+export const Glass: StoryObj<StoryArgs> = {
+    args: {
+        type: "success",
+        content: "Questa è una notifica glass!",
+        showCancelButton: false,
+        showCloseButton: true,
+        // @ts-expect-error: variant is not in StoryArgs but usato nel template
+        variant: "glass"
+    },
+    render: (args: StoryArgs) => ({
+        components: { ClayAlert },
+        setup: () => ({ args }),
+        template: `
+      <ClayAlert 
+        :type="args.type" 
+        :variant="args.variant"
+        :class="'clay-alert--' + args.size"
+        :showCancelButton="args.showCancelButton"
+        :showCloseButton="args.showCloseButton"
+        @close="() => console.log('Alert closed')">
+        <template v-if="args.content">
+          {{ args.content }}
+        </template>
+      </ClayAlert>
+    `
+    })
+};
