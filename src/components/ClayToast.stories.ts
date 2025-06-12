@@ -13,7 +13,7 @@ const meta: Meta<StoryArgs> = {
         type: {
             name: "Type",
             control: { type: "select" },
-            options: ["success", "error", "warning"]
+            options: ["success", "error", "warning", "information"]
         },
         content: {
             name: "Content",

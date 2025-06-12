@@ -47,7 +47,7 @@
         type: {
             type: String,
             default: "success",
-            validator: (v: string) => ["success", "error", "warning"].includes(v)
+            validator: (v: string) => ["success", "error", "warning", "information"].includes(v)
         },
         message: {
             type: String,
@@ -71,7 +71,8 @@
     const colors = {
         success: "#21ba45",
         error: "#db2828",
-        warning: "#f2c037"
+        warning: "#f2c037",
+        information: "var(--clay-primary-color)"
     };
 
     const toastStyle = computed(() => ({}));
@@ -129,6 +130,8 @@
                 return "Something went wrong. Please try again.";
             case "warning":
                 return "Warning: Check your input values.";
+            case "information":
+                return "For your information.";
             default:
                 return "";
         }
@@ -136,6 +139,10 @@
 </script>
 
 <style scoped lang="scss">
+:root {
+  --clay-alert-color-information: var(--clay-primary-color);
+}
+
 .clay-toast {
   font-family: 'Baloo 2', cursive, sans-serif;
   min-width: 320px;
@@ -153,20 +160,19 @@
   letter-spacing: 0.01em;
   overflow: hidden;
   user-select: none;
-  border: none;
+  border: 2px solid rgba(120,120,120,0.18);
   color: #222;
   background: linear-gradient(120deg, #fff 70%, #f3f3f7 100%);
   box-shadow:
-    0 4px 24px 0 rgba(0,0,0,0.18),
-    0 8px 32px 0 rgba(0,0,0,0.12),
-    0 16px 48px 8px rgba(0,0,0,0.18),
+    0 8px 32px 0 rgba(0,0,0,0.28),
+    0 2px 8px 0 rgba(0,0,0,0.18),
+    0 0 0 2px #fff8 inset,
     0 1.5px 8px 0 #fff8,
-    0 0 0 2px #fff6 inset,
-    inset 0 2px 16px 0 #fff8,
-    inset 0 -4px 16px 0 #0002,
-    inset 0 0 24px 0 rgba(0,0,0,0.13),
-    inset 0 1.5px 8px 0 #fff4,
-    inset 0 -1.5px 8px 0 #0002;
+    0 16px 48px 8px rgba(0,0,0,0.35),
+    0 1.5px 8px 0 #0002,
+    inset 0 2px 16px 0 #fff6,
+    inset 0 -2px 16px 0 #0002,
+    inset 0 0 24px 0 rgba(0,0,0,0.10);
 
   &.clay-toast--glass {
     background:
@@ -174,16 +180,6 @@
       rgba(255,255,255,0.22);
     backdrop-filter: blur(14px) saturate(2.2);
     border: 2px solid rgba(120,120,120,0.18);
-    box-shadow:
-      0 8px 32px 0 rgba(0,0,0,0.28),
-      0 2px 8px 0 rgba(0,0,0,0.18),
-      0 0 0 2px #fff8 inset,
-      0 1.5px 8px 0 #fff8,
-      0 16px 48px 8px rgba(0,0,0,0.35),
-      0 1.5px 8px 0 #0002,
-      inset 0 2px 16px 0 #fff6,
-      inset 0 -2px 16px 0 #0002,
-      inset 0 0 24px 0 rgba(0,0,0,0.10);
     color: #222;
   }
 
@@ -249,6 +245,19 @@
   z-index: 2;
 }
 
+.toast-fade-enter-active,
+.toast-fade-leave-active {
+  transition: opacity 0.25s;
+}
+.toast-fade-enter-from,
+.toast-fade-leave-to {
+  opacity: 0;
+}
+
+.clay-toast--information {
+  --clay-toast-color-information: var(--clay-primary-color);
+}
+
 @media (prefers-color-scheme: dark) {
   .clay-toast {
     background: #181a1b;
@@ -264,7 +273,7 @@
       inset 0 -4px 16px 0 #0008,
       inset 0 0 24px 0 rgba(0,0,0,0.22);
     text-shadow: 0 2px 8px #0008, 0 1px 2px #fff2;
-    border: none;
+    border: 2px solid rgba(120,120,120,0.18);
   }
   .clay-toast::before {
     background: linear-gradient(
@@ -275,14 +284,5 @@
     );
     mix-blend-mode: lighten;
   }
-}
-
-.toast-fade-enter-active,
-.toast-fade-leave-active {
-  transition: opacity 0.25s;
-}
-.toast-fade-enter-from,
-.toast-fade-leave-to {
-  opacity: 0;
 }
 </style>

@@ -130,6 +130,26 @@
                                 :fill="badgeColor"
                                 filter="url(#inner-shadow)" />
                     </svg>
+                    <svg v-else-if="type === 'information'"
+                         class="clay-alert__icon"
+                         viewBox="0 0 300 300"
+                         width="150"
+                         height="150"
+                         shape-rendering="geometricPrecision">
+                        <line x1="150"
+                              y1="130"
+                              x2="150"
+                              y2="240"
+                              :stroke="badgeColor"
+                              stroke-width="24"
+                              stroke-linecap="round"
+                              filter="url(#inner-shadow)" />
+                        <circle cx="150"
+                                cy="85"
+                                r="14"
+                                :fill="badgeColor"
+                                filter="url(#inner-shadow)" />
+                    </svg>
                 </span>
             </span>
         </span>
@@ -163,7 +183,7 @@
         type: {
             type: String,
             default: "success",
-            validator: (v: string) => ["success", "error", "warning"].includes(v)
+            validator: (v: string) => ["success", "error", "warning", "information"].includes(v)
         },
         message: {
             type: String,
@@ -202,6 +222,8 @@
                 return "var(--clay-alert-color-error)";
             case "warning":
                 return "var(--clay-alert-color-warning)";
+            case "information":
+                return "var(--clay-alert-color-information)";
             default:
                 return "var(--clay-alert-color-success)";
         }
@@ -218,6 +240,8 @@
                 return "❌ Error during operation.";
             case "warning":
                 return "⚠️ Warning: potentially risky action.";
+            case "information":
+                return "ℹ️ For your information.";
             default:
                 return "";
         }
@@ -230,6 +254,7 @@
   --clay-alert-color-success: #21ba45;
   --clay-alert-color-error: #db2828;
   --clay-alert-color-warning: #f2c037;
+  --clay-alert-color-information: var(--clay-primary-color);
 
   --clay-alert-color-cancel: #ff4d4f;
   --clay-alert-color-cancel-hover: #ff7875;
@@ -392,9 +417,13 @@
     0 0 0 0.15em rgba(51,255,255,1),
     0 0 0.5em 0 rgba(51,255,255,0.25),
     0 0.25em 0.5em 0 rgba(51,255,255,0.25);
-}
+  }
 
-@media (prefers-color-scheme: dark) {
+  .clay-alert--information {
+    --clay-alert-color-information: var(--clay-primary-color);
+  }
+
+  @media (prefers-color-scheme: dark) {
   :root {
     --clay-alert-color-cancel: #b71c1c;
     --clay-alert-color-cancel-hover: #ff3333;
