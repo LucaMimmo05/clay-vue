@@ -10,7 +10,7 @@
              role="alert"
              aria-live="polite">
             <span class="clay-toast__message">
-                <slot>{{ message }}</slot>
+                <slot>{{ defaultMessage }}</slot>
             </span>
             <button class="clay-toast__close"
                     aria-label="Chiudi"
@@ -117,6 +117,22 @@
         emit("close");
         if (intervalId) { clearInterval(intervalId); }
     }
+
+    const defaultMessage = computed(() =>
+    {
+        if (props.message) { return props.message; }
+        switch (props.type)
+        {
+            case "success":
+                return "Your changes have been saved successfully!";
+            case "error":
+                return "Something went wrong. Please try again.";
+            case "warning":
+                return "Warning: Check your input values.";
+            default:
+                return "";
+        }
+    });
 </script>
 
 <style scoped lang="scss">

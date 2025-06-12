@@ -29,6 +29,10 @@ const meta: Meta<StoryArgs> = {
 export default meta;
 
 export const Primary: StoryObj<StoryArgs> = {
+    args: {
+        type: "success",
+        content: ""
+    },
     render: (args) => ({
         components: { ClayToast },
         setup: () => ({ args }),
@@ -37,8 +41,7 @@ export const Primary: StoryObj<StoryArgs> = {
                 <ClayToast
                     :type="args.type"
                     :message="args.content"
-                    :duration=""
-                    :relative="true"
+                    :duration="3000"
                     @close="() => console.log('Toast closed')"
                 />
             </div>
@@ -49,7 +52,7 @@ export const Primary: StoryObj<StoryArgs> = {
 export const Glass: StoryObj<StoryArgs> = {
     args: {
         type: "success",
-        content: "Questa è una notifica toast glass!",
+        content: "",
         // @ts-expect-error: variant is not defined in args, but we want to use it in the template
         variant: "glass"
     },

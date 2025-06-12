@@ -210,7 +210,6 @@
     const defaultMessage = computed(() =>
     {
         if (props.message) { return props.message; }
-
         switch (props.type)
         {
             case "success":
@@ -221,7 +220,7 @@
                 return "⚠️ Warning: potentially risky action.";
             default:
                 return "";
-        };
+        }
     });
 </script>
 

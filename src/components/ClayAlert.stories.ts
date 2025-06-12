@@ -68,12 +68,9 @@ export const Primary: StoryObj<StoryArgs> = {
 
 export const Glass: StoryObj<StoryArgs> = {
     args: {
-        type: "success",
-        content: "Questa è una notifica glass!",
-        showCancelButton: false,
-        showCloseButton: true,
         // @ts-expect-error: variant is not in StoryArgs but usato nel template
-        variant: "glass"
+        variant: "glass",
+        content: ""
     },
     render: (args: StoryArgs) => ({
         components: { ClayAlert },
