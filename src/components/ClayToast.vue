@@ -176,10 +176,10 @@
 
   &.clay-toast--glass {
     background:
-      linear-gradient(135deg, rgba(255,255,255,0.45) 0%, rgba(255,255,255,0.12) 100%),
-      rgba(255,255,255,0.22);
-    backdrop-filter: blur(14px) saturate(2.2);
-    border: 2px solid rgba(120,120,120,0.18);
+      linear-gradient(135deg, rgba(255,255,255,0.13) 0%, rgba(255,255,255,0.04) 100%),
+      rgba(255,255,255,0.06);
+    backdrop-filter: blur(16px) saturate(2.2);
+    border: 2px solid rgba(120,120,120,0.13);
     color: #222;
   }
 
@@ -274,6 +274,13 @@
       inset 0 0 24px 0 rgba(0,0,0,0.22);
     text-shadow: 0 2px 8px #0008, 0 1px 2px #fff2;
     border: 2px solid rgba(120,120,120,0.18);
+  }
+  .clay-toast.clay-toast--glass {
+    color: #fff;
+    background:
+      linear-gradient(135deg, rgba(40,40,40,0.10) 0%, rgba(40,40,40,0.04) 100%),
+      rgba(40,40,40,0.10);
+    border: 2px solid rgba(120,120,120,0.13);
   }
   .clay-toast::before {
     background: linear-gradient(
