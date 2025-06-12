@@ -1,9 +1,10 @@
 import type { Meta, StoryObj } from "@storybook/vue3-vite";
 import ClaySwitch from "./ClaySwitch.vue";
+import { ref } from "vue";
 
 interface StoryArgs {
-    size: "small" | "default" | "large";
-    click: () => void;
+    modelValue: boolean;
+    "update:modelValue": (value: boolean) => void;
 }
 
 const meta: Meta<StoryArgs> = {
@@ -11,43 +12,51 @@ const meta: Meta<StoryArgs> = {
     component: ClaySwitch,
     tags: ["autodocs"],
     argTypes: {
-        size: {
-            name: "Size",
-            type: { name: "string", required: false },
-            description: "The size used to display the switch.",
+        modelValue: {
+            name: "Model Value",
+            type: { name: "boolean", required: false },
+            description: "The value of the switch.",
             table: {
                 category: "Component's",
-                defaultValue: { summary: "default" },
-                type: { summary: "small | default | large" }
+                defaultValue: { summary: "false" },
+                type: { summary: "boolean" }
             },
             control: {
-                type: "select",
-                labels: {
-                    small: "Small",
-                    default: "Default",
-                    large: "Large"
-                }
-            },
-            options: ["small", "default", "large"]
-        },
-        click: {
-            name: "Click",
-            type: { name: "function", required: false },
-            description: "Function to call when the switch is clicked.",
-            table: {
-                category: "Component's",
-                type: { summary: "function" }
+                type: "boolean"
             }
         }
     }
 };
 
-export const Primary: StoryObj<StoryArgs> = {
+export default meta;
+type Story = StoryObj<StoryArgs>;
+
+export const Default: Story = {
     render: (args: StoryArgs) => ({
         components: { ClaySwitch },
-        setup: () => ({ args }),
-        template: `<ClaySwitch :size="args.size" @click="args.click" />`
-    })
+        setup: () =>
+        {
+            const modelValue = ref(args.modelValue || false);
+            return { modelValue };
+        },
+        template: `<ClaySwitch v-model="modelValue" />`
+    }),
+    args: {
+        modelValue: false
+    }
 };
 
-export default meta;
+export const Checked: Story = {
+    render: (args: StoryArgs) => ({
+        components: { ClaySwitch },
+        setup: () =>
+        {
+            const modelValue = ref(args.modelValue || true);
+            return { modelValue };
+        },
+        template: `<ClaySwitch v-model="modelValue" />`
+    }),
+    args: {
+        modelValue: true
+    }
+};
