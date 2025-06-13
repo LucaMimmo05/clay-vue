@@ -47,7 +47,7 @@ const meta: Meta<StoryArgs> = {
 
 export default meta;
 
-export const Primary: StoryObj<StoryArgs> = {
+export const Default: StoryObj<StoryArgs> = {
     render: (args: StoryArgs) => ({
         components: { ClayAlert },
         setup: () => ({ args }),

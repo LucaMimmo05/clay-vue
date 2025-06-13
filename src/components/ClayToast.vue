@@ -140,7 +140,21 @@
 
 <style scoped lang="scss">
 :root {
-  --clay-alert-color-information: var(--clay-primary-color);
+  --clay-toast-color-success: #21ba45;
+  --clay-toast-color-error: #db2828;
+  --clay-toast-color-warning: #f2c037;
+  --clay-toast-color-information: var(--clay-primary-color);
+
+  --clay-toast-color-background: linear-gradient(120deg, #fff 70%, #f3f3f7 100%);
+  --clay-toast-color-background-glass:
+    linear-gradient(135deg, rgba(255,255,255,0.13) 0%, rgba(255,255,255,0.04) 100%),
+    rgba(255,255,255,0.06);
+
+  --clay-toast-color-border: 2px solid rgba(120,120,120,0.18);
+  --clay-toast-color-border-glass: 2px solid rgba(120,120,120,0.13);
+
+  --clay-toast-color-text: #222;
+  --clay-toast-color-text-glass: #222;
 }
 
 .clay-toast {
@@ -161,26 +175,14 @@
   overflow: hidden;
   user-select: none;
   border: 2px solid rgba(120,120,120,0.18);
-  color: #222;
-  background: linear-gradient(120deg, #fff 70%, #f3f3f7 100%);
-  box-shadow:
-    0 8px 32px 0 rgba(0,0,0,0.28),
-    0 2px 8px 0 rgba(0,0,0,0.18),
-    0 0 0 2px #fff8 inset,
-    0 1.5px 8px 0 #fff8,
-    0 16px 48px 8px rgba(0,0,0,0.35),
-    0 1.5px 8px 0 #0002,
-    inset 0 2px 16px 0 #fff6,
-    inset 0 -2px 16px 0 #0002,
-    inset 0 0 24px 0 rgba(0,0,0,0.10);
+  color: var(--clay-toast-color-text);
+  background: var(--clay-toast-color-background);
+  border: var(--clay-toast-color-border);
 
   &.clay-toast--glass {
-    background:
-      linear-gradient(135deg, rgba(255,255,255,0.13) 0%, rgba(255,255,255,0.04) 100%),
-      rgba(255,255,255,0.06);
-    backdrop-filter: blur(16px) saturate(2.2);
-    border: 2px solid rgba(120,120,120,0.13);
-    color: #222;
+    color: var(--clay-toast-color-text-glass);
+    background: var(--clay-toast-color-background-glass);
+    border: var(--clay-toast-color-border-glass);
   }
 
   &::after {
@@ -243,6 +245,7 @@
   border-radius: 0 0 1em 1em;
   transition: width 0.2s linear;
   z-index: 2;
+  background: var(--clay-toast-progress);
 }
 
 .toast-fade-enter-active,
@@ -259,6 +262,24 @@
 }
 
 @media (prefers-color-scheme: dark) {
+  :root {
+    --clay-toast-color-success: #21ba45;
+    --clay-toast-color-error: #db2828;
+    --clay-toast-color-warning: #f2c037;
+    --clay-toast-color-information: var(--clay-primary-color);
+
+    --clay-toast-color-background: #181a1b;
+    --clay-toast-color-background-glass:
+      linear-gradient(135deg, rgba(40,40,40,0.10) 0%, rgba(40,40,40,0.04) 100%),
+      rgba(40,40,40,0.10);
+
+    --clay-toast-color-border: 2px solid rgba(120,120,120,0.18);
+    --clay-toast-color-border-glass: 2px solid rgba(120,120,120,0.13);
+
+    --clay-toast-color-text: #fff;
+    --clay-toast-color-text-glass: #fff;
+  }
+
   .clay-toast {
     background: #181a1b;
     color: #fff;

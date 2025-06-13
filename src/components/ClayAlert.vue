@@ -250,7 +250,6 @@
 
 <style lang="scss">
 :root {
-  /* Colors */
   --clay-alert-color-success: #21ba45;
   --clay-alert-color-error: #db2828;
   --clay-alert-color-warning: #f2c037;
@@ -260,7 +259,6 @@
   --clay-alert-color-cancel-hover: #ff7875;
   --clay-alert-color-cancel-active: #e04344;
 
-  /* Shadows */
   --clay-alert-shadow-opacity: 0.4;
   --clay-alert-shadow-offset-y: 10px;
   --clay-alert-shadow-blur: 3px;
