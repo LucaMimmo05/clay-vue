@@ -76,6 +76,7 @@
 <style lang="scss">
     @use "sass:color";
 
+    @use "@/assets/scss/mixins";
     @use "@/assets/scss/variables";
 
     $button-color-background: variables.$primary-color;
@@ -88,9 +89,9 @@
         --clay-button-color-outline: #{$button-color-outline};
         --clay-button-color-shadow: #{$button-color-shadow};
 
-        --clay-button-spacing-x: 0.5em;
-        --clay-button-spacing-y: 1em;
-        --clay-button-spacing: var(--clay-button-spacing-x) var(--clay-button-spacing-y);
+        --clay-button-spacing-x: 1em;
+        --clay-button-spacing-y: 0.5em;
+        --clay-button-spacing: var(--clay-button-spacing-y) var(--clay-button-spacing-x);
 
         --clay-button-roundness: var(--clay-button-spacing-x);
     }
@@ -98,39 +99,36 @@
     .clay-button
     {
         background-color: var(--clay-button-color-background);
-
-        background-image: linear-gradient(rgba(from var(--white) r g b / 0.25), rgba(from var(--black) r g b / 0.25));
+        background-image: linear-gradient(rgba(from var(--white) r g b / 0.25), rgba(from var(--black) r g b / 0.125));
         background-blend-mode: overlay;
         border: none;
         border-radius: var(--clay-button-roundness);
         box-shadow: 0px 0px 0px 0px rgba(from var(--clay-button-color-outline) r g b / 0),
                     0px 0.1em 0.2em -0.1em rgba(from var(--clay-button-color-shadow) r g b / 0.75);
 
-        color: white;
+        color: var(--white);
         cursor: pointer;
         font-size: 1em;
         font-weight: bold;
         outline: none;
         padding: var(--clay-button-spacing);
+        perspective: 0px;
         position: relative;
         transition: background-color var(--clay-ease-duration) var(--clay-ease-function),
                     box-shadow var(--clay-ease-duration) var(--clay-ease-function),
                     color var(--clay-ease-duration) var(--clay-ease-function),
                     transform var(--clay-ease-duration) var(--clay-ease-function);
 
-        perspective: 0px;
-
         &::before
         {
             border-radius: var(--clay-button-roundness);
             bottom: 0px;
-            box-shadow: inset 0px 0px 0.125em 0px rgba(from var(--black) r g b / 0.25),
-                        inset 0px 0.2em 0.45em 0px rgba(from var(--white) r g b / 0.25),
-                        inset 0px -0.2em 0.45em 0px rgba(from var(--black) r g b / 0.25);
+
+            @include mixins.clay-shadow-inset($intensity: 0.5);
 
             content: "";
             left: 0px;
-            mix-blend-mode: hard-light;
+            mix-blend-mode: luminosity;
             position: absolute;
             right: 0px;
             top: 0px;
@@ -185,7 +183,7 @@
         $button-color-background: color.adjust(variables.$primary-color, $lightness: -30%);
         $button-color-background-glow: color.adjust($button-color-background, $lightness: 20%);
         $button-color-outline: color.complement($button-color-background-glow);
-        $button-color-shadow: rgb(0, 0, 0);
+        $button-color-shadow: var(--black);
 
         :root
         {
