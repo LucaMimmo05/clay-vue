@@ -1,8 +1,9 @@
 import type { Meta, StoryObj } from "@storybook/vue3-vite";
 import ClayCard from "./ClayCard.vue";
 
-interface StoryArgs {
-size: "Vicino" | "Default" | "Alto";
+interface StoryArgs
+{
+    elevation: "none" | "low" | "default" | "high";
 }
 
 const meta: Meta<StoryArgs> = {
@@ -10,11 +11,28 @@ const meta: Meta<StoryArgs> = {
     component: ClayCard,
     tags: ["autodocs"],
     argTypes: {
-        size: {
-            name: "Altezza",
-            control: { type: "select" },
-            options: ["Vicino", "Default", "Alto"]
-        } }
+        elevation: {
+            name: "Elevation",
+            type: { name: "string", required: false },
+            description: "The elevation used to display the card.",
+            table: {
+                category: "Component's",
+                defaultValue: { summary: "default" },
+                type: { summary: "none | low | default | high" }
+            },
+            control: {
+                type: "select",
+                labels: {
+                    none: "None",
+                    low: "Low",
+                    default: "Default",
+                    high: "High"
+                }
+            },
+            options: ["none", "low", "default", "high"]
+        }
+    },
+    args: { elevation: "default" }
 };
 
 export const Primary: StoryObj<StoryArgs> = {
@@ -22,9 +40,8 @@ export const Primary: StoryObj<StoryArgs> = {
         components: { ClayCard },
         setup: () => ({ args }),
         template: `
-            <ClayCard :class="'clay-card--' + args.size">
-                {{ args.content }}
-            </ClayCard>
+            <ClayCard :elevation="args.elevation"
+                      style="aspect-ratio: 32/9;" />
         `
     })
 };
@@ -34,9 +51,9 @@ export const Glass: StoryObj<StoryArgs> = {
         components: { ClayCard },
         setup: () => ({ args }),
         template: `
-            <ClayCard :class="'clay-card--' + args.size + ' clay-card--glass'">
-                {{ args.content }}
-            </ClayCard>
+            <ClayCard :elevation="args.elevation"
+                      glass
+                      style="aspect-ratio: 32/9;" />
         `
     })
 };
