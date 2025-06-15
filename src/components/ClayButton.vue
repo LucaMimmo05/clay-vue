@@ -102,6 +102,7 @@
 
         color: var(--white);
         cursor: pointer;
+        font-family: inherit;
         font-size: 1em;
         font-weight: bold;
         outline: none;
