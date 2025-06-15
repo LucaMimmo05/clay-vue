@@ -29,18 +29,12 @@
 </template>
 
 <style lang="scss">
-    @use "sass:color";
-
     @use "@/assets/scss/mixins";
-    @use "@/assets/scss/variables";
-
-    $card-color-background: variables.$light-color;
-    $card-color-shadow: color.adjust(variables.$primary-color, $lightness: -25%);
 
     :root
     {
-        --clay-card-color-background: #{$card-color-background};
-        --clay-card-color-shadow: #{$card-color-shadow};
+        --clay-card-color-background: var(--clay-light-color);
+        --clay-card-color-shadow: oklch(from var(--clay-primary-color) calc(l - 0.25) c h);
 
         --clay-card-opacity: 1.0;
 
@@ -99,11 +93,8 @@
 
         &.clay-card--glass
         {
-            $card-color-background: variables.$light-color;
-            $card-color-shadow: color.adjust($card-color-background, $lightness: -50%);
-
-            --clay-card-color-background: #{$card-color-background};
-            --clay-card-color-shadow: #{$card-color-shadow};
+            --clay-card-color-background: var(--clay-light-color);
+            --clay-card-color-shadow: oklch(from var(--clay-card-color-background) calc(l - 0.50) c h);
 
             --clay-card-blur: 0.5em;
             --clay-card-opacity: 0.5;
@@ -119,13 +110,10 @@
 
     @media (prefers-color-scheme: dark)
     {
-        $card-color-background: variables.$dark-color;
-        $card-color-shadow: var(--black);
-
         :root
         {
-            --clay-card-color-background: #{$card-color-background};
-            --clay-card-color-shadow: #{$card-color-shadow};
+            --clay-card-color-background: var(--clay-dark-color);
+            --clay-card-color-shadow: var(--black);
         }
 
         .clay-card
@@ -137,9 +125,7 @@
 
             &.clay-card--glass
             {
-                $card-color-background: variables.$dark-color;
-
-                --clay-card-color-background: #{$card-color-background};
+                --clay-card-color-background: var(--clay-dark-color);
                 --clay-card-color-shadow: var(--black);
             }
         }

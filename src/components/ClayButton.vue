@@ -74,20 +74,14 @@
 </template>
 
 <style lang="scss">
-    @use "sass:color";
-
     @use "@/assets/scss/mixins";
-    @use "@/assets/scss/variables";
-
-    $button-color-background: variables.$primary-color;
-    $button-color-outline: color.complement($button-color-background);
-    $button-color-shadow: color.adjust($button-color-background, $lightness: -25%);
 
     :root
     {
-        --clay-button-color-background: #{$button-color-background};
-        --clay-button-color-outline: #{$button-color-outline};
-        --clay-button-color-shadow: #{$button-color-shadow};
+        --clay-button-color-background: var(--clay-primary-color);
+        --clay-button-color-background: var(--clay-primary-color);
+        --clay-button-color-outline: oklch(from var(--clay-button-color-background) l c calc(h + 180));
+        --clay-button-color-shadow: oklch(from var(--clay-button-color-background) calc(l - 0.25) c h);
 
         --clay-button-spacing-x: 1em;
         --clay-button-spacing-y: 0.5em;
@@ -180,16 +174,12 @@
 
     @media (prefers-color-scheme: dark)
     {
-        $button-color-background: color.adjust(variables.$primary-color, $lightness: -30%);
-        $button-color-background-glow: color.adjust($button-color-background, $lightness: 20%);
-        $button-color-outline: color.complement($button-color-background-glow);
-        $button-color-shadow: var(--black);
-
         :root
         {
-            --clay-button-color-background: #{$button-color-background};
-            --clay-button-color-outline: #{$button-color-outline};
-            --clay-button-color-shadow: #{$button-color-shadow};
+            --clay-button-color-background: oklch(from var(--clay-primary-color) calc(l - 0.3) c h);
+            --clay-button-color-background-glow: oklch(from var(--clay-button-color-background) calc(l + 0.2) c h);
+            --clay-button-color-outline: oklch(from var(--clay-button-color-background-glow) l c calc(h + 180));
+            --clay-button-color-shadow: var(--black);
         }
 
         .clay-button
@@ -201,8 +191,8 @@
             &:active,
             &.clay-button--active
             {
-                --clay-button-color-background: #{$button-color-background-glow};
-                --clay-button-color-shadow: #{$button-color-background-glow};
+                --clay-button-color-background: var(--clay-button-color-background-glow);
+                --clay-button-color-shadow: var(--clay-button-color-background-glow);
             }
 
             &:hover

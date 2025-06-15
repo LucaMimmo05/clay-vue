@@ -5,8 +5,8 @@
     --black: rgb(0, 0, 0);
     --white: rgb(255, 255, 255);
 
-    --clay-light-color-background: #{variables.$light-color};
-    --clay-dark-color-background: #{variables.$dark-color};
+    --clay-light-color: #{variables.$light-color};
+    --clay-dark-color: #{variables.$dark-color};
 
     --clay-primary-color: #{variables.$primary-color};
 
@@ -17,12 +17,12 @@
 
     @media (prefers-color-scheme: light)
     {
-        --clay-color-background: var(--clay-light-color-background);
+        --clay-color-background: var(--clay-light-color);
         --clay-text-color: var(--black);
     }
     @media (prefers-color-scheme: dark)
     {
-        --clay-color-background: var(--clay-dark-color-background);
+        --clay-color-background: var(--clay-dark-color);
         --clay-text-color: var(--white);
     }
 }
