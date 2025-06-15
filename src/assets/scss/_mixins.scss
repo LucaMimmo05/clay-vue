@@ -2,12 +2,12 @@
 
 @mixin clay-shadow-inset($color: var(--black), $intensity: 1)
 {
-    box-shadow: inset 0px #{-0.125em * $intensity} #{0.25em * $intensity} 0px rgba(from $color r g b / 0.25),
-                inset 0px #{0.5em * $intensity} #{1em * $intensity} 0px rgba(from var(--white) r g b / 0.25),
-                inset 0px #{-0.5em * $intensity} #{1em * $intensity} 0px rgba(from $color r g b / 0.25);
+    box-shadow: inset 0 #{-0.125em * $intensity} #{0.25em * $intensity} 0 rgba(from $color r g b / 0.25),
+                inset 0 #{0.5em * $intensity} #{1em * $intensity} 0 rgba(from var(--white) r g b / 0.25),
+                inset 0 #{-0.5em * $intensity} #{1em * $intensity} 0 rgba(from $color r g b / 0.25);
 }
 
 @mixin clay-shadow-elevation($color: var(--black), $intensity: 1)
 {
-    box-shadow: 0px #{0.5em * $intensity} #{1em * $intensity} #{-0.5em * $intensity} rgba(from $color r g b / 0.75);
+    box-shadow: 0 #{0.5em * $intensity} #{1em * $intensity} #{-0.5em * $intensity} rgba(from $color r g b / 0.75);
 }

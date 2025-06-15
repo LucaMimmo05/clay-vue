@@ -61,7 +61,7 @@
         @include mixins.clay-shadow-elevation($color: var(--clay-card-color-shadow));
 
         padding: var(--clay-card-spacing);
-        perspective: 0px;
+        perspective: 0;
         position: relative;
         transition: background-color var(--clay-ease-duration) var(--clay-ease-function),
                     box-shadow var(--clay-ease-duration) var(--clay-ease-function);
@@ -69,16 +69,16 @@
         &::before
         {
             border-radius: var(--clay-card-roundness);
-            bottom: 0px;
+            bottom: 0;
 
             @include mixins.clay-shadow-inset($color: var(--clay-primary-color));
 
             content: "";
-            left: 0px;
+            left: 0;
             mix-blend-mode: multiply;
             position: absolute;
-            right: 0px;
-            top: 0px;
+            right: 0;
+            top: 0;
             transition: box-shadow var(--clay-ease-duration) var(--clay-ease-function);
 
             z-index: -1;

@@ -103,8 +103,8 @@
         background-blend-mode: overlay;
         border: none;
         border-radius: var(--clay-button-roundness);
-        box-shadow: 0px 0px 0px 0px rgba(from var(--clay-button-color-outline) r g b / 0),
-                    0px 0.1em 0.2em -0.1em rgba(from var(--clay-button-color-shadow) r g b / 0.75);
+        box-shadow: 0 0 0 0 rgba(from var(--clay-button-color-outline) r g b / 0),
+                    0 0.1em 0.2em -0.1em rgba(from var(--clay-button-color-shadow) r g b / 0.75);
 
         color: var(--white);
         cursor: pointer;
@@ -112,7 +112,7 @@
         font-weight: bold;
         outline: none;
         padding: var(--clay-button-spacing);
-        perspective: 0px;
+        perspective: 0;
         position: relative;
         transition: background-color var(--clay-ease-duration) var(--clay-ease-function),
                     box-shadow var(--clay-ease-duration) var(--clay-ease-function),
@@ -122,16 +122,16 @@
         &::before
         {
             border-radius: var(--clay-button-roundness);
-            bottom: 0px;
+            bottom: 0;
 
             @include mixins.clay-shadow-inset($intensity: 0.5);
 
             content: "";
-            left: 0px;
+            left: 0;
             mix-blend-mode: luminosity;
             position: absolute;
-            right: 0px;
-            top: 0px;
+            right: 0;
+            top: 0;
             transition: box-shadow var(--clay-ease-duration) var(--clay-ease-function);
 
             z-index: -1;
@@ -139,32 +139,32 @@
 
         &:hover
         {
-            box-shadow: 0px 0px 0px 0px rgba(from var(--clay-button-color-outline) r g b / 0),
-                        0px 0.25em 0.25em 0px rgba(from var(--clay-button-color-shadow) r g b / 0.333);
+            box-shadow: 0 0 0 0 rgba(from var(--clay-button-color-outline) r g b / 0),
+                        0 0.25em 0.25em 0 rgba(from var(--clay-button-color-shadow) r g b / 0.333);
 
             transform: translateY(-0.0625em) scale(1.1);
         }
         &:focus-visible
         {
-            box-shadow: 0px 0px 0px 0.15em rgba(from var(--clay-button-color-outline) r g b / 1),
-                        0px 0.25em 0.25em 0px rgba(from var(--clay-button-color-shadow) r g b / 0.333);
+            box-shadow: 0 0 0 0.15em rgba(from var(--clay-button-color-outline) r g b / 1),
+                        0 0.25em 0.25em 0 rgba(from var(--clay-button-color-shadow) r g b / 0.333);
 
             transform: translateY(-0.0625em) scale(1.1);
         }
         &:active,
         &.clay-button--active
         {
-            box-shadow: 0px 0px 0px 0px rgba(from var(--clay-button-color-outline) r g b / 0),
-                        0px 0px 0.125em 0px rgba(from var(--clay-button-color-shadow) r g b / 0.5),
-                        0px -0.25em 0.25em 0px rgba(from var(--clay-button-color-shadow) r g b / 0.333);
+            box-shadow: 0 0 0 0 rgba(from var(--clay-button-color-outline) r g b / 0),
+                        0 0 0.125em 0 rgba(from var(--clay-button-color-shadow) r g b / 0.5),
+                        0 -0.25em 0.25em 0 rgba(from var(--clay-button-color-shadow) r g b / 0.333);
 
             transform: translateY(0.25em) scaleX(1.2) scaleY(0.9);
 
             &::before
             {
-                box-shadow: inset 0px 0px 0.125em 0px rgba(from var(--black) r g b / 0.25),
-                            inset 0px 0.2em 0.45em 0px rgba(from var(--black) r g b / 0),
-                            inset 0px -0.2em 0.45em 0px rgba(from var(--black) r g b / 0.25);
+                box-shadow: inset 0 0 0.125em 0 rgba(from var(--black) r g b / 0.25),
+                            inset 0 0.2em 0.45em 0 rgba(from var(--black) r g b / 0),
+                            inset 0 -0.2em 0.45em 0 rgba(from var(--black) r g b / 0.25);
             }
         }
 
@@ -194,8 +194,8 @@
 
         .clay-button
         {
-            box-shadow: 0px 0px 0px 0px rgba(from var(--clay-button-color-outline) r g b / 0),
-                        0px 0.1em 0.2em -0.1em rgba(from var(--clay-button-color-shadow) r g b / 0.5);
+            box-shadow: 0 0 0 0 rgba(from var(--clay-button-color-outline) r g b / 0),
+                        0 0.1em 0.2em -0.1em rgba(from var(--clay-button-color-shadow) r g b / 0.5);
             &:hover,
             &:focus-visible,
             &:active,
@@ -207,22 +207,22 @@
 
             &:hover
             {
-                box-shadow: 0px 0px 0px 0px rgba(from var(--clay-button-color-outline) r g b / 0),
-                            0px 0px 0.5em 0px rgba(from var(--clay-button-color-shadow) r g b / 0.25),
-                            0px 0.25em 0.5em 0px rgba(from var(--clay-button-color-shadow) r g b / 0.25);
+                box-shadow: 0 0 0 0 rgba(from var(--clay-button-color-outline) r g b / 0),
+                            0 0 0.5em 0 rgba(from var(--clay-button-color-shadow) r g b / 0.25),
+                            0 0.25em 0.5em 0 rgba(from var(--clay-button-color-shadow) r g b / 0.25);
             }
             &:focus-visible
             {
-                box-shadow: 0px 0px 0px 0.15em rgba(from var(--clay-button-color-outline) r g b / 1),
-                            0px 0px 0.5em 0px rgba(from var(--clay-button-color-shadow) r g b / 0.25),
-                            0px 0.25em 0.5em 0px rgba(from var(--clay-button-color-shadow) r g b / 0.25);
+                box-shadow: 0 0 0 0.15em rgba(from var(--clay-button-color-outline) r g b / 1),
+                            0 0 0.5em 0 rgba(from var(--clay-button-color-shadow) r g b / 0.25),
+                            0 0.25em 0.5em 0 rgba(from var(--clay-button-color-shadow) r g b / 0.25);
             }
             &:active,
             &.clay-button--active
             {
-                box-shadow: 0px 0px 0px 0px rgba(from var(--clay-button-color-outline) r g b / 0),
-                            0px 0px 0.25em 0px rgba(from var(--clay-button-color-shadow) r g b / 0.25),
-                            0px -0.25em 0.25em 0px rgba(from var(--clay-button-color-shadow) r g b / 0.25);
+                box-shadow: 0 0 0 0 rgba(from var(--clay-button-color-outline) r g b / 0),
+                            0 0 0.25em 0 rgba(from var(--clay-button-color-shadow) r g b / 0.25),
+                            0 -0.25em 0.25em 0 rgba(from var(--clay-button-color-shadow) r g b / 0.25);
             }
         }
     }
