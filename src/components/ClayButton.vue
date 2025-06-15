@@ -30,7 +30,7 @@
     {
         active.value = true;
 
-        if (!(_timeoutId)) { _timestamp = event.timeStamp; }
+        _timestamp = event.timeStamp;
     };
     const onMouseUp = (event: MouseEvent): void =>
     {
@@ -42,6 +42,7 @@
             return;
         }
 
+        if (_timeoutId) { clearTimeout(_timeoutId); }
         _timeoutId = setTimeout((): void =>
         {
             active.value = false;
