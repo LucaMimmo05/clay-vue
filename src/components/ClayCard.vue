@@ -42,6 +42,8 @@
         --clay-card-color-background: #{$card-color-background};
         --clay-card-color-shadow: #{$card-color-shadow};
 
+        --clay-card-opacity: 1.0;
+
         --clay-card-spacing-x: 1em;
         --clay-card-spacing-y: 0.5em;
         --clay-card-spacing: var(--clay-card-spacing-y) var(--clay-card-spacing-x);
@@ -51,7 +53,7 @@
 
     .clay-card
     {
-        background-color: var(--clay-card-color-background);
+        background-color: rgba(from var(--clay-card-color-background) r g b / var(--clay-card-opacity));
         background-image: linear-gradient(rgba(from var(--white) r g b / 0.25), rgba(from var(--black) r g b / 0.125));
         background-blend-mode: overlay;
         border-radius: var(--clay-card-roundness);
@@ -97,12 +99,21 @@
 
         &.clay-card--glass
         {
-            padding: var(--clay-card-spacing);
-            border-radius: 11px;
-            background-image: linear-gradient(180deg, rgba(0, 0, 0, 0.0) -3.72%, rgba(0, 0, 0, 0.1) 48.14%, rgba(0, 0, 0, 0.2) 100%), rgba(255, 255, 255, 0.0);
-            box-shadow: 0px -2px 4px 0px rgba(0, 0, 0, 0.5) inset,
-                        0px -8px 16px 0px rgba(0, 0, 0, 0.25) inset,
-                        0px 40px 48px 0px rgba(0, 0, 0, 0.6);
+            $card-color-background: variables.$light-color;
+            $card-color-shadow: color.adjust($card-color-background, $lightness: -50%);
+
+            --clay-card-color-background: #{$card-color-background};
+            --clay-card-color-shadow: #{$card-color-shadow};
+
+            --clay-card-blur: 0.5em;
+            --clay-card-opacity: 0.5;
+
+            backdrop-filter: blur(var(--clay-card-blur)) saturate(180%);
+
+            &::before
+            {
+                @include mixins.clay-shadow-inset($intensity: 0.5, $color: var(--clay-card-color-shadow));
+            }
         }
     }
 
@@ -126,12 +137,10 @@
 
             &.clay-card--glass
             {
-                padding: var(--clay-card-spacing);
-                border-radius: 11px;
-                background-image: linear-gradient(180deg, rgba(0, 0, 0, 0) -3.72%, rgba(0, 0, 0, 0.1) 48.14%, rgba(0, 0, 0, 0.2) 100%), rgba(36, 35, 35, 0);
-                box-shadow: 0px -2px 4px 0px rgba(0, 0, 0, 0.50) inset,
-                            0px -8px 16px 0px rgba(0, 0, 0, 0.25) inset,
-                            0px 40px 48px 0px rgba(0, 0, 0, 0.60);
+                $card-color-background: variables.$dark-color;
+
+                --clay-card-color-background: #{$card-color-background};
+                --clay-card-color-shadow: var(--black);
             }
         }
     }

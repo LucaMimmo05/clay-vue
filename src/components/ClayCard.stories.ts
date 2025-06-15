@@ -41,7 +41,7 @@ export const Primary: StoryObj<StoryArgs> = {
         setup: () => ({ args }),
         template: `
             <ClayCard :elevation="args.elevation"
-                      style="aspect-ratio: 32/9;" />
+                      style="aspect-ratio: 32/9; margin: 2rem 4rem;" />
         `
     })
 };
@@ -51,9 +51,13 @@ export const Glass: StoryObj<StoryArgs> = {
         components: { ClayCard },
         setup: () => ({ args }),
         template: `
-            <ClayCard :elevation="args.elevation"
-                      glass
-                      style="aspect-ratio: 32/9;" />
+            <div style="background-image: url('https://picsum.photos/1920/1080');
+                        background-size: cover;
+                        padding: 2rem 4rem;">
+                <ClayCard :elevation="args.elevation"
+                          glass
+                          style="aspect-ratio: 32/9;" />
+            </div>
         `
     })
 };
