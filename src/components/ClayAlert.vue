@@ -173,15 +173,79 @@
 </template>
 
 <script setup lang="ts">
-import ClayButton from "./ClayButton.vue";
+    import { ref, computed } from "vue";
+    import ClayCard from "./ClayCard.vue";
+    import ClayButton from "./ClayButton.vue";
 
-const props = defineProps({
-  type: {
-    type: String,
-    default: "success",
-    validator: (v: string) => ["success", "error", "warning"].includes(v),
-  },
-});
+    const emit = defineEmits(["close"]);
+
+    const props = defineProps({
+        type: {
+            type: String,
+            default: "success",
+            validator: (v: string) => ["success", "error", "warning", "information"].includes(v)
+        },
+        message: {
+            type: String,
+            default: ""
+        },
+        showCancelButton: {
+            type: Boolean,
+            default: false
+        },
+        showCloseButton: {
+            type: Boolean,
+            default: false
+        },
+        variant: {
+            type: String,
+            default: "default",
+            validator: (v: string) => ["default", "glass"].includes(v)
+        }
+    });
+
+    const visible = ref(true);
+
+    function closeAlert()
+    {
+        visible.value = false;
+        emit("close");
+    }
+
+    const badgeColor = computed(() =>
+    {
+        switch (props.type)
+        {
+            case "success":
+                return "var(--clay-alert-color-success)";
+            case "error":
+                return "var(--clay-alert-color-error)";
+            case "warning":
+                return "var(--clay-alert-color-warning)";
+            case "information":
+                return "var(--clay-alert-color-information)";
+            default:
+                return "var(--clay-alert-color-success)";
+        }
+    });
+
+    const defaultMessage = computed(() =>
+    {
+        if (props.message) { return props.message; }
+        switch (props.type)
+        {
+            case "success":
+                return "✅ Operation completed successfully.";
+            case "error":
+                return "❌ Error during operation.";
+            case "warning":
+                return "⚠️ Warning: potentially risky action.";
+            case "information":
+                return "ℹ️ For your information.";
+            default:
+                return "";
+        }
+    });
 </script>
 
 <style lang="scss">

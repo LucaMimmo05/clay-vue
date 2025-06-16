@@ -39,14 +39,9 @@ body
     height: 100%;
     font-family: #{variables.$font-family};
     text-align: center;
-<<<<<<< HEAD
-    transition: background-color var(--clay-ease-duration) var(--clay-ease-function);
-    font-family: variables.$font-family;
-=======
     transition: background-color var(--clay-ease-duration) var(--clay-ease-function),
                 color var(--clay-ease-duration) var(--clay-ease-function);
 
->>>>>>> Byloth/master
     &[light]
     {
         color-scheme: light;
