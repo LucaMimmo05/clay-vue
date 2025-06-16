@@ -60,3 +60,17 @@ export const Checked: Story = {
         modelValue: true
     }
 };
+export const Theme: Story = {
+    render: (args: StoryArgs) => ({
+        components: { ClaySwitch },
+        setup: () =>
+        {
+            const modelValue = ref(args.modelValue || true);
+            return { modelValue };
+        },
+        template: `<ClaySwitch v-model="modelValue" />`
+    }),
+    args: {
+        modelValue: true
+    }
+};
