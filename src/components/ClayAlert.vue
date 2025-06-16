@@ -161,7 +161,8 @@
                 </slot>
             </span>
             <div class="clay-alert__buttons">
-                <ClayButton v-if="showCancelButton" class="clay-alert__button clay-alert__button--cancel">
+                <ClayButton v-if="showCancelButton"
+                            class="clay-alert__button clay-alert__button--cancel">
                     Cancel
                 </ClayButton>
                 <ClayButton class="clay-alert__button">
@@ -249,212 +250,160 @@
 </script>
 
 <style lang="scss">
+@use "@/assets/scss/variables";
+@use "@/assets/scss/mixins";
+
 :root {
   --clay-alert-color-success: #21ba45;
   --clay-alert-color-error: #db2828;
   --clay-alert-color-warning: #f2c037;
   --clay-alert-color-information: var(--clay-primary-color);
-
-  --clay-alert-color-cancel: #ff4d4f;
-  --clay-alert-color-cancel-hover: #ff7875;
-  --clay-alert-color-cancel-active: #e04344;
-
-  --clay-alert-shadow-opacity: 0.4;
-  --clay-alert-shadow-offset-y: 10px;
-  --clay-alert-shadow-blur: 3px;
-  --clay-alert-text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
-  --clay-alert-text-shadow-dark: 0 1px 2px rgba(0, 0, 0, 0.5);
 }
 
 .clay-alert {
-  font-family: 'Baloo 2', cursive, sans-serif;
-}
+  padding: 2.5em 0;
+  margin: 2em 0;
 
-.clay-alert__badge-svg,
-.clay-alert__icon {
-  shape-rendering: geometricPrecision;
-  text-rendering: geometricPrecision;
-  image-rendering: optimizeQuality;
-  will-change: transform;
-  transform: translateZ(0);
-}
-
-.clay-alert__icon-wrapper {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  margin-bottom: 1.5em;
-}
-
-.clay-alert__badge {
-  position: relative;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 150px;
-  height: 150px;
-}
-
-.clay-alert__badge-svg {
-  position: absolute;
-  top: 0;
-  left: 0;
-  z-index: 1;
-}
-
-.clay-alert__icon-content {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 150px;
-  height: 150px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  z-index: 2;
-}
-
-.clay-alert__icon {
-  width: 96px;
-  height: 96px;
-  display: block;
-}
-
-.clay-alert__label {
-  font-size: 1.5em;
-  font-weight: 600;
-  color: #222;
-  text-transform: capitalize;
-  text-align: center;
-  width: 100%;
-  display: block;
-  margin-bottom: 2em;
-  text-shadow: var(--clay-alert-text-shadow) inset;
-}
-
-.clay-alert__message {
-  font-size: 1.1em;
-  color: #333;
-  text-align: center;
-  margin-bottom: 1.5em;
-  text-shadow: var(--clay-alert-text-shadow) inset;
-}
-
-.clay-alert__content {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-
-.clay-alert__buttons {
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  gap: 1em;
-  margin-top: 1em;
-  width: 100%;
-}
-
-.clay-alert__button {
-  width: 110px;
-  height: 40px;
-}
-
-.clay-alert__button--cancel {
-  --clay-button-color-background: var(--clay-alert-color-cancel) !important;
-  --clay-button-color-outline: var(--clay-alert-color-cancel) !important;
-  --clay-button-color-shadow: var(--clay-alert-color-cancel) !important;
-  color: #fff !important;
-}
-
-.clay-alert__button--cancel:hover,
-.clay-alert__button--cancel:focus-visible {
-  --clay-button-color-background: color-mix(in srgb, var(--clay-alert-color-cancel) 90%, #fff 10%);
-  --clay-button-color-shadow: var(--clay-alert-color-cancel);
-}
-
-.clay-alert__button--cancel:active,
-.clay-alert__button--cancel.clay-button--active {
-  --clay-button-color-background: var(--clay-alert-color-cancel);
-  --clay-button-color-shadow: var(--clay-alert-color-cancel);
-}
-
-.clay-alert__close-button {
-  position: absolute;
-  top: 20px;
-  right: 20px;
-  background: none;
-  border: none;
-  cursor: pointer;
-  padding: 5px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  z-index: 10;
-  border-radius: 50%;
-  width: 36px;
-  height: 36px;
-  transition: background-color 0.2s ease;
-}
-
-.clay-alert__close-button:hover {
-  background-color: rgba(from var(--clay-alert-color-error) r g b / 0.1);
-}
-
-.clay-alert__close-icon {
-  width: 20px;
-  height: 20px;
-}
-
-.clay-alert__button--cancel:focus-visible,
-.clay-alert__close-button:focus-visible {
-  outline: none;
-  --clay-button-color-outline: #33ffff;
-  --clay-button-color-shadow: #33ffff;
-  box-shadow:
-    0 0 0 0.15em rgba(51,255,255,1),
-    0 0 0.5em 0 rgba(51,255,255,0.25),
-    0 0.25em 0.5em 0 rgba(51,255,255,0.25);
+  &__badge-svg,
+  &__icon {
+    shape-rendering: geometricPrecision;
+    text-rendering: geometricPrecision;
+    image-rendering: optimizeQuality;
+    will-change: transform;
+    transform: translateZ(0);
   }
 
-  .clay-alert--information {
-    --clay-alert-color-information: var(--clay-primary-color);
+  &__icon-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 1.5em;
+  }
+
+  &__badge {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 150px;
+    height: 150px;
+  }
+
+  &__badge-svg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 1;
+  }
+
+  &__icon-content {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 150px;
+    height: 150px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 2;
+  }
+
+  &__icon {
+    width: 96px;
+    height: 96px;
+    display: block;
+  }
+
+  &__label {
+    font-size: 1.5em;
+    font-weight: 600;
+    color: var(--clay-text-color);
+    text-transform: capitalize;
+    text-align: center;
+    width: 100%;
+    display: block;
+    margin-bottom: 2em;
+  }
+
+  &__message {
+    font-size: 1.1em;
+    color: var(--clay-text-color);
+    text-align: center;
+    margin-bottom: 1.5em;
+  }
+
+  &__content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  &__buttons {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    gap: 1em;
+    margin-top: 1em;
+    width: 100%;
+  }
+
+  &__button {
+    width: 110px;
+    height: 40px;
+  }
+
+  &__close-button {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 5px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 10;
+    border-radius: 50%;
+    width: 36px;
+    height: 36px;
+    transition: background-color 0.2s ease;
+  }
+
+  &__close-icon {
+    width: 20px;
+    height: 20px;
+  }
+
+  &__button--cancel {
+    --clay-primary-color: #db2828;
+    --clay-button-color-background: var(--clay-primary-color);
+    --clay-button-color-outline: oklch(from var(--clay-primary-color) l c calc(h + 180));
+    --clay-button-color-shadow: oklch(from var(--clay-primary-color) calc(l - 0.25) c h);
+
+    --clay-button-color-background-hover: oklch(from var(--clay-primary-color) calc(l + 0.05) c h);
+    --clay-button-color-background-focus: oklch(from var(--clay-primary-color) calc(l + 0.10) c h);
+    --clay-button-color-background-active: oklch(from var(--clay-primary-color) calc(l - 0.05) c h);
+
+    --clay-button-color-shadow-hover: oklch(from var(--clay-primary-color) calc(l - 0.15) c h);
+    --clay-button-color-outline-focus: oklch(from var(--clay-primary-color) l c calc(h + 180));
   }
 
   @media (prefers-color-scheme: dark) {
-  :root {
-    --clay-alert-color-cancel: #b71c1c;
-    --clay-alert-color-cancel-hover: #ff3333;
-    --clay-alert-color-cancel-active: #ff4444;
-  }
+    &__button--cancel {
+      --clay-primary-color: #db2828;
+      --clay-button-color-background: oklch(from var(--clay-primary-color) calc(l - 0.3) c h);
+      --clay-button-color-background-glow: oklch(from var(--clay-primary-color) calc(l + 0.2) c h);
+      --clay-button-color-outline: oklch(from var(--clay-button-color-background-glow) l c calc(h + 180));
+      --clay-button-color-shadow: var(--black);
 
-  .clay-alert__label {
-    color: #fff;
-    text-shadow: var(--clay-alert-text-shadow) inset;
-  }
+      --clay-button-color-background-hover: oklch(from var(--clay-primary-color) calc(l + 0.05) c h);
+      --clay-button-color-background-focus: oklch(from var(--clay-primary-color) calc(l + 0.10) c h);
+      --clay-button-color-background-active: oklch(from var(--clay-primary-color) calc(l - 0.05) c h);
 
-  .clay-alert__message {
-    color: #eee;
-    text-shadow: var(--clay-alert-text-shadow-dark) inset;
-  }
-
-  .clay-alert__button--cancel {
-    --clay-button-color-background: var(--clay-alert-color-cancel) !important;
-    --clay-button-color-outline: var(--clay-alert-color-cancel) !important;
-    --clay-button-color-shadow: var(--clay-alert-color-cancel) !important;
-    color: #fff !important;
-  }
-
-  .clay-alert__button--cancel:hover,
-  .clay-alert__button--cancel:focus-visible {
-    --clay-button-color-background: var(--clay-alert-color-cancel-hover);
-    --clay-button-color-shadow: var(--clay-alert-color-cancel-hover);
-  }
-
-  .clay-alert__button--cancel:active,
-  .clay-alert__button--cancel.clay-button--active {
-    --clay-button-color-background: var(--clay-alert-color-cancel-active);
-    --clay-button-color-shadow: var(--clay-alert-color-cancel-active);
+      --clay-button-color-shadow-hover: oklch(from var(--clay-primary-color) calc(l - 0.15) c h);
+      --clay-button-color-outline-focus: oklch(from var(--clay-primary-color) l c calc(h + 180));
+    }
   }
 }
 </style>

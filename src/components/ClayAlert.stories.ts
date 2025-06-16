@@ -68,7 +68,7 @@ export const Default: StoryObj<StoryArgs> = {
 
 export const Glass: StoryObj<StoryArgs> = {
     args: {
-        // @ts-expect-error: variant is not in StoryArgs but usato nel template
+    // @ts-expect-error: variant is not in StoryArgs but usato nel template
         variant: "glass",
         content: ""
     },
@@ -76,17 +76,21 @@ export const Glass: StoryObj<StoryArgs> = {
         components: { ClayAlert },
         setup: () => ({ args }),
         template: `
-      <ClayAlert 
-        :type="args.type" 
-        :variant="args.variant"
-        :class="'clay-alert--' + args.size"
-        :showCancelButton="args.showCancelButton"
-        :showCloseButton="args.showCloseButton"
-        @close="() => console.log('Alert closed')">
-        <template v-if="args.content">
-          {{ args.content }}
-        </template>
-      </ClayAlert>
+        <div style="background-image: url('https://picsum.photos/1920/1080');
+                        background-size: cover;
+                        padding: 2rem 4rem;">
+            <ClayAlert 
+              :type="args.type" 
+              :variant="args.variant"
+              :class="'clay-alert--' + args.size"
+              :showCancelButton="args.showCancelButton"
+              :showCloseButton="args.showCloseButton"
+              @close="() => console.log('Alert closed')">
+              <template v-if="args.content">
+                {{ args.content }}
+              </template>
+            </ClayAlert>
+        </div>
     `
     })
 };
