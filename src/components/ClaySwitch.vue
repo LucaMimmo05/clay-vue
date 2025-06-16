@@ -5,6 +5,10 @@
         modelValue: {
             type: Boolean,
             default: false
+        },
+        theme: {
+            type: Boolean,
+            default: false
         }
     });
 
@@ -123,6 +127,10 @@ $switch-color-border: color.scale($switch-color-background, $lightness: +70%);
 }
 
 @media (prefers-color-scheme: dark) {
+    $button-color-background: color.adjust(variables.$primary-color, $lightness: -30%);
+    :root {
+        --clay-button-color-background: #{$button-color-background};
+    }
     .slider {
         background-color: var(--clay-switch-bg-dark);
         box-shadow: inset 6px 6px 12px var(--clay-shadow-dark-dark), inset -6px -6px 12px
@@ -136,7 +144,7 @@ $switch-color-border: color.scale($switch-color-background, $lightness: +70%);
     }
 
     .switch input:checked + .slider {
-        background-color: var(--clay-switch-bg-dark-checked);
+        background-color: var(--clay-button-color-background);
         box-shadow: inset 4px 4px 8px rgba(0, 0, 0, 0.3), inset -4px -4px 8px
         rgba(255, 255, 255, 0.1), 2px 2px 6px rgba(0, 0, 0, 0.15);
 
