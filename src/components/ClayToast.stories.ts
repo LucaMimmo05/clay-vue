@@ -2,8 +2,8 @@ import type { Meta, StoryObj } from "@storybook/vue3-vite";
 import ClayToast from "./ClayToast.vue";
 
 interface StoryArgs {
-  type: "success" | "error" | "warning";
-  content: string;
+    type: "success" | "error" | "warning";
+    content: string;
 }
 
 const meta: Meta<StoryArgs> = {
@@ -60,6 +60,14 @@ export const Glass: StoryObj<StoryArgs> = {
         components: { ClayToast },
         setup: () => ({ args }),
         template: `
+         <div style="background-image: url('https://picsum.photos/1920/1080');
+                background-size: cover;
+                background-position: center;
+                width: 100vw;
+                height: 100vh;
+                margin: 0;
+                padding: 0;
+            ">
             <div style="position:relative; min-height:200px;">
                 <ClayToast
                     :type="args.type"
