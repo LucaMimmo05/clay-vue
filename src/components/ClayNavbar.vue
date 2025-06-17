@@ -105,6 +105,10 @@ import ClayCard from "./ClayCard.vue";
           &.active {
             color: #fff;
           }
+
+          &.active:hover {
+            color: var(--clay-primary-color);
+          }
         }
       }
     }
