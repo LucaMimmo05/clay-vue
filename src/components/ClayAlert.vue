@@ -161,8 +161,7 @@
                 </slot>
             </span>
             <div class="clay-alert__buttons">
-                <ClayButton v-if="showCancelButton"
-                            class="clay-alert__button clay-alert__button--cancel">
+                <ClayButton v-if="showCancelButton" class="clay-alert__button clay-alert__button--cancel">
                     Cancel
                 </ClayButton>
                 <ClayButton class="clay-alert__button">
@@ -258,6 +257,7 @@
   --clay-alert-color-error: #db2828;
   --clay-alert-color-warning: #f2c037;
   --clay-alert-color-information: var(--clay-primary-color);
+  --clay-alert-color-botton-cancel: #db2828;
 }
 
 .clay-alert {
@@ -376,34 +376,31 @@
   }
 
   &__button--cancel {
-    --clay-primary-color: #db2828;
-    --clay-button-color-background: var(--clay-primary-color);
-    --clay-button-color-outline: oklch(from var(--clay-primary-color) l c calc(h + 180));
-    --clay-button-color-shadow: oklch(from var(--clay-primary-color) calc(l - 0.25) c h);
+    --clay-button-color-background: var(--clay-alert-color-botton-cancel);
+    --clay-button-color-outline: oklch(from var(--clay-alert-color-botton-cancel) l c calc(h + 180));
+    --clay-button-color-shadow: oklch(from var(--clay-alert-color-botton-cancel) calc(l - 0.25) c h);
 
-    --clay-button-color-background-hover: oklch(from var(--clay-primary-color) calc(l + 0.05) c h);
-    --clay-button-color-background-focus: oklch(from var(--clay-primary-color) calc(l + 0.10) c h);
-    --clay-button-color-background-active: oklch(from var(--clay-primary-color) calc(l - 0.05) c h);
+    --clay-button-color-background-hover: oklch(from var(--clay-alert-color-botton-cancel) calc(l + 0.05) c h);
+    --clay-button-color-background-focus: oklch(from var(--clay-alert-color-botton-cancel) calc(l + 0.10) c h);
+    --clay-button-color-background-active: oklch(from var(--clay-alert-color-botton-cancel) calc(l - 0.05) c h);
 
-    --clay-button-color-shadow-hover: oklch(from var(--clay-primary-color) calc(l - 0.15) c h);
-    --clay-button-color-outline-focus: oklch(from var(--clay-primary-color) l c calc(h + 180));
+    --clay-button-color-shadow-hover: oklch(from var(--clay-alert-color-botton-cancel) calc(l - 0.15) c h);
+    --clay-button-color-outline-focus: oklch(from var(--clay-alert-color-botton-cancel) l c calc(h + 180));
   }
 
   @media (prefers-color-scheme: dark) {
     &__button--cancel {
-      --clay-primary-color: #db2828;
-      --clay-button-color-background: oklch(from var(--clay-primary-color) calc(l - 0.3) c h);
-      --clay-button-color-background-glow: oklch(from var(--clay-primary-color) calc(l + 0.2) c h);
+      --clay-button-color-background: oklch(from var(--clay-alert-color-botton-cancel) calc(l - 0.3) c h);
+      --clay-button-color-background-glow: oklch(from var(--clay-alert-color-botton-cancel) calc(l + 0.2) c h);
       --clay-button-color-outline: oklch(from var(--clay-button-color-background-glow) l c calc(h + 180));
       --clay-button-color-shadow: var(--black);
 
-      --clay-button-color-background-hover: oklch(from var(--clay-primary-color) calc(l + 0.05) c h);
-      --clay-button-color-background-focus: oklch(from var(--clay-primary-color) calc(l + 0.10) c h);
-      --clay-button-color-background-active: oklch(from var(--clay-primary-color) calc(l - 0.05) c h);
+      --clay-button-color-background-hover: oklch(from var(--clay-alert-color-botton-cancel) calc(l + 0.05) c h);
+      --clay-button-color-background-focus: oklch(from var(--clay-alert-color-botton-cancel) calc(l + 0.10) c h);
+      --clay-button-color-background-active: oklch(from var(--clay-alert-color-botton-cancel) calc(l - 0.05) c h);
 
-      --clay-button-color-shadow-hover: oklch(from var(--clay-primary-color) calc(l - 0.15) c h);
-      --clay-button-color-outline-focus: oklch(from var(--clay-primary-color) l c calc(h + 180));
-    }
-  }
+      --clay-button-color-shadow-hover: oklch(from var(--clay-alert-color-botton-cancel) calc(l - 0.15) c h);
+      --clay-button-color-outline-focus: oklch(from var(--clay-alert-color-botton-cancel) l c calc(h + 180));
+    }  }
 }
 </style>
