@@ -4,6 +4,7 @@ import { ref } from "vue";
 
 interface StoryArgs {
     modelValue: boolean;
+    theme?: boolean;
     "update:modelValue": (value: boolean) => void;
 }
 
@@ -16,6 +17,19 @@ const meta: Meta<StoryArgs> = {
             name: "Model Value",
             type: { name: "boolean", required: false },
             description: "The value of the switch.",
+            table: {
+                category: "Component's",
+                defaultValue: { summary: "false" },
+                type: { summary: "boolean" }
+            },
+            control: {
+                type: "boolean"
+            }
+        },
+        theme: {
+            name: "Theme Mode",
+            type: { name: "boolean", required: false },
+            description: "Enable theme mode with sun/moon icons.",
             table: {
                 category: "Component's",
                 defaultValue: { summary: "false" },
@@ -66,11 +80,13 @@ export const Theme: Story = {
         setup: () =>
         {
             const modelValue = ref(args.modelValue || true);
-            return { modelValue };
+            const theme = ref(args.theme || true);
+            return { modelValue, theme };
         },
-        template: `<ClaySwitch v-model="modelValue" />`
+        template: `<ClaySwitch v-model="modelValue" :theme="theme" />`
     }),
     args: {
-        modelValue: true
+        modelValue: true,
+        theme: true
     }
 };
