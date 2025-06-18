@@ -42,7 +42,7 @@
            class="switch"
            :class="{
                'theme-switch': theme,
-               [`switch-${size}`]: size
+               [`switch-${size}`]: size,
            }">
         <input :id="switchId"
                v-model="localValue"
@@ -105,15 +105,15 @@ $switch-color-border: color.scale($switch-color-background, $lightness: +70%);
 
         &:checked + .slider {
             background-color: var(--clay-switch-color-background);
-            box-shadow: inset 6px 6px 12px rgba(0, 0, 0, 0.2),
-            inset -6px -6px 12px rgba(255, 255, 255, 0.1), 2px 2px 8px rgba(0, 0, 0, 0.15);
+            box-shadow: inset 6px 6px 12px
+            rgba(0, 0, 0, 0.2), inset -6px -6px 12px rgba(255, 255, 255, 0.1), 2px 2px 8px rgba(0, 0, 0, 0.15);
         }
 
         &:checked + .slider::before {
             transform: translateX(22px);
             animation: switch 0.5s cubic-bezier(0.4, 0, 0.2, 1);
-            box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.3), 0px 2px 6px
-            rgba(0, 0, 0, 0.2), inset 2px 2px 6px rgba(255, 255, 255, 0.9), inset -2px -2px 6px rgba(0, 0, 0, 0.1);
+            box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.3), 0px 2px 6px rgba(0, 0, 0, 0.2),
+            inset 2px 2px 6px rgba(255, 255, 255, 0.9), inset -2px -2px 6px rgba(0, 0, 0, 0.1);
         }
     }
 }
@@ -163,8 +163,8 @@ $switch-color-border: color.scale($switch-color-background, $lightness: +70%);
     right: 0;
     bottom: 0;
     transition: 0.3s;
-    box-shadow: inset 8px 8px 16px var(--clay-shadow-dark),
-    inset -8px -8px 16px var(--clay-shadow-light), 2px 2px 8px rgba(0, 0, 0, 0.1);
+    box-shadow: inset 8px 8px 16px var(--clay-shadow-dark), inset -8px -8px 16px var(--clay-shadow-light), 2px 2px 8px
+    rgba(0, 0, 0, 0.1);
 
     &::before {
         position: absolute;
@@ -176,8 +176,9 @@ $switch-color-border: color.scale($switch-color-background, $lightness: +70%);
         background-color: #fafafa;
         border-radius: 50%;
         transition: 0.5s;
-        box-shadow: 4px 4px 8px var(--clay-shadow-dark), -4px -4px 8px var(--clay-shadow-light),
-        inset 2px 2px 4px rgba(255, 255, 255, 0.8), inset -2px -2px 4px rgba(0, 0, 0, 0.1);
+        box-shadow: 4px 4px 8px var(--clay-shadow-dark), -4px -4px 8px var(--clay-shadow-light), inset 2px 2px 4px
+        rgba(255, 255, 255, 0.8), inset -2px -2px 4px
+        rgba(0, 0, 0, 0.1);
     }
 }
 
@@ -209,7 +210,6 @@ $switch-color-border: color.scale($switch-color-background, $lightness: +70%);
 }
 
 @media (prefers-color-scheme: dark) {
-
     $button-color-background: color.adjust(variables.$primary-color, $lightness: -30%);
 
     :root {
@@ -217,26 +217,26 @@ $switch-color-border: color.scale($switch-color-background, $lightness: +70%);
     }
     .slider {
         background-color: var(--clay-switch-bg-dark);
-        box-shadow: inset 6px 6px 12px var(--clay-shadow-dark-dark),
-        inset -6px -6px 12px var(--clay-shadow-light-dark), 2px 2px 8px rgba(0, 0, 0, 0.2);
+        box-shadow: inset 6px 6px 12px
+        var(--clay-shadow-dark-dark), inset -6px -6px 12px var(--clay-shadow-light-dark), 2px 2px 8px
+        rgba(0, 0, 0, 0.2);
 
         &::before {
             background-color: var(--clay-switch-toggle-dark);
-            box-shadow: 3px 3px 6px var(--clay-shadow-dark-dark), -3px -3px 6px
-            var(--clay-shadow-light-dark), inset 2px 2px 4px rgba(255, 255, 255, 0.15),
-            inset -2px -2px 4px rgba(0, 0, 0, 0.2);
+            box-shadow: 3px 3px 6px var(--clay-shadow-dark-dark), -3px -3px 6px var(--clay-shadow-light-dark),
+            inset 2px 2px 4px rgba(255, 255, 255, 0.15), inset -2px -2px 4px rgba(0, 0, 0, 0.2);
         }
     }
 
     .switch input:checked + .slider {
         background-color: var(--clay-button-color-background);
-        box-shadow: inset 4px 4px 8px rgba(0, 0, 0, 0.3), inset -4px -4px 8px
-        rgba(255, 255, 255, 0.1), 2px 2px 6px rgba(0, 0, 0, 0.15);
+        box-shadow: inset 4px 4px 8px
+        rgba(0, 0, 0, 0.3), inset -4px -4px 8px rgba(255, 255, 255, 0.1), 2px 2px 6px rgba(0, 0, 0, 0.15);
 
         &::before {
             background-color: #ffffff;
-            box-shadow: 0px 3px 8px rgba(0, 0, 0, 0.3), 0px 1px 4px
-            rgba(0, 0, 0, 0.2), inset 2px 2px 4px rgba(255, 255, 255, 0.25), inset -2px -2px 4px rgba(0, 0, 0, 0.25);
+            box-shadow: 0px 3px 8px rgba(0, 0, 0, 0.3), 0px 1px 4px rgba(0, 0, 0, 0.2), inset 2px 2px 4px
+            rgba(255, 255, 255, 0.25), inset -2px -2px 4px rgba(0, 0, 0, 0.25);
         }
     }
 }
