@@ -9,6 +9,11 @@
         theme: {
             type: Boolean,
             default: false
+        },
+        size: {
+            type: String,
+            default: "medium",
+            validator: (value: string) => ["small", "medium", "large"].includes(value)
         }
     });
 
@@ -35,7 +40,10 @@
 <template>
     <label :for="switchId"
            class="switch"
-           :class="{ 'theme-switch': theme }">
+           :class="{
+               'theme-switch': theme,
+               [`switch-${size}`]: size
+           }">
         <input :id="switchId"
                v-model="localValue"
                type="checkbox" />
@@ -110,6 +118,41 @@ $switch-color-border: color.scale($switch-color-background, $lightness: +70%);
     }
 }
 
+// Size variants
+.switch-small {
+    width: 36px;
+    height: 20px;
+
+    .slider::before {
+        height: 16px;
+        width: 16px;
+        left: 2px;
+        bottom: 2px;
+    }
+
+    input:checked + .slider::before {
+        transform: translateX(16px);
+        animation: switch-small 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+}
+
+.switch-large {
+    width: 66px;
+    height: 36px;
+
+    .slider::before {
+        height: 30px;
+        width: 30px;
+        left: 3px;
+        bottom: 3px;
+    }
+
+    input:checked + .slider::before {
+        transform: translateX(30px);
+        animation: switch-large 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+}
+
 .slider {
     position: absolute;
     cursor: pointer;
@@ -144,6 +187,24 @@ $switch-color-border: color.scale($switch-color-background, $lightness: +70%);
     }
     to {
         transform: translateX(22px);
+    }
+}
+
+@keyframes switch-small {
+    from {
+        transform: translateX(0);
+    }
+    to {
+        transform: translateX(16px);
+    }
+}
+
+@keyframes switch-large {
+    from {
+        transform: translateX(0);
+    }
+    to {
+        transform: translateX(30px);
     }
 }
 
@@ -199,11 +260,43 @@ $switch-color-border: color.scale($switch-color-background, $lightness: +70%);
             height: 14px;
             transition: color 0.3s ease;
         }
-
     }
 
     input:checked + .slider .theme-icon {
         transform: translateX(22px);
+    }
+
+    // Size-specific theme icon adjustments
+    &.switch-small .theme-icon {
+        top: 2px;
+        left: 2px;
+        width: 16px;
+        height: 16px;
+
+        svg {
+            width: 8px;
+            height: 8px;
+        }
+    }
+
+    &.switch-small input:checked + .slider .theme-icon {
+        transform: translateX(16px);
+    }
+
+    &.switch-large .theme-icon {
+        top: 3px;
+        left: 3px;
+        width: 30px;
+        height: 30px;
+
+        svg {
+            width: 16px;
+            height: 16px;
+        }
+    }
+
+    &.switch-large input:checked + .slider .theme-icon {
+        transform: translateX(30px);
     }
 }
 </style>
