@@ -5,6 +5,7 @@ import { ref } from "vue";
 interface StoryArgs {
     modelValue: boolean;
     theme?: boolean;
+    size?: "small" | "medium" | "large";
     "update:modelValue": (value: boolean) => void;
 }
 
@@ -38,6 +39,20 @@ const meta: Meta<StoryArgs> = {
             control: {
                 type: "boolean"
             }
+        },
+        size: {
+            name: "Size",
+            type: { name: "string", required: false },
+            description: "The size of the switch.",
+            table: {
+                category: "Component's",
+                defaultValue: { summary: "medium" },
+                type: { summary: "string" }
+            },
+            control: {
+                type: "select"
+            },
+            options: ["small", "medium", "large"]
         }
     }
 };
@@ -56,7 +71,8 @@ export const Default: Story = {
         template: `<ClaySwitch v-model="modelValue" />`
     }),
     args: {
-        modelValue: false
+        modelValue: false,
+        size: "small"
     }
 };
 
@@ -88,5 +104,77 @@ export const Theme: Story = {
     args: {
         modelValue: true,
         theme: true
+    }
+};
+
+export const Small: Story = {
+    render: (args: StoryArgs) => ({
+        components: { ClaySwitch },
+        setup: () =>
+        {
+            const modelValue = ref(args.modelValue || false);
+            const size = ref(args.size || "small");
+            return { modelValue, size };
+        },
+        template: `<ClaySwitch v-model="modelValue" :size="size" />`
+    }),
+    args: {
+        modelValue: false,
+        size: "small"
+    }
+};
+
+export const Large: Story = {
+    render: (args: StoryArgs) => ({
+        components: { ClaySwitch },
+        setup: () =>
+        {
+            const modelValue = ref(args.modelValue || false);
+            const size = ref(args.size || "large");
+            return { modelValue, size };
+        },
+        template: `<ClaySwitch v-model="modelValue" :size="size" />`
+    }),
+    args: {
+        modelValue: false,
+        size: "large"
+    }
+};
+
+export const ThemeSmall: Story = {
+    render: (args: StoryArgs) => ({
+        components: { ClaySwitch },
+        setup: () =>
+        {
+            const modelValue = ref(args.modelValue || true);
+            const theme = ref(args.theme || true);
+            const size = ref(args.size || "small");
+            return { modelValue, theme, size };
+        },
+        template: `<ClaySwitch v-model="modelValue" :theme="theme" :size="size" />`
+    }),
+    args: {
+        modelValue: true,
+        theme: true,
+        size: "small"
+    }
+};
+
+export const ThemeLarge: Story = {
+    render: (args: StoryArgs) => ({
+        components: { ClaySwitch },
+        setup: () =>
+        {
+            const modelValue = ref(args.modelValue || true);
+            const theme = ref(args.theme || true);
+            const size = ref(args.size || "large");
+            return { modelValue, theme, size };
+        },
+        template: `<ClaySwitch v-model="modelValue" :theme="theme" :size="size" />`
+    }),
+    args: {
+        modelValue: true,
+        theme: true,
+        size: "large"
     }
 };
