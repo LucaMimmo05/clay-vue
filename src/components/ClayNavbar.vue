@@ -24,12 +24,12 @@ import ClayCard from "./ClayCard.vue";
 @use "@/assets/scss/mixins";
 @use "@/assets/scss/variables";
 
-.clay-navbar {
+ .clay-navbar {
   display: flex;
   align-items: center;
   justify-content: space-between;
   color: var(--clay-light-color);
-  font-family: 'Montserrat', Arial, sans-serif;
+  font-family: #{variables.$font-family};
   font-weight: 500;
   font-size: 1.15em;
   min-height: 3.5em;
@@ -50,7 +50,7 @@ import ClayCard from "./ClayCard.vue";
     }
 
     .clay-navbar__brand-text {
-      font-family: 'Montserrat', Arial, sans-serif;
+      font-family: #{variables.$font-family};
       font-weight: 900;
       font-style: italic;
       letter-spacing: 0.05em;
@@ -93,6 +93,13 @@ import ClayCard from "./ClayCard.vue";
           transition: color var(--clay-ease-duration) var(--clay-ease-function),
                       transform var(--clay-ease-duration) var(--clay-ease-function),
                       font-size var(--clay-ease-duration) var(--clay-ease-function);
+        }
+        &:not(:hover) {
+          transition: color var(--clay-ease-duration) var(--clay-ease-function),
+                      transform var(--clay-ease-duration) var(--clay-ease-function),
+                      font-size var(--clay-ease-duration) var(--clay-ease-function);
+          transform: scale(1);
+          font-size: 1em;
         }
       }
     }
