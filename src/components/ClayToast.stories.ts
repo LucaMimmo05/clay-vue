@@ -41,7 +41,7 @@ export const Default: StoryObj<StoryArgs> = {
                 <ClayToast
                     :type="args.type"
                     :message="args.content"
-                    :duration="3000"
+                    :duration=""
                     @close="() => console.log('Toast closed')"
                 />
             </div>
