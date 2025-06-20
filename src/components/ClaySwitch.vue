@@ -71,15 +71,9 @@
 </template>
 
 <style lang="scss">
-@use "sass:color";
-@use "@/assets/scss/variables";
-
-$switch-color-background: variables.$primary-color;
-$switch-color-border: color.scale($switch-color-background, $lightness: +70%);
-
 :root {
-    --clay-switch-color-background: #{$switch-color-background};
-    --clay-switch-color-border: #{$switch-color-border};
+    --clay-switch-color-background: rgb(87, 185, 255);
+    --clay-switch-color-border: rgba(87, 185, 255, 0.3);
 
     --clay-shadow-light: #ffffff;
     --clay-shadow-dark: #d1d9e6;
@@ -87,7 +81,7 @@ $switch-color-border: color.scale($switch-color-background, $lightness: +70%);
     --clay-shadow-light-dark: #6b7280;
     --clay-shadow-dark-dark: #374151;
     --clay-switch-bg-dark: #4b5563;
-    --clay-switch-bg-dark-checked: color.adjust($switch-color-background, $lightness: -20%);
+    --clay-switch-bg-dark-checked: rgb(69, 148, 204);
     --clay-switch-toggle-dark: #9ca3af;
 }
 
@@ -105,15 +99,15 @@ $switch-color-border: color.scale($switch-color-background, $lightness: +70%);
 
         &:checked + .slider {
             background-color: var(--clay-switch-color-background);
-            box-shadow: inset 6px 6px 12px
-            rgba(0, 0, 0, 0.2), inset -6px -6px 12px rgba(255, 255, 255, 0.1), 2px 2px 8px rgba(0, 0, 0, 0.15);
+            box-shadow: inset 6px 6px 12px rgba(0, 0, 0, 0.2), inset -6px -6px 12px
+            rgba(255, 255, 255, 0.1), 2px 2px 8px rgba(0, 0, 0, 0.15);
         }
 
         &:checked + .slider::before {
             transform: translateX(22px);
-            animation: switch 0.5s cubic-bezier(0.4, 0, 0.2, 1);
-            box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.3), 0px 2px 6px rgba(0, 0, 0, 0.2),
-            inset 2px 2px 6px rgba(255, 255, 255, 0.9), inset -2px -2px 6px rgba(0, 0, 0, 0.1);
+            animation: switch 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.3), 0px 2px 6px
+            rgba(0, 0, 0, 0.2), inset 2px 2px 6px rgba(255, 255, 255, 0.9), inset -2px -2px 6px rgba(0, 0, 0, 0.1);
         }
     }
 }
@@ -132,7 +126,7 @@ $switch-color-border: color.scale($switch-color-background, $lightness: +70%);
 
     input:checked + .slider::before {
         transform: translateX(16px);
-        animation: switch-small 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+        animation: switch-small 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
     }
 }
 
@@ -149,7 +143,7 @@ $switch-color-border: color.scale($switch-color-background, $lightness: +70%);
 
     input:checked + .slider::before {
         transform: translateX(30px);
-        animation: switch-large 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+        animation: switch-large 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
     }
 }
 
@@ -162,9 +156,9 @@ $switch-color-border: color.scale($switch-color-background, $lightness: +70%);
     left: 0;
     right: 0;
     bottom: 0;
-    transition: 0.3s;
-    box-shadow: inset 8px 8px 16px var(--clay-shadow-dark), inset -8px -8px 16px var(--clay-shadow-light), 2px 2px 8px
-    rgba(0, 0, 0, 0.1);
+    transition: background-color 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.3s ease;
+    box-shadow: inset 8px 8px 16px var(--clay-shadow-dark), inset -8px -8px 16px
+    var(--clay-shadow-light), 2px 2px 8px rgba(0, 0, 0, 0.1);
 
     &::before {
         position: absolute;
@@ -175,68 +169,84 @@ $switch-color-border: color.scale($switch-color-background, $lightness: +70%);
         bottom: 3px;
         background-color: #fafafa;
         border-radius: 50%;
-        transition: 0.5s;
-        box-shadow: 4px 4px 8px var(--clay-shadow-dark), -4px -4px 8px var(--clay-shadow-light), inset 2px 2px 4px
-        rgba(255, 255, 255, 0.8), inset -2px -2px 4px
-        rgba(0, 0, 0, 0.1);
+        transition: transform 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.3s ease;
+        box-shadow: 4px 4px 8px var(--clay-shadow-dark), -4px -4px 8px
+        var(--clay-shadow-light), inset 2px 2px 4px rgba(255, 255, 255, 0.8), inset -2px -2px 4px rgba(0, 0, 0, 0.1);
     }
 }
 
 @keyframes switch {
-    from {
+    0% {
         transform: translateX(0);
     }
-    to {
+    60% {
+        transform: translateX(24px);
+    }
+    100% {
         transform: translateX(22px);
     }
 }
 
 @keyframes switch-small {
-    from {
+    0% {
         transform: translateX(0);
     }
-    to {
+    60% {
+        transform: translateX(18px);
+    }
+    100% {
         transform: translateX(16px);
     }
 }
 
 @keyframes switch-large {
-    from {
+    0% {
         transform: translateX(0);
     }
-    to {
+    60% {
+        transform: translateX(32px);
+    }
+    100% {
         transform: translateX(30px);
     }
 }
 
 @media (prefers-color-scheme: dark) {
-    $button-color-background: color.adjust(variables.$primary-color, $lightness: -30%);
-
     :root {
-        --clay-button-color-background: #{$button-color-background};
+        --clay-button-color-background: rgb(69, 148, 204);
     }
     .slider {
         background-color: var(--clay-switch-bg-dark);
-        box-shadow: inset 6px 6px 12px
-        var(--clay-shadow-dark-dark), inset -6px -6px 12px var(--clay-shadow-light-dark), 2px 2px 8px
-        rgba(0, 0, 0, 0.2);
+        box-shadow: inset 6px 6px 12px var(--clay-shadow-dark-dark),
+        inset -6px -6px 12px var(--clay-shadow-light-dark), 2px 2px 8px rgba(0, 0, 0, 0.2);
 
         &::before {
             background-color: var(--clay-switch-toggle-dark);
-            box-shadow: 3px 3px 6px var(--clay-shadow-dark-dark), -3px -3px 6px var(--clay-shadow-light-dark),
-            inset 2px 2px 4px rgba(255, 255, 255, 0.15), inset -2px -2px 4px rgba(0, 0, 0, 0.2);
+            box-shadow: 3px 3px 6px var(--clay-shadow-dark-dark), -3px -3px 6px
+            var(--clay-shadow-light-dark), inset 2px 2px 4px rgba(255, 255, 255, 0.15),
+            inset -2px -2px 4px rgba(0, 0, 0, 0.2);
         }
     }
 
     .switch input:checked + .slider {
         background-color: var(--clay-button-color-background);
-        box-shadow: inset 4px 4px 8px
-        rgba(0, 0, 0, 0.3), inset -4px -4px 8px rgba(255, 255, 255, 0.1), 2px 2px 6px rgba(0, 0, 0, 0.15);
+        box-shadow: inset 4px 4px 8px rgba(0, 0, 0, 0.3), inset -4px -4px 8px
+        rgba(255, 255, 255, 0.1), 2px 2px 6px rgba(0, 0, 0, 0.15);
 
         &::before {
             background-color: #ffffff;
-            box-shadow: 0px 3px 8px rgba(0, 0, 0, 0.3), 0px 1px 4px rgba(0, 0, 0, 0.2), inset 2px 2px 4px
-            rgba(255, 255, 255, 0.25), inset -2px -2px 4px rgba(0, 0, 0, 0.25);
+            box-shadow: 0px 3px 8px rgba(0, 0, 0, 0.3), 0px 1px 4px rgba(0, 0, 0, 0.2),
+            inset 2px 2px 4px rgba(255, 255, 255, 0.25), inset -2px -2px 4px rgba(0, 0, 0, 0.25);
+        }
+    }
+
+    .theme-switch .theme-icon {
+        svg.sun-icon {
+            color: #ffffff !important;
+        }
+
+        svg.moon-icon {
+            color: #000000 !important;
         }
     }
 }
@@ -252,13 +262,21 @@ $switch-color-border: color.scale($switch-color-background, $lightness: +70%);
         align-items: center;
         justify-content: center;
         z-index: 10;
-        transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+        transition: transform 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         pointer-events: none;
 
         svg {
             width: 14px;
             height: 14px;
             transition: color 0.3s ease;
+        }
+
+        .sun-icon {
+            color: #f59e0b;
+        }
+
+        .moon-icon {
+            color: #6366f1;
         }
     }
 
