@@ -1,35 +1,44 @@
 @use "./variables";
 
+@import url('https://fonts.googleapis.com/css2?family=Baloo+2:wght@400..800&display=swap');
+
 :root
 {
     --black: rgb(0, 0, 0);
     --white: rgb(255, 255, 255);
 
-    --clay-light-color-background: rgb(248, 248, 248);
-    --clay-dark-color-background: rgb(51, 51, 51);
+    --clay-light-color: #{variables.$light-color};
+    --clay-dark-color: #{variables.$dark-color};
 
     --clay-primary-color: #{variables.$primary-color};
 
     --clay-ease-duration: #{variables.$ease-duration};
     --clay-ease-function: #{variables.$ease-function};
 
+    --clay-text-color: var(--black);
+
     @media (prefers-color-scheme: light)
     {
-        --clay-color-background: var(--clay-light-color-background);
+        --clay-color-background: var(--clay-light-color);
+        --clay-text-color: var(--black);
     }
     @media (prefers-color-scheme: dark)
     {
-        --clay-color-background: var(--clay-dark-color-background);
+        --clay-color-background: var(--clay-dark-color);
+        --clay-text-color: var(--white);
     }
 }
 
 body
 {
     background-color: var(--clay-color-background);
+    color: var(--clay-text-color);
     color-scheme: normal;
     height: 100%;
+    font-family: #{variables.$font-family};
     text-align: center;
-    transition: background-color var(--clay-ease-duration) var(--clay-ease-function);
+    transition: background-color var(--clay-ease-duration) var(--clay-ease-function),
+                color var(--clay-ease-duration) var(--clay-ease-function);
 
     &[light]
     {
