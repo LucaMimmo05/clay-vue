@@ -47,13 +47,23 @@ const meta: Meta<StoryArgs> = {
             table: {
                 category: "Component's",
                 defaultValue: { summary: "medium" },
-                type: { summary: "string" }
+                type: { summary: "small | medium | large" }
             },
             control: {
-                type: "select"
+                type: "select",
+                labels: {
+                    small: "Small",
+                    medium: "Medium",
+                    large: "Large"
+                }
             },
             options: ["small", "medium", "large"]
         }
+    },
+    args: {
+        modelValue: false,
+        theme: false,
+        size: "medium"
     }
 };
 
@@ -66,115 +76,30 @@ export const Default: Story = {
         setup: () =>
         {
             const modelValue = ref(args.modelValue || false);
-            return { modelValue };
+            return { args, modelValue };
         },
-        template: `<ClaySwitch v-model="modelValue" />`
+        template: `<ClaySwitch v-model="modelValue" :theme="args.theme" :size="args.size" />`
     }),
     args: {
         modelValue: false,
-        size: "small"
+        theme: false,
+        size: "medium"
     }
 };
 
-export const Checked: Story = {
-    render: (args: StoryArgs) => ({
-        components: { ClaySwitch },
-        setup: () =>
-        {
-            const modelValue = ref(args.modelValue || true);
-            return { modelValue };
-        },
-        template: `<ClaySwitch v-model="modelValue" />`
-    }),
-    args: {
-        modelValue: true
-    }
-};
 export const Theme: Story = {
     render: (args: StoryArgs) => ({
         components: { ClaySwitch },
         setup: () =>
         {
             const modelValue = ref(args.modelValue || true);
-            const theme = ref(args.theme || true);
-            return { modelValue, theme };
+            return { args, modelValue };
         },
-        template: `<ClaySwitch v-model="modelValue" :theme="theme" />`
-    }),
-    args: {
-        modelValue: true,
-        theme: true
-    }
-};
-
-export const Small: Story = {
-    render: (args: StoryArgs) => ({
-        components: { ClaySwitch },
-        setup: () =>
-        {
-            const modelValue = ref(args.modelValue || false);
-            const size = ref(args.size || "small");
-            return { modelValue, size };
-        },
-        template: `<ClaySwitch v-model="modelValue" :size="size" />`
-    }),
-    args: {
-        modelValue: false,
-        size: "small"
-    }
-};
-
-export const Large: Story = {
-    render: (args: StoryArgs) => ({
-        components: { ClaySwitch },
-        setup: () =>
-        {
-            const modelValue = ref(args.modelValue || false);
-            const size = ref(args.size || "large");
-            return { modelValue, size };
-        },
-        template: `<ClaySwitch v-model="modelValue" :size="size" />`
-    }),
-    args: {
-        modelValue: false,
-        size: "large"
-    }
-};
-
-export const ThemeSmall: Story = {
-    render: (args: StoryArgs) => ({
-        components: { ClaySwitch },
-        setup: () =>
-        {
-            const modelValue = ref(args.modelValue || true);
-            const theme = ref(args.theme || true);
-            const size = ref(args.size || "small");
-            return { modelValue, theme, size };
-        },
-        template: `<ClaySwitch v-model="modelValue" :theme="theme" :size="size" />`
+        template: `<ClaySwitch v-model="modelValue" :theme="args.theme" :size="args.size" />`
     }),
     args: {
         modelValue: true,
         theme: true,
-        size: "small"
-    }
-};
-
-export const ThemeLarge: Story = {
-    render: (args: StoryArgs) => ({
-        components: { ClaySwitch },
-        setup: () =>
-        {
-            const modelValue = ref(args.modelValue || true);
-            const theme = ref(args.theme || true);
-            const size = ref(args.size || "large");
-            return { modelValue, theme, size };
-        },
-        template: `<ClaySwitch v-model="modelValue" :theme="theme" :size="size" />`
-    }),
-    args: {
-        modelValue: true,
-        theme: true,
-        size: "large"
+        size: "medium"
     }
 };
