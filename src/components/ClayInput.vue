@@ -44,13 +44,17 @@
 $input-color-background: variables.$primary-color;
 $input-color-outline: color.complement($input-color-background);
 $input-color-shadow: color.adjust($input-color-background, $lightness: -30%);
+$input-color-shadow-lightest: color.adjust($input-color-background, $lightness: +5%);
+$input-color-shadow-darkest: color.adjust($input-color-shadow, $lightness: -20%);
 
 :root {
     --clay-input-color-background: #{$input-color-background};
-    --clay-input-color-background-dark: #{$input-color-background};
+    --clay-input-color-background-light: #fff;
+    --clay-input-color-background-dark: #262525;
     --clay-input-color-outline: #{$input-color-outline};
     --clay-input-color-shadow: #{$input-color-shadow};
-
+    --clay-input-color-shadow-lightest: #{$input-color-shadow-lightest};
+    --clay-input-color-shadow-darkest: #{$input-color-shadow-darkest};
     --clay-input-spacing-x: 1em;
     --clay-input-spacing-y: 1em;
     --clay-input-spacing: var(--clay-input-spacing-x) var(--clay-input-spacing-y);
@@ -65,15 +69,16 @@ $input-color-shadow: color.adjust($input-color-background, $lightness: -30%);
     padding: var(--clay-input-spacing);
     font-size: 1em;
     position: relative;
-    box-shadow: 0px 2px 6px 0px var(--clay-input-color-shadow) inset;
-    background: var(--clay-input-color-background);
+    box-shadow: 0 0 0 0 rgba(from var(--clay-input-color-outline) r g b / 0),
+    0px 2px 6px 0px var(--clay-input-color-shadow) inset;
+    background: var(--clay-input-color-background-light);
 
     transition: background-color var(--clay-ease-duration) var(--clay-ease-function),
     box-shadow var(--clay-ease-duration) var(--clay-ease-function),
     color var(--clay-ease-duration) var(--clay-ease-function),
 
     transform var(--clay-ease-duration) var(--clay-ease-function);
-    color: white;
+    color: black;
 
     &::before {
         border-radius: var(--clay-input-roundness);
@@ -101,12 +106,14 @@ $input-color-shadow: color.adjust($input-color-background, $lightness: -30%);
     }
 
     &:focus-visible {
-        box-shadow: 0px 4px 4px 0px var(--clay-input-color-shadow) inset, 0px 4px 4px 0px
-        var(--clay-input-color-shadow);
+        box-shadow:0 0 0 0.15em rgba(from var(--clay-input-color-outline) r g b / 1),
+         0px 4px 4px 0px var(--clay-input-color-shadow-lightest) inset,
+        0px 6px 4px 0px var(--clay-input-color-shadow);
+        transform: translateY(-0.0625em) scale(1.1);
     }
 
     &::placeholder {
-        color: #fff;
+        color: #262525;
     }
 }
 .clay-input--small {
@@ -124,12 +131,13 @@ $input-color-shadow: color.adjust($input-color-background, $lightness: -30%);
 @media (prefers-color-scheme: dark) {
     .clay-input {
         background-color: var(--clay-input-color-background-dark);
-        box-shadow: 0px 2px 6px 0px rgba(from var(--clay-input-color-shadow) r g b / 0.8) inset;
-
-        transition: background-color var(--clay-ease-duration-dark-theme-input)
-        var(--clay-ease-function), box-shadow var(--clay-ease-duration-dark-theme-input)
-        var(--clay-ease-function), color var(--clay-ease-duration-dark-theme-input)
-        var(--clay-ease-function), transform var(--clay-ease-duration-dark-theme-input)
+        box-shadow:0 0 0 0 rgba(from var(--clay-input-color-outline) r g b / 0),
+        0px 7px 6px 0px rgba(from var(--clay-input-color-shadow-darkest) r g b / 0.8) inset;
+        color:#fff;
+        transition: background-color var(--clay-ease-duration)
+        var(--clay-ease-function), box-shadow var(--clay-ease-duration)
+        var(--clay-ease-function), color var(--clay-ease-duration)
+        var(--clay-ease-function), transform var(--clay-ease-duration)
         var(--clay-ease-function);
 
         &::placeholder {
@@ -137,9 +145,11 @@ $input-color-shadow: color.adjust($input-color-background, $lightness: -30%);
         }
 
         &:focus-visible {
-             box-shadow: 0px 3px 3px 0px var(--clay-input-color-shadow) inset, 0px 4px 4px 0px
-            var(--clay-input-color-shadow);
+            box-shadow: 0 0 0 0.15em rgba(from var(--clay-input-color-outline) r g b / 1),
+            0px 2px 4px 0px var(--clay-input-color-shadow) inset,
+            0px 6px 4px 0px var(--clay-input-color-shadow);
+            transform: translateY(-0.0625em) scale(1.1);
         }
     }
 }
-</style>
+    </style>
