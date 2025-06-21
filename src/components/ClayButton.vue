@@ -80,7 +80,6 @@
     :root
     {
         --clay-button-color-background: var(--clay-primary-color);
-        --clay-button-color-background: var(--clay-primary-color);
         --clay-button-color-outline: oklch(from var(--clay-button-color-background) l c calc(h + 180));
         --clay-button-color-shadow: oklch(from var(--clay-button-color-background) calc(l - 0.25) c h);
 

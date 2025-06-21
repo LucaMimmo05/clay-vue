@@ -1,5 +1,5 @@
 <script setup lang="ts">
-    import { ref, computed } from "vue";
+    import { computed } from "vue";
 
     const value = defineModel({
         type: String,
@@ -14,14 +14,8 @@
         large: {
             type: Boolean,
             default: false
-        },
-        placeholder: {
-            type: String,
-            default: ""
         }
     });
-
-    const $el = ref<HTMLInputElement | null>(null);
 
     const classes = computed(() => ({
         "clay-input--small": props.small,
@@ -30,12 +24,9 @@
 </script>
 
 <template>
-    <div class="clay-input-wrapper" :class="classes">
-        <input ref="$el"
-               v-model="value"
-               class="clay-input"
-               :placeholder="placeholder" />
-    </div>
+    <input v-model="value"
+           class="clay-input"
+           :class="classes" />
 </template>
 
 <style lang="scss">
@@ -154,4 +145,4 @@ $input-color-shadow-darkest: color.adjust($input-color-shadow, $lightness: -20%)
         }
     }
 }
-    </style>
+</style>
