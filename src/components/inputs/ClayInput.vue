@@ -103,11 +103,11 @@
         }
     }
 
-    .clay-input--small
+    &.clay-input--small
     {
         font-size: 0.75em;
     }
-    .clay-input--large
+    &.clay-input--large
     {
         font-size: 1.25em;
     }
