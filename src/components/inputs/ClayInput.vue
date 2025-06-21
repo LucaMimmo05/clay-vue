@@ -101,15 +101,15 @@
                 opacity: 0.25;
             }
         }
-    }
 
-    &.clay-input--small
-    {
-        font-size: 0.75em;
-    }
-    &.clay-input--large
-    {
-        font-size: 1.25em;
+        &.clay-input--small
+        {
+            font-size: 0.75em;
+        }
+        &.clay-input--large
+        {
+            font-size: 1.25em;
+        }
     }
 
     @media (prefers-color-scheme: dark)
