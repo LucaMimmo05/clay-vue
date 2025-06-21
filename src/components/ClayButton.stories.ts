@@ -18,7 +18,7 @@ const meta: Meta<StoryArgs> = {
         label: {
             name: "Text",
             type: { name: "string", required: true },
-            description: "The text to display inside the button.",
+            description: "The text displayed on the button.",
             table: {
                 category: "Component's",
                 defaultValue: { summary: "Click me!" },
@@ -29,7 +29,7 @@ const meta: Meta<StoryArgs> = {
         size: {
             name: "Size",
             type: { name: "string", required: false },
-            description: "The size used to display the button.",
+            description: "The size of the button.",
             table: {
                 category: "Component's",
                 defaultValue: { summary: "default" },
