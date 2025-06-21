@@ -1,23 +1,25 @@
 <script setup lang="ts">
     import { ref, computed } from "vue";
 
-    interface Props {
-        small?: boolean;
-        large?: boolean;
-        placeholder?: string;
-        value?: string;
-    }
-
-    const props = withDefaults(defineProps<Props>(), {
-        small: false,
-        large: false,
-        placeholder: "",
-        value: ""
+    const value = defineModel({
+        type: String,
+        default: ""
     });
 
-    // const emit = defineEmits<{
-    //     "update:value": [value: string];
-    // }>();
+    const props = defineProps({
+        small: {
+            type: Boolean,
+            default: false
+        },
+        large: {
+            type: Boolean,
+            default: false
+        },
+        placeholder: {
+            type: String,
+            default: ""
+        }
+    });
 
     const $el = ref<HTMLInputElement | null>(null);
 
@@ -30,9 +32,9 @@
 <template>
     <div class="clay-input-wrapper" :class="classes">
         <input ref="$el"
+               v-model="value"
                class="clay-input"
-               :placeholder="placeholder"
-               :value="value" />
+               :placeholder="placeholder" />
     </div>
 </template>
 
