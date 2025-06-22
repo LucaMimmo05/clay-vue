@@ -54,7 +54,7 @@ export const Default: StoryObj<StoryArgs> = {
     render: (args) => ({
         components: { ClayTextarea },
         setup: () => ({ args }),
-        template: `<ClayTextarea id="storybook--story__clay-input"
+        template: `<ClayTextarea id="storybook--story__clay-textarea"
                                  :placeholder="args.placeholder"
                                  :small="args.size === 'small'"
                                  :large="args.size === 'large'" />`
