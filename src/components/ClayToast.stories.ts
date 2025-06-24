@@ -4,7 +4,6 @@ import ClayToast from "./ClayToast.vue";
 interface StoryArgs {
     type?: "success" | "error" | "warning" | "information";
     content?: string;
-    variant?: "default" | "glass";
     duration?: number;
     relative?: boolean;
 }
@@ -22,11 +21,6 @@ const meta: Meta<StoryArgs> = {
             name: "Content",
             control: "text"
         },
-        variant: {
-            name: "Variant",
-            control: { type: "select" },
-            options: ["default", "glass"]
-        },
         duration: {
             name: "Duration",
             control: "number"
@@ -35,13 +29,6 @@ const meta: Meta<StoryArgs> = {
             name: "Relative",
             control: "boolean"
         }
-    },
-    args: {
-        type: "success",
-        content: "Operazione completata! Questo è un toast.",
-        variant: "default",
-        duration: 3000,
-        relative: false
     }
 };
 
@@ -51,7 +38,6 @@ export const Default: StoryObj<StoryArgs> = {
     args: {
         type: "success",
         content: "",
-        variant: "default",
         duration: 3000,
         relative: false
     },
@@ -64,7 +50,6 @@ export const Default: StoryObj<StoryArgs> = {
                     :type="args.type"
                     :content="args.content"
                     :duration="args.duration"
-                    :variant="args.variant"
                     :relative="args.relative"
                     @close="() => console.log('Toast closed')"
                 />
@@ -77,7 +62,6 @@ export const Glass: StoryObj<StoryArgs> = {
     args: {
         type: "success",
         content: "",
-        variant: "glass",
         duration: 3000,
         relative: true
     },
@@ -98,8 +82,8 @@ export const Glass: StoryObj<StoryArgs> = {
                     :type="args.type"
                     :content="args.content"
                     :duration="args.duration"
-                    :variant="args.variant"
                     :relative="args.relative"
+                    glass
                     @close="() => console.log('Toast closed')"
                 />
             </div>

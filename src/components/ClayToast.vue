@@ -52,10 +52,9 @@
             type: Number,
             default: 3000
         },
-        variant: {
-            type: String,
-            default: "default",
-            validator: (v: string) => ["default", "glass"].includes(v)
+        glass: {
+            type: Boolean,
+            default: false
         },
         relative: {
             type: Boolean,
@@ -139,7 +138,7 @@
     const classes = computed((): Record<string, boolean> => ({
         "clay-toast": true,
         [`clay-toast--${props.type}`]: !!props.type,
-        "clay-card--glass": props.variant === "glass",
+        "clay-card--glass": props.glass,
         "clay-toast--relative": props.relative
     }));
 </script>
