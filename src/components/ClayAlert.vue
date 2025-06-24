@@ -198,17 +198,16 @@
             type: Boolean,
             default: false
         },
-        variant: {
-            type: String,
-            default: "default",
-            validator: (v: string) => ["default", "glass"].includes(v)
+        glass: {
+            type: Boolean,
+            default: false
         }
     });
 
     const visible = ref(true);
 
     const classes = computed((): Record<string, boolean> => ({
-        "clay-card--glass": props.variant === "glass"
+        "clay-card--glass": props.glass
     }));
 
     function closeAlert()
