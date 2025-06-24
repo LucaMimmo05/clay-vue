@@ -1,7 +1,13 @@
 import ClayDropdown from "./ClayDropdown.vue";
-import type { Meta, StoryObj } from "@storybook/vue3";
+import type { Meta, StoryObj } from "@storybook/vue3-vite";
 
-const meta: Meta<typeof ClayDropdown> = {
+interface StoryArgs {
+    items: { label: string; value: string }[];
+    placeholder: "Menu" | string;
+    modelValue: string;
+    click: () => void;
+}
+const meta: Meta<StoryArgs> = {
     title: "ClayDropdown",
     component: ClayDropdown,
     parameters: {
@@ -20,42 +26,29 @@ const meta: Meta<typeof ClayDropdown> = {
             control: "text",
             description: "Current selected value"
         }
-    }
-};
-
-export default meta;
-type Story = StoryObj<typeof meta>;
-
-export const Default: Story = {
+    },
     args: {
         items: [
             { label: "Opzione 1", value: "option1" },
             { label: "Opzione 2", value: "option2" },
             { label: "Opzione 3", value: "option3" }
         ],
-        placeholder: "Menu"
+        placeholder: "Menu",
+        modelValue: ""
     }
 };
 
-export const WithSelection: Story = {
-    args: {
-        items: [
-            { label: "Option 1", value: "option1" },
-            { label: "Option 2", value: "option2" },
-            { label: "Option 3", value: "option3" }
-        ],
-        placeholder: "Select an option...",
-        modelValue: "option2"
-    }
+export const Primary: StoryObj<StoryArgs> = {
+    render: (args: StoryArgs) => ({
+        components: { ClayDropdown },
+        setup: () => ({ args }),
+        template: `
+            <ClayDropdown 
+                :items="args.items"
+                :placeholder="args.placeholder"
+                :modelValue="args.modelValue" />
+        `
+    })
 };
 
-export const WithLongText: Story = {
-    args: {
-        items: [
-            { label: "Opzione molto lunga che dovrebbe espandere il dropdown", value: "long1" },
-            { label: "Altra opzione con testo molto lungo per testare", value: "long2" },
-            { label: "Breve", value: "short" }
-        ],
-        placeholder: "Choose a long option..."
-    }
-};
+export default meta;
