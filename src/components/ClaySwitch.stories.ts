@@ -27,19 +27,7 @@ const meta: Meta<StoryArgs> = {
                 type: "boolean"
             }
         },
-        theme: {
-            name: "Theme Mode",
-            type: { name: "boolean", required: false },
-            description: "Enable theme mode with sun/moon icons.",
-            table: {
-                category: "Component's",
-                defaultValue: { summary: "false" },
-                type: { summary: "boolean" }
-            },
-            control: {
-                type: "boolean"
-            }
-        },
+
         size: {
             name: "Size",
             type: { name: "string", required: false },
@@ -67,10 +55,9 @@ const meta: Meta<StoryArgs> = {
     }
 };
 
-export default meta;
 type Story = StoryObj<StoryArgs>;
 
-export const Default: Story = {
+export const Primary: Story = {
     render: (args: StoryArgs) => ({
         components: { ClaySwitch },
         setup: () =>
@@ -103,3 +90,5 @@ export const Theme: Story = {
         size: "medium"
     }
 };
+
+export default meta;
