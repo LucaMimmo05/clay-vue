@@ -1,6 +1,7 @@
 <template>
     <ClayCard v-if="visible"
-              :class="['clay-alert', { 'clay-card--glass': props.variant === 'glass' }]"
+              class="clay-alert"
+              :class="classes"
               v-bind="$attrs">
         <button v-if="showCloseButton"
                 class="clay-alert__close-button"
@@ -197,14 +198,17 @@
             type: Boolean,
             default: false
         },
-        variant: {
-            type: String,
-            default: "default",
-            validator: (v: string) => ["default", "glass"].includes(v)
+        glass: {
+            type: Boolean,
+            default: false
         }
     });
 
     const visible = ref(true);
+
+    const classes = computed((): Record<string, boolean> => ({
+        "clay-card--glass": props.glass
+    }));
 
     function closeAlert()
     {
