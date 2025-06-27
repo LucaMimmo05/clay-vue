@@ -124,19 +124,13 @@
 
     .clay-accordion {
         border-radius: var(--clay-accordion-roundness);
-        overflow: hidden;
-
-        @include mixins.clay-shadow-elevation($color: var(--clay-accordion-color-shadow), $intensity: 0.5);
+        contain: layout;
+        overflow: visible;
+        padding: 0.5em;
 
         &__item {
-            background-color: var(--clay-accordion-color-background);
-            border-bottom: 1px solid var(--clay-accordion-color-border);
             position: relative;
             transition: background-color var(--clay-ease-duration) var(--clay-ease-function);
-
-            &:last-child {
-                border-bottom: none;
-            }
 
             &--disabled {
                 opacity: 0.6;
@@ -146,8 +140,12 @@
 
         &__header {
             align-items: center;
-            background: none;
+            background-color: var(--clay-accordion-color-background);
+            background-image: linear-gradient(rgba(from var(--white) r g b / 0.15),
+                              rgba(from var(--black) r g b / 0.05));
+            background-blend-mode: overlay;
             border: none;
+            border-radius: var(--clay-accordion-roundness);
             color: var(--clay-accordion-color-text);
             cursor: pointer;
             display: flex;
@@ -155,21 +153,58 @@
             font-size: 1em;
             font-weight: 600;
             justify-content: space-between;
+            margin: 0.25em;
             outline: none;
             padding: var(--clay-accordion-spacing);
             position: relative;
             text-align: left;
             transition: color var(--clay-ease-duration) var(--clay-ease-function),
-                        background-color var(--clay-ease-duration) var(--clay-ease-function);
-            width: 100%;
+                        background-color var(--clay-ease-duration) var(--clay-ease-function),
+                        transform var(--clay-ease-duration) var(--clay-ease-function),
+                        box-shadow var(--clay-ease-duration) var(--clay-ease-function);
+            width: calc(100% - 0.5em);
+            z-index: 2;
+
+            @include mixins.clay-shadow-elevation($color: var(--clay-accordion-color-shadow), $intensity: 0.3);
+
+            &::before {
+                border-radius: var(--clay-accordion-roundness);
+                bottom: 0;
+                content: "";
+                left: 0;
+                mix-blend-mode: multiply;
+                position: absolute;
+                right: 0;
+                top: 0;
+                transition: box-shadow var(--clay-ease-duration) var(--clay-ease-function);
+                z-index: -1;
+
+                @include mixins.clay-shadow-inset($color: var(--clay-primary-color), $intensity: 0.15);
+            }
 
             &:hover {
                 background-color: rgba(from var(--clay-primary-color) r g b / 0.05);
+                transform: translateY(-0.0625em) scale(1.02);
+
+                @include mixins.clay-shadow-elevation($color: var(--clay-accordion-color-shadow), $intensity: 0.5);
             }
 
             &:focus-visible {
                 background-color: rgba(from var(--clay-primary-color) r g b / 0.1);
-                box-shadow: inset 0 0 0 2px var(--clay-primary-color);
+                box-shadow: 0 0 0 2px var(--clay-primary-color);
+                transform: translateY(-0.0625em) scale(1.02);
+
+                @include mixins.clay-shadow-elevation($color: var(--clay-accordion-color-shadow), $intensity: 0.5);
+            }
+
+            &:active {
+                transform: translateY(0.125em) scale(1.05);
+
+                @include mixins.clay-shadow-elevation($color: var(--clay-accordion-color-shadow), $intensity: 0.8);
+
+                &::before {
+                    @include mixins.clay-shadow-inset($color: var(--clay-primary-color), $intensity: 0.3);
+                }
             }
 
             &:disabled {
@@ -200,14 +235,38 @@
         &__content {
             max-height: 0;
             overflow: hidden;
+            position: relative;
             transition: max-height var(--clay-ease-duration) var(--clay-ease-function),
                         padding var(--clay-ease-duration) var(--clay-ease-function);
+
+            &::before {
+                content: "";
+                position: absolute;
+                top: 0;
+                left: 0.5em;
+                right: 0.5em;
+                height: 100%;
+                border-radius: 0 0 calc(var(--clay-accordion-roundness) * 0.75)
+                    calc(var(--clay-accordion-roundness) * 0.75);
+                pointer-events: none;
+                z-index: 1;
+
+                @include mixins.clay-shadow-inset($color: var(--clay-accordion-color-shadow), $intensity: 0.2);
+            }
         }
 
         &__content-inner {
-            padding: 0 var(--clay-accordion-spacing-x) var(--clay-accordion-spacing-y);
+            background-color: rgba(from var(--clay-accordion-color-background) r g b / 0.3);
+            border-radius: 0 0 calc(var(--clay-accordion-roundness) * 0.75)
+                calc(var(--clay-accordion-roundness) * 0.75);
             color: var(--clay-accordion-color-text-secondary);
             line-height: 1.6;
+            margin: 0 0.5em;
+            padding: var(--clay-accordion-spacing-y) var(--clay-accordion-spacing-x);
+            position: relative;
+            z-index: 0;
+
+            @include mixins.clay-shadow-inset($color: var(--clay-accordion-color-shadow), $intensity: 0.15);
 
             p {
                 margin: 0;
@@ -215,12 +274,31 @@
         }
 
         &__item--open {
+            .clay-accordion__header {
+                transform: translateY(0.125em) scale(1.05);
+                z-index: 3;
+
+                @include mixins.clay-shadow-elevation($color: var(--clay-accordion-color-shadow), $intensity: 0.8);
+
+                &::before {
+                    @include mixins.clay-shadow-inset($color: var(--clay-primary-color), $intensity: 0.3);
+                }
+            }
+
             .clay-accordion__icon {
                 transform: rotate(180deg);
             }
 
             .clay-accordion__content {
                 max-height: 200px;
+
+                &::before {
+                    @include mixins.clay-shadow-inset($color: var(--clay-accordion-color-shadow), $intensity: 0.3);
+                }
+            }
+
+            .clay-accordion__content-inner {
+                @include mixins.clay-shadow-inset($color: var(--clay-accordion-color-shadow), $intensity: 0.25);
             }
         }
 
@@ -247,6 +325,16 @@
 
                 &:focus-visible {
                     background-color: rgba(from var(--clay-primary-color) r g b / 0.15);
+                }
+
+                &:active {
+                    --clay-accordion-color-shadow: oklch(from var(--clay-primary-color) calc(l - 0.1) c h);
+                }
+            }
+
+            &__item--open {
+                .clay-accordion__header {
+                    --clay-accordion-color-shadow: oklch(from var(--clay-primary-color) calc(l - 0.1) c h);
                 }
             }
         }

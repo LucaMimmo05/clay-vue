@@ -1,5 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/vue3-vite";
 import { fn } from "storybook/test";
+import { computed } from "vue";
 
 import ClayAccordion from "./ClayAccordion.vue";
 
@@ -15,6 +16,14 @@ interface StoryArgs {
     multiple: boolean;
     disabled: boolean;
     toggle: (id: string, isOpen: boolean) => void;
+    item1Title: string;
+    item2Title: string;
+    item3Title: string;
+    item4Title: string;
+    item1Content: string;
+    item2Content: string;
+    item3Content: string;
+    item4Content: string;
 }
 
 const defaultItems: AccordionItem[] = [
@@ -94,23 +103,144 @@ const meta: Meta<StoryArgs> = {
                 type: { summary: "(id: string, isOpen: boolean) => void" }
             },
             control: false
+        },
+        item1Title: {
+            name: "Item 1 Title",
+            type: { name: "string", required: false },
+            description: "Title for the first accordion item.",
+            table: {
+                category: "Content",
+                type: { summary: "string" }
+            },
+            control: "text"
+        },
+        item2Title: {
+            name: "Item 2 Title",
+            type: { name: "string", required: false },
+            description: "Title for the second accordion item.",
+            table: {
+                category: "Content",
+                type: { summary: "string" }
+            },
+            control: "text"
+        },
+        item3Title: {
+            name: "Item 3 Title",
+            type: { name: "string", required: false },
+            description: "Title for the third accordion item.",
+            table: {
+                category: "Content",
+                type: { summary: "string" }
+            },
+            control: "text"
+        },
+        item4Title: {
+            name: "Item 4 Title",
+            type: { name: "string", required: false },
+            description: "Title for the fourth accordion item.",
+            table: {
+                category: "Content",
+                type: { summary: "string" }
+            },
+            control: "text"
+        },
+        item1Content: {
+            name: "Item 1 Content",
+            type: { name: "string", required: false },
+            description: "Content for the first accordion item.",
+            table: {
+                category: "Content",
+                type: { summary: "string" }
+            },
+            control: "text"
+        },
+        item2Content: {
+            name: "Item 2 Content",
+            type: { name: "string", required: false },
+            description: "Content for the second accordion item.",
+            table: {
+                category: "Content",
+                type: { summary: "string" }
+            },
+            control: "text"
+        },
+        item3Content: {
+            name: "Item 3 Content",
+            type: { name: "string", required: false },
+            description: "Content for the third accordion item.",
+            table: {
+                category: "Content",
+                type: { summary: "string" }
+            },
+            control: "text"
+        },
+        item4Content: {
+            name: "Item 4 Content",
+            type: { name: "string", required: false },
+            description: "Content for the fourth accordion item.",
+            table: {
+                category: "Content",
+                type: { summary: "string" }
+            },
+            control: "text"
         }
     },
     args: {
         items: defaultItems,
         multiple: false,
         disabled: false,
-        toggle: fn()
+        toggle: fn(),
+        item1Title: "",
+        item2Title: "",
+        item3Title: "",
+        item4Title: "",
+        item1Content: "",
+        item2Content: "",
+        item3Content: "",
+        item4Content: ""
     }
 };
 
-export const Primary: StoryObj<StoryArgs> = {
+const createItemsWithContent = (args: StoryArgs): AccordionItem[] =>
+{
+    return [
+        {
+            id: "item-1",
+            title: args.item1Title || defaultItems[0].title,
+            content: args.item1Content || defaultItems[0].content
+        },
+        {
+            id: "item-2",
+            title: args.item2Title || defaultItems[1].title,
+            content: args.item2Content || defaultItems[1].content
+        },
+        {
+            id: "item-3",
+            title: args.item3Title || defaultItems[2].title,
+            content: args.item3Content || defaultItems[2].content
+        },
+        {
+            id: "item-4",
+            title: args.item4Title || defaultItems[3].title,
+            content: args.item4Content || defaultItems[3].content
+        }
+    ];
+};
+
+export const Default: StoryObj<StoryArgs> = {
     render: (args: StoryArgs) => ({
         components: { ClayAccordion },
-        setup: () => ({ args }),
+        setup: () =>
+        {
+            const computedItems = computed(() => createItemsWithContent(args));
+            return {
+                args,
+                computedItems
+            };
+        },
         template: `
-            <div style="max-width: 600px; margin: 2rem auto;">
-                <ClayAccordion :items="args.items"
+            <div style="max-width: 800px; margin: 2rem auto; padding: 0 2rem;">
+                <ClayAccordion :items="computedItems"
                                :multiple="args.multiple"
                                :disabled="args.disabled"
                                @toggle="args.toggle" />
@@ -125,10 +255,17 @@ export const Multiple: StoryObj<StoryArgs> = {
     },
     render: (args: StoryArgs) => ({
         components: { ClayAccordion },
-        setup: () => ({ args }),
+        setup: () =>
+        {
+            const computedItems = computed(() => createItemsWithContent(args));
+            return {
+                args,
+                computedItems
+            };
+        },
         template: `
-            <div style="max-width: 600px; margin: 2rem auto;">
-                <ClayAccordion :items="args.items"
+            <div style="max-width: 800px; margin: 2rem auto; padding: 0 2rem;">
+                <ClayAccordion :items="computedItems"
                                :multiple="args.multiple"
                                :disabled="args.disabled"
                                @toggle="args.toggle" />
@@ -162,7 +299,7 @@ export const WithDisabledItems: StoryObj<StoryArgs> = {
         components: { ClayAccordion },
         setup: () => ({ args }),
         template: `
-            <div style="max-width: 600px; margin: 2rem auto;">
+            <div style="max-width: 800px; margin: 2rem auto; padding: 0 2rem;">
                 <ClayAccordion :items="args.items"
                                :multiple="args.multiple"
                                :disabled="args.disabled"
@@ -180,7 +317,7 @@ export const DisabledAccordion: StoryObj<StoryArgs> = {
         components: { ClayAccordion },
         setup: () => ({ args }),
         template: `
-            <div style="max-width: 600px; margin: 2rem auto;">
+            <div style="max-width: 800px; margin: 2rem auto; padding: 0 2rem;">
                 <ClayAccordion :items="args.items"
                                :multiple="args.multiple"
                                :disabled="args.disabled"
@@ -205,7 +342,7 @@ export const SingleItem: StoryObj<StoryArgs> = {
         components: { ClayAccordion },
         setup: () => ({ args }),
         template: `
-            <div style="max-width: 600px; margin: 2rem auto;">
+            <div style="max-width: 800px; margin: 2rem auto; padding: 0 2rem;">
                 <ClayAccordion :items="args.items"
                                :multiple="args.multiple"
                                :disabled="args.disabled"
