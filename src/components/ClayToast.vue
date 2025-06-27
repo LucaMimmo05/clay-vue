@@ -1,15 +1,11 @@
 <template>
     <transition name="toast-fade">
         <ClayCard v-if="visible"
-                  :class="[
-                      'clay-toast',
-                      `clay-toast--${props.type}`,
-                      { 'clay-card--glass': props.variant === 'glass' }
-                  ]"
+                  :class="classes"
                   :style="toastStyle"
                   v-bind="$attrs">
             <span class="clay-toast__message">
-                <slot>{{ defaultMessage }}</slot>
+                <slot>{{ defaultContent }}</slot>
             </span>
             <button class="clay-toast__close"
                     aria-label="Chiudi"
@@ -48,7 +44,7 @@
             default: "success",
             validator: (v: string) => ["success", "error", "warning", "information"].includes(v)
         },
-        message: {
+        content: {
             type: String,
             default: ""
         },
@@ -56,10 +52,13 @@
             type: Number,
             default: 3000
         },
-        variant: {
-            type: String,
-            default: "default",
-            validator: (v: string) => ["default", "glass"].includes(v)
+        glass: {
+            type: Boolean,
+            default: false
+        },
+        relative: {
+            type: Boolean,
+            default: false
         }
     });
 
@@ -105,7 +104,7 @@
 
     onMounted(startTimer);
 
-    watch([() => props.duration, () => props.message], () =>
+    watch([() => props.duration, () => props.content], () =>
     {
         visible.value = true;
         startTimer();
@@ -118,9 +117,9 @@
         if (intervalId) { clearInterval(intervalId); }
     }
 
-    const defaultMessage = computed(() =>
+    const defaultContent = computed(() =>
     {
-        if (props.message) { return props.message; }
+        if (props.content) { return props.content; }
         switch (props.type)
         {
             case "success":
@@ -135,6 +134,13 @@
                 return "";
         }
     });
+
+    const classes = computed((): Record<string, boolean> => ({
+        "clay-toast": true,
+        [`clay-toast--${props.type}`]: !!props.type,
+        "clay-card--glass": props.glass,
+        "clay-toast--relative": props.relative
+    }));
 </script>
 
 <style scoped lang="scss">

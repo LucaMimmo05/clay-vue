@@ -2,8 +2,10 @@ import type { Meta, StoryObj } from "@storybook/vue3-vite";
 import ClayToast from "./ClayToast.vue";
 
 interface StoryArgs {
-    type: "success" | "error" | "warning";
-    content: string;
+    type?: "success" | "error" | "warning" | "information";
+    content?: string;
+    duration?: number;
+    relative?: boolean;
 }
 
 const meta: Meta<StoryArgs> = {
@@ -18,11 +20,15 @@ const meta: Meta<StoryArgs> = {
         content: {
             name: "Content",
             control: "text"
+        },
+        duration: {
+            name: "Duration",
+            control: "number"
+        },
+        relative: {
+            name: "Relative",
+            control: "boolean"
         }
-    },
-    args: {
-        type: "success",
-        content: "Operazione completata! Questo è un toast."
     }
 };
 
@@ -31,7 +37,9 @@ export default meta;
 export const Default: StoryObj<StoryArgs> = {
     args: {
         type: "success",
-        content: ""
+        content: "",
+        duration: 3000,
+        relative: false
     },
     render: (args) => ({
         components: { ClayToast },
@@ -40,8 +48,9 @@ export const Default: StoryObj<StoryArgs> = {
             <div style="position:relative; min-height:200px;">
                 <ClayToast
                     :type="args.type"
-                    :message="args.content"
-                    :duration=""
+                    :content="args.content"
+                    :duration="args.duration"
+                    :relative="args.relative"
                     @close="() => console.log('Toast closed')"
                 />
             </div>
@@ -53,8 +62,8 @@ export const Glass: StoryObj<StoryArgs> = {
     args: {
         type: "success",
         content: "",
-        // @ts-expect-error: variant is not defined in args, but we want to use it in the template
-        variant: "glass"
+        duration: 3000,
+        relative: true
     },
     render: (args) => ({
         components: { ClayToast },
@@ -71,10 +80,10 @@ export const Glass: StoryObj<StoryArgs> = {
             <div style="position:relative; min-height:200px;">
                 <ClayToast
                     :type="args.type"
-                    :message="args.content"
-                    :duration=""
-                    variant="glass"
-                    :relative="true"
+                    :content="args.content"
+                    :duration="args.duration"
+                    :relative="args.relative"
+                    glass
                     @close="() => console.log('Toast closed')"
                 />
             </div>
