@@ -1,0 +1,254 @@
+<script lang="ts" setup>
+    import { computed, ref } from "vue";
+    import type { PropType } from "vue";
+
+    interface AccordionItem {
+        id: string;
+        title: string;
+        content: string;
+        disabled?: boolean;
+    }
+
+    const props = defineProps({
+        items: {
+            type: Array as PropType<AccordionItem[]>,
+            required: true
+        },
+        multiple: {
+            default: false,
+            type: Boolean
+        },
+        disabled: {
+            default: false,
+            type: Boolean
+        }
+    });
+
+    const emit = defineEmits<{
+        toggle: [id: string, isOpen: boolean];
+    }>();
+
+    const openItems = ref<Set<string>>(new Set());
+
+    const classes = computed((): Record<string, boolean> => ({
+        "clay-accordion--multiple": props.multiple,
+        "clay-accordion--disabled": props.disabled
+    }));
+
+    const isItemOpen = (id: string): boolean =>
+    {
+        return openItems.value.has(id);
+    };
+
+    const toggleItem = (id: string): void =>
+    {
+        if (props.disabled) { return; }
+
+        const item = props.items.find((i) => i.id === id);
+        if (item?.disabled) { return; }
+
+        const isCurrentlyOpen = openItems.value.has(id);
+
+        if (!props.multiple)
+        {
+            openItems.value.clear();
+        }
+
+        if (isCurrentlyOpen)
+        {
+            openItems.value.delete(id);
+        }
+        else
+        {
+            openItems.value.add(id);
+        }
+
+        emit("toggle", id, !isCurrentlyOpen);
+    };
+
+    const getItemClasses = (item: AccordionItem): Record<string, boolean> => ({
+        "clay-accordion__item--open": isItemOpen(item.id),
+        "clay-accordion__item--disabled": item.disabled || props.disabled
+    });
+</script>
+
+<template>
+    <div class="clay-accordion" :class="classes">
+        <div v-for="item in items"
+             :key="item.id"
+             class="clay-accordion__item"
+             :class="getItemClasses(item)">
+            <button class="clay-accordion__header"
+                    :disabled="item.disabled || disabled"
+                    :aria-expanded="isItemOpen(item.id)"
+                    :aria-controls="`accordion-content-${item.id}`"
+                    @click="toggleItem(item.id)">
+                <span class="clay-accordion__title">{{ item.title }}</span>
+                <span class="clay-accordion__icon" aria-hidden="true">
+                    <svg viewBox="0 0 24 24"
+                         fill="none"
+                         stroke="currentColor"
+                         stroke-width="2">
+                        <polyline points="6,9 12,15 18,9" />
+                    </svg>
+                </span>
+            </button>
+
+            <div :id="`accordion-content-${item.id}`"
+                 class="clay-accordion__content"
+                 :aria-hidden="!isItemOpen(item.id)">
+                <div class="clay-accordion__content-inner">
+                    <p>{{ item.content }}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</template>
+
+<style lang="scss">
+    @use "@/assets/scss/mixins";
+
+    :root {
+        --clay-accordion-color-background: var(--clay-light-color);
+        --clay-accordion-color-border: oklch(from var(--clay-primary-color) calc(l - 0.1) c h);
+        --clay-accordion-color-shadow: oklch(from var(--clay-primary-color) calc(l - 0.25) c h);
+        --clay-accordion-color-text: var(--clay-dark-color);
+        --clay-accordion-color-text-secondary: oklch(from var(--clay-accordion-color-text) calc(l + 0.2) c h);
+
+        --clay-accordion-spacing-x: 1.25em;
+        --clay-accordion-spacing-y: 1em;
+        --clay-accordion-spacing: var(--clay-accordion-spacing-y) var(--clay-accordion-spacing-x);
+
+        --clay-accordion-roundness: 0.5em;
+    }
+
+    .clay-accordion {
+        border-radius: var(--clay-accordion-roundness);
+        overflow: hidden;
+
+        @include mixins.clay-shadow-elevation($color: var(--clay-accordion-color-shadow), $intensity: 0.5);
+
+        &__item {
+            background-color: var(--clay-accordion-color-background);
+            border-bottom: 1px solid var(--clay-accordion-color-border);
+            position: relative;
+            transition: background-color var(--clay-ease-duration) var(--clay-ease-function);
+
+            &:last-child {
+                border-bottom: none;
+            }
+
+            &--disabled {
+                opacity: 0.6;
+                pointer-events: none;
+            }
+        }
+
+        &__header {
+            align-items: center;
+            background: none;
+            border: none;
+            color: var(--clay-accordion-color-text);
+            cursor: pointer;
+            display: flex;
+            font-family: inherit;
+            font-size: 1em;
+            font-weight: 600;
+            justify-content: space-between;
+            outline: none;
+            padding: var(--clay-accordion-spacing);
+            position: relative;
+            text-align: left;
+            transition: color var(--clay-ease-duration) var(--clay-ease-function),
+                        background-color var(--clay-ease-duration) var(--clay-ease-function);
+            width: 100%;
+
+            &:hover {
+                background-color: rgba(from var(--clay-primary-color) r g b / 0.05);
+            }
+
+            &:focus-visible {
+                background-color: rgba(from var(--clay-primary-color) r g b / 0.1);
+                box-shadow: inset 0 0 0 2px var(--clay-primary-color);
+            }
+
+            &:disabled {
+                cursor: not-allowed;
+                opacity: 0.6;
+            }
+        }
+
+        &__title {
+            flex: 1;
+            margin-right: 1em;
+        }
+
+        &__icon {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: transform var(--clay-ease-duration) var(--clay-ease-function);
+            width: 1.5em;
+            height: 1.5em;
+
+            svg {
+                width: 100%;
+                height: 100%;
+            }
+        }
+
+        &__content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height var(--clay-ease-duration) var(--clay-ease-function),
+                        padding var(--clay-ease-duration) var(--clay-ease-function);
+        }
+
+        &__content-inner {
+            padding: 0 var(--clay-accordion-spacing-x) var(--clay-accordion-spacing-y);
+            color: var(--clay-accordion-color-text-secondary);
+            line-height: 1.6;
+
+            p {
+                margin: 0;
+            }
+        }
+
+        &__item--open {
+            .clay-accordion__icon {
+                transform: rotate(180deg);
+            }
+
+            .clay-accordion__content {
+                max-height: 200px;
+            }
+        }
+
+        &--disabled {
+            opacity: 0.6;
+            pointer-events: none;
+        }
+    }
+
+    @media (prefers-color-scheme: dark) {
+        :root {
+            --clay-accordion-color-background: var(--clay-dark-color);
+            --clay-accordion-color-border: oklch(from var(--clay-primary-color) calc(l - 0.2) c h);
+            --clay-accordion-color-shadow: var(--black);
+            --clay-accordion-color-text: var(--clay-light-color);
+            --clay-accordion-color-text-secondary: oklch(from var(--clay-accordion-color-text) calc(l - 0.2) c h);
+        }
+
+        .clay-accordion {
+            &__header {
+                &:hover {
+                    background-color: rgba(from var(--clay-primary-color) r g b / 0.1);
+                }
+
+                &:focus-visible {
+                    background-color: rgba(from var(--clay-primary-color) r g b / 0.15);
+                }
+            }
+        }
+    }
+</style>
