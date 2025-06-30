@@ -309,47 +309,4 @@ export const WithDisabledItems: StoryObj<StoryArgs> = {
     })
 };
 
-export const DisabledAccordion: StoryObj<StoryArgs> = {
-    args: {
-        disabled: true
-    },
-    render: (args: StoryArgs) => ({
-        components: { ClayAccordion },
-        setup: () => ({ args }),
-        template: `
-            <div style="max-width: 800px; margin: 2rem auto; padding: 0 2rem;">
-                <ClayAccordion :items="args.items"
-                               :multiple="args.multiple"
-                               :disabled="args.disabled"
-                               @toggle="args.toggle" />
-            </div>
-        `
-    })
-};
-
-export const SingleItem: StoryObj<StoryArgs> = {
-    args: {
-        items: [
-            {
-                id: "single-item",
-                title: "Single Accordion Item",
-                content: `This is an accordion with only one item. Perfect for simple FAQ sections or when you need a
-                        collapsible content area.`
-            }
-        ]
-    },
-    render: (args: StoryArgs) => ({
-        components: { ClayAccordion },
-        setup: () => ({ args }),
-        template: `
-            <div style="max-width: 800px; margin: 2rem auto; padding: 0 2rem;">
-                <ClayAccordion :items="args.items"
-                               :multiple="args.multiple"
-                               :disabled="args.disabled"
-                               @toggle="args.toggle" />
-            </div>
-        `
-    })
-};
-
 export default meta;

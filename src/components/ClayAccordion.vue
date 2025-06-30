@@ -141,9 +141,6 @@
         &__header {
             align-items: center;
             background-color: var(--clay-accordion-color-background);
-            background-image: linear-gradient(rgba(from var(--white) r g b / 0.15),
-                              rgba(from var(--black) r g b / 0.05));
-            background-blend-mode: overlay;
             border: none;
             border-radius: var(--clay-accordion-roundness);
             color: var(--clay-accordion-color-text);
@@ -158,43 +155,60 @@
             padding: var(--clay-accordion-spacing);
             position: relative;
             text-align: left;
-            transition: color var(--clay-ease-duration) var(--clay-ease-function),
-                        background-color var(--clay-ease-duration) var(--clay-ease-function),
-                        transform var(--clay-ease-duration) var(--clay-ease-function),
-                        box-shadow var(--clay-ease-duration) var(--clay-ease-function);
+            transition: transform var(--clay-ease-duration) var(--clay-ease-function);
             width: calc(100% - 0.5em);
+            will-change: transform, box-shadow;
             z-index: 2;
 
-            @include mixins.clay-shadow-elevation($color: var(--clay-accordion-color-shadow), $intensity: 0.3);
+            &::after {
+                content: "";
+                position: absolute;
+                top: -2px;
+                left: -2px;
+                right: -2px;
+                bottom: -2px;
+                z-index: -2;
+            }
 
             &::before {
+                background-image: linear-gradient(rgba(from var(--white) r g b / 0.15),
+                                  rgba(from var(--black) r g b / 0.05));
                 border-radius: var(--clay-accordion-roundness);
                 bottom: 0;
                 content: "";
                 left: 0;
-                mix-blend-mode: multiply;
                 position: absolute;
                 right: 0;
                 top: 0;
-                transition: box-shadow var(--clay-ease-duration) var(--clay-ease-function);
+                transition: background-color var(--clay-ease-duration) var(--clay-ease-function),
+                           box-shadow var(--clay-ease-duration) var(--clay-ease-function);
+                will-change: background-color, box-shadow;
                 z-index: -1;
 
                 @include mixins.clay-shadow-inset($color: var(--clay-primary-color), $intensity: 0.15);
             }
 
-            &:hover {
-                background-color: rgba(from var(--clay-primary-color) r g b / 0.05);
-                transform: translateY(-0.0625em) scale(1.02);
+            @include mixins.clay-shadow-elevation($color: var(--clay-accordion-color-shadow), $intensity: 0.3);
 
-                @include mixins.clay-shadow-elevation($color: var(--clay-accordion-color-shadow), $intensity: 0.5);
+            &:hover {
+                transform: translateY(-0.03125em) scale(1.01);
+
+                @include mixins.clay-shadow-elevation($color: var(--clay-accordion-color-shadow), $intensity: 0.4);
+
+                &::before {
+                    background-color: rgba(from var(--clay-primary-color) r g b / 0.05);
+                }
             }
 
             &:focus-visible {
-                background-color: rgba(from var(--clay-primary-color) r g b / 0.1);
                 box-shadow: 0 0 0 2px var(--clay-primary-color);
-                transform: translateY(-0.0625em) scale(1.02);
+                transform: translateY(-0.03125em) scale(1.01);
 
-                @include mixins.clay-shadow-elevation($color: var(--clay-accordion-color-shadow), $intensity: 0.5);
+                @include mixins.clay-shadow-elevation($color: var(--clay-accordion-color-shadow), $intensity: 0.4);
+
+                &::before {
+                    background-color: rgba(from var(--clay-primary-color) r g b / 0.1);
+                }
             }
 
             &:active {
@@ -319,12 +333,23 @@
 
         .clay-accordion {
             &__header {
+                &::before {
+                    background-image: linear-gradient(
+                        rgba(from var(--white) r g b / 0.08),
+                        rgba(from var(--black) r g b / 0.10)
+                    );
+                }
+
                 &:hover {
-                    background-color: rgba(from var(--clay-primary-color) r g b / 0.1);
+                    &::before {
+                        background-color: rgba(from var(--clay-primary-color) r g b / 0.1);
+                    }
                 }
 
                 &:focus-visible {
-                    background-color: rgba(from var(--clay-primary-color) r g b / 0.15);
+                    &::before {
+                        background-color: rgba(from var(--clay-primary-color) r g b / 0.15);
+                    }
                 }
 
                 &:active {
