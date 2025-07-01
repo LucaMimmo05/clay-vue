@@ -13,3 +13,13 @@ export const Default = () => ({
     </div>
   `,
 });
+
+export const Vertical = () => ({
+  components: { ClayCarosel },
+  template: `
+    <div style="max-width: 600px; height: 600px; margin: auto;">
+      <ClayCarosel :vertical="true" />
+    </div>
+  `,
+});
+
