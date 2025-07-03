@@ -115,6 +115,8 @@
         --clay-accordion-color-text: var(--clay-dark-color);
         --clay-accordion-color-text-secondary: oklch(from var(--clay-accordion-color-text) calc(l + 0.2) c h);
 
+        --clay-accordion-color-outline: oklch(from var(--clay-primary-color) l c calc(h + 180));
+
         --clay-accordion-spacing-x: 1.25em;
         --clay-accordion-spacing-y: 1em;
         --clay-accordion-spacing: var(--clay-accordion-spacing-y) var(--clay-accordion-spacing-x);
@@ -191,7 +193,7 @@
             @include mixins.clay-shadow-elevation($color: var(--clay-accordion-color-shadow), $intensity: 0.3);
 
             &:hover {
-                transform: translateY(-0.03125em) scale(1.01);
+                transform: translateY(-0.035em) scale(1.025);
 
                 @include mixins.clay-shadow-elevation($color: var(--clay-accordion-color-shadow), $intensity: 0.4);
 
@@ -201,10 +203,12 @@
             }
 
             &:focus-visible {
-                box-shadow: 0 0 0 2px var(--clay-primary-color);
-                transform: translateY(-0.03125em) scale(1.01);
+                box-shadow: 0 0 0 2px var(--clay-accordion-color-outline);
+                outline: 2px solid var(--clay-accordion-color-outline);
+                outline-offset: 2px;
+                transform: translateY(-0.0625em) scale(1.05);
 
-                @include mixins.clay-shadow-elevation($color: var(--clay-accordion-color-shadow), $intensity: 0.4);
+                @include mixins.clay-shadow-elevation($color: var(--clay-accordion-color-shadow), $intensity: 0.5);
 
                 &::before {
                     background-color: rgba(from var(--clay-primary-color) r g b / 0.1);
