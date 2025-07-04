@@ -56,8 +56,8 @@
     --clay-loading-size: 3rem;
 
     --clay-loading-roundness: 50%;
-    --clay-loading-duration: 1.2s;
-    --clay-loading-thickness: 4px;
+    --clay-loading-duration: 1s;
+    --clay-loading-thickness: 3px;
 }
 
 .clay-loading {
@@ -76,43 +76,32 @@
             width: 100%;
             height: 100%;
             border-radius: var(--clay-loading-roundness);
-
-            @include mixins.clay-shadow-inset($color: var(--clay-loading-color-shadow), $intensity: 0.3);
-
             position: relative;
-            border: 4px solid transparent;
 
             &::before {
                 content: "";
                 position: absolute;
-                top: -4px;
-                left: -4px;
-                right: -4px;
-                bottom: -4px;
+                inset: -3px;
                 border-radius: var(--clay-loading-roundness);
-                background: conic-gradient(from 0deg, transparent 0deg, transparent 270deg,
-                var(--clay-loading-color-primary) 270deg,var(--clay-loading-color-primary) 360deg);
-                mask: radial-gradient(circle, transparent calc(50% - 4px), black calc(50% - 4px),
-                black 50%, transparent 50%);
+                background: conic-gradient(from 0deg, transparent 0deg, transparent 300deg,
+                var(--clay-loading-color-primary) 300deg, var(--clay-loading-color-primary) 360deg);
+                mask: radial-gradient(circle, transparent calc(50% - 3px),
+                black calc(50% - 3px), black 50%, transparent 50%);
                 animation: clay-loading-spinner var(--clay-loading-duration) linear infinite;
-
-                @include mixins.clay-shadow-elevation($color: var(--clay-loading-color-primary), $intensity: 0.8);
+                filter: drop-shadow(0 0 8px rgba(from var(--clay-loading-color-primary) r g b / 0.4));
             }
 
             &::after {
                 content: "";
                 position: absolute;
-                top: -2px;
-                left: -2px;
-                right: -2px;
-                bottom: -2px;
+                inset: -1px;
                 border-radius: var(--clay-loading-roundness);
-                background: conic-gradient(from 0deg, rgba(from var(--clay-loading-color-primary) r g b / 0.3) 0deg,
-                rgba(from var(--clay-loading-color-primary) r g b / 0.1) 90deg, transparent 180deg, transparent 270deg,
-                rgba(from var(--clay-loading-color-primary) r g b / 0.2) 360deg);
-                mask: radial-gradient(circle, transparent calc(50% - 2px), black calc(50% - 2px),
-                black 50%, transparent 50%);
-                animation: clay-loading-spinner var(--clay-loading-duration) linear infinite;
+                background: conic-gradient(from 180deg, rgba(from var(--clay-loading-color-primary) r g b / 0.1)
+                0deg, rgba(from var(--clay-loading-color-primary) r g b / 0.3)
+                120deg, transparent 240deg, transparent 360deg);
+                mask: radial-gradient(circle, transparent calc(50% - 1px),
+                black calc(50% - 1px), black 50%, transparent 50%);
+                animation: clay-loading-spinner calc(var(--clay-loading-duration) * 0.8) linear infinite reverse;
             }
         }
     }
@@ -127,38 +116,34 @@
     }
 
     &__dot {
-        width: 20%;
-        height: 20%;
+        width: 18%;
+        height: 18%;
         border-radius: var(--clay-loading-roundness);
-        background-color: rgba(from var(--clay-loading-color-background) r g b / 0.95);
-        background-image: linear-gradient(rgba(from var(--white) r g b / 0.2), rgba(from var(--black) r g b / 0.1));
-        background-blend-mode: overlay;
+        background: linear-gradient(135deg, rgba(from var(--clay-loading-color-primary) r g b / 0.8) 0%,
+        rgba(from var(--clay-loading-color-primary) r g b / 0.4) 100%);
 
-        @include mixins.clay-shadow-elevation($color: var(--clay-loading-color-shadow), $intensity: 0.4);
+        @include mixins.clay-shadow-elevation($color: var(--clay-loading-color-primary), $intensity: 0.6);
 
         position: relative;
-        animation: clay-loading-dots calc(var(--clay-loading-duration) * 0.8) ease-in-out infinite;
+        animation: clay-loading-dots calc(var(--clay-loading-duration) * 0.9) ease-in-out infinite;
+        transform-origin: center;
 
         &::before {
             content: "";
             position: absolute;
+            inset: 0;
             border-radius: var(--clay-loading-roundness);
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-
-            @include mixins.clay-shadow-inset($color: var(--clay-loading-color-primary), $intensity: 0.2);
+            background: radial-gradient(circle at 30% 30%, rgba(from var(--white) r g b / 0.4) 0%, transparent 60%);
         }
 
         &:nth-child(1) {
             animation-delay: 0s;
         }
         &:nth-child(2) {
-            animation-delay: calc(var(--clay-loading-duration) * 0.15);
+            animation-delay: calc(var(--clay-loading-duration) * 0.2);
         }
         &:nth-child(3) {
-            animation-delay: calc(var(--clay-loading-duration) * 0.3);
+            animation-delay: calc(var(--clay-loading-duration) * 0.4);
         }
     }
 
@@ -174,22 +159,21 @@
     &__pulse-ring {
         position: absolute;
         border-radius: var(--clay-loading-roundness);
-        border: 3px solid rgba(from var(--clay-loading-color-primary) r g b / 0.6);
-        background-color: rgba(from var(--clay-loading-color-background) r g b / 0.05);
-        animation: clay-loading-pulse calc(var(--clay-loading-duration) * 1.5)
-        cubic-bezier(0.455, 0.03, 0.515, 0.955) infinite;
+        border: 2px solid transparent;
+        background: radial-gradient(circle, transparent 50%,
+        rgba(from var(--clay-loading-color-primary) r g b / 0.3) 51%,
+        rgba(from var(--clay-loading-color-primary) r g b / 0.1) 100%);
+        animation: clay-loading-pulse calc(var(--clay-loading-duration) * 2)
+        cubic-bezier(0.25, 0.46, 0.45, 0.94) infinite;
 
         &:nth-child(1) {
             animation-delay: 0s;
-            border-color: rgba(from var(--clay-loading-color-primary) r g b / 0.8);
         }
         &:nth-child(2) {
-            animation-delay: calc(var(--clay-loading-duration) * 0.5);
-            border-color: rgba(from var(--clay-loading-color-primary) r g b / 0.6);
+            animation-delay: calc(var(--clay-loading-duration) * 0.66);
         }
         &:nth-child(3) {
-            animation-delay: calc(var(--clay-loading-duration) * 1);
-            border-color: rgba(from var(--clay-loading-color-primary) r g b / 0.4);
+            animation-delay: calc(var(--clay-loading-duration) * 1.33);
         }
     }
 }
@@ -205,27 +189,32 @@
 
 @keyframes clay-loading-dots {
     0%,
-    80%,
+    60%,
     100% {
-        transform: scale(1);
-        opacity: 0.7;
+        transform: scale(0.8);
+        opacity: 0.5;
     }
-    40% {
-        transform: scale(1.3);
+    30% {
+        transform: scale(1.2);
         opacity: 1;
     }
 }
 
 @keyframes clay-loading-pulse {
     0% {
-        width: 0;
-        height: 0;
-        opacity: 1;
+        width: 20%;
+        height: 20%;
+        opacity: 0.8;
+        transform: scale(1);
+    }
+    50% {
+        opacity: 0.4;
     }
     100% {
         width: 100%;
         height: 100%;
         opacity: 0;
+        transform: scale(1.1);
     }
 }
 
