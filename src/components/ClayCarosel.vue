@@ -90,7 +90,7 @@ export default defineComponent({
         :class="{ vertical: isVertical }"
       >
         <ClayCard :style="{ background: 'none', boxShadow: 'var(--clay-shadow)' }">
-          <img :src="image" alt="Image" class="clay-carosel__image" />
+          <img :src="image" alt="Image" class="clay-carosel__image" @mousedown.prevent /> 
         </ClayCard>
       </div>
     </div>
