@@ -3,7 +3,7 @@ import ClayLoading from "./ClayLoading.vue";
 
 interface StoryArgs {
     size: "small" | "default" | "large";
-    type: "spinner" | "dots" | "pulse";
+    type: "spinner" | "dots" | "pulse" | "wave";
 }
 
 const meta: Meta<StoryArgs> = {
@@ -37,17 +37,18 @@ const meta: Meta<StoryArgs> = {
             table: {
                 category: "Component's",
                 defaultValue: { summary: "spinner" },
-                type: { summary: "spinner | dots | pulse" }
+                type: { summary: "spinner | dots | pulse | wave" }
             },
             control: {
                 type: "select",
                 labels: {
                     spinner: "Spinner",
                     dots: "Dots",
-                    pulse: "Pulse"
+                    pulse: "Pulse",
+                    wave: "Wave"
                 }
             },
-            options: ["spinner", "dots", "pulse"]
+            options: ["spinner", "dots", "pulse", "wave"]
         }
     },
     args: {
@@ -102,6 +103,23 @@ export const Pulse: StoryObj<StoryArgs> = {
             <div style="display: flex; align-items: center; justify-content: center; 
                         padding: 2rem; min-height: 200px;">
                 <ClayLoading :size="args.size" type="pulse" />
+            </div>
+        `
+    })
+};
+
+export const Wave: StoryObj<StoryArgs> = {
+    args: {
+        size: "default",
+        type: "wave"
+    },
+    render: (args: StoryArgs) => ({
+        components: { ClayLoading },
+        setup: () => ({ args }),
+        template: `
+            <div style="display: flex; align-items: center; justify-content: center; 
+                        padding: 2rem; min-height: 200px;">
+                <ClayLoading :size="args.size" type="wave" />
             </div>
         `
     })

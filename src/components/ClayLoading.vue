@@ -9,7 +9,7 @@
         },
         type: {
             default: "spinner",
-            type: String as PropType<"spinner" | "dots" | "pulse">
+            type: String as PropType<"spinner" | "dots" | "pulse" | "wave">
         }
     });
 
@@ -42,6 +42,13 @@
             <div class="clay-loading__pulse-ring"></div>
             <div class="clay-loading__pulse-ring"></div>
         </div>
+        <div v-else-if="type === 'wave'" class="clay-loading__wave">
+            <div class="clay-loading__wave-bar"></div>
+            <div class="clay-loading__wave-bar"></div>
+            <div class="clay-loading__wave-bar"></div>
+            <div class="clay-loading__wave-bar"></div>
+            <div class="clay-loading__wave-bar"></div>
+        </div>
     </div>
 </template>
 
@@ -52,6 +59,7 @@
     --clay-loading-color-primary: var(--clay-primary-color);
     --clay-loading-color-background: var(--clay-light-color);
     --clay-loading-color-shadow: oklch(from var(--clay-primary-color) calc(l - 0.25) c h);
+    --clay-loading-color-highlight: var(--white);
 
     --clay-loading-size: 3rem;
 
@@ -96,8 +104,8 @@
                 position: absolute;
                 inset: -1px;
                 border-radius: var(--clay-loading-roundness);
-                background: conic-gradient(from 180deg, rgba(from var(--clay-loading-color-primary) r g b / 0.1)
-                0deg, rgba(from var(--clay-loading-color-primary) r g b / 0.3)
+                background: conic-gradient(from 180deg, rgba(from var(--clay-loading-color-primary) r g b / 0.1) 0deg,
+                rgba(from var(--clay-loading-color-primary) r g b / 0.3)
                 120deg, transparent 240deg, transparent 360deg);
                 mask: radial-gradient(circle, transparent calc(50% - 1px),
                 black calc(50% - 1px), black 50%, transparent 50%);
@@ -133,7 +141,8 @@
             position: absolute;
             inset: 0;
             border-radius: var(--clay-loading-roundness);
-            background: radial-gradient(circle at 30% 30%, rgba(from var(--white) r g b / 0.4) 0%, transparent 60%);
+            background: radial-gradient(circle at 30% 30%,
+            rgba(from var(--clay-loading-color-highlight) r g b / 0.4) 0%, transparent 60%);
         }
 
         &:nth-child(1) {
@@ -174,6 +183,45 @@
         }
         &:nth-child(3) {
             animation-delay: calc(var(--clay-loading-duration) * 1.33);
+        }
+    }
+
+    &__wave {
+        display: flex;
+        gap: 0.2rem;
+        align-items: center;
+        justify-content: center;
+        width: 100%;
+        height: 100%;
+    }
+
+    &__wave-bar {
+        width: 12%;
+        height: 30%;
+        border-radius: 2px;
+        background: linear-gradient(to top, var(--clay-loading-color-primary) 0%,
+        rgba(from var(--clay-loading-color-primary) r g b / 0.7) 50%,
+        rgba(from var(--clay-loading-color-primary) r g b / 0.4) 100%);
+
+        @include mixins.clay-shadow-elevation($color: var(--clay-loading-color-primary), $intensity: 0.4);
+
+        animation: clay-loading-wave calc(var(--clay-loading-duration) * 1.2) ease-in-out infinite;
+        transform-origin: center;
+
+        &:nth-child(1) {
+            animation-delay: 0s;
+        }
+        &:nth-child(2) {
+            animation-delay: calc(var(--clay-loading-duration) * 0.1);
+        }
+        &:nth-child(3) {
+            animation-delay: calc(var(--clay-loading-duration) * 0.2);
+        }
+        &:nth-child(4) {
+            animation-delay: calc(var(--clay-loading-duration) * 0.3);
+        }
+        &:nth-child(5) {
+            animation-delay: calc(var(--clay-loading-duration) * 0.4);
         }
     }
 }
@@ -218,10 +266,46 @@
     }
 }
 
+@keyframes clay-loading-wave {
+    0%,
+    40%,
+    100% {
+        transform: scaleY(0.4);
+        opacity: 0.6;
+    }
+    20% {
+        transform: scaleY(1);
+        opacity: 1;
+    }
+}
+
 @media (prefers-color-scheme: dark) {
     :root {
         --clay-loading-color-background: var(--clay-dark-color);
-        --clay-loading-color-shadow: var(--black);
+        --clay-loading-color-shadow: rgba(0, 0, 0, 0.6);
+        --clay-loading-color-highlight: rgba(255, 255, 255, 0.9);
+    }
+
+    .clay-loading {
+        &__spinner-inner {
+            &::before {
+                filter: drop-shadow(0 0 12px rgba(from var(--clay-loading-color-primary) r g b / 0.6));
+            }
+        }
+
+        &__dot {
+            @include mixins.clay-shadow-elevation($color: var(--clay-loading-color-primary), $intensity: 0.8);
+        }
+
+        &__wave-bar {
+            @include mixins.clay-shadow-elevation($color: var(--clay-loading-color-primary), $intensity: 0.6);
+        }
+
+        &__pulse-ring {
+            background: radial-gradient(circle, transparent 50%,
+            rgba(from var(--clay-loading-color-primary) r g b / 0.4) 51%,
+            rgba(from var(--clay-loading-color-primary) r g b / 0.2) 100%);
+        }
     }
 }
 </style>
