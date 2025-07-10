@@ -58,7 +58,6 @@
                     inset 0 0.25em 0.25em 0 rgba(from var(--clay-input-color-shadow) r g b / 0.25);
 
         color: var(--black);
-        display: block;
         font-family: inherit;
         outline: none;
         padding: var(--clay-input-spacing);

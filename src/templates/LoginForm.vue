@@ -6,9 +6,13 @@
 
 <template>
     <ClayCard>
-        <form class="login-form">
-            <ClayInput id="username" />
-            <ClayInput id="password" type="password" />
+        <form class="login-form" @submit.prevent>
+            <ClayInput id="username"
+                       placeholder="Type your email address..."
+                       type="email" />
+            <ClayInput id="password"
+                       placeholder="Type your password..."
+                       type="password" />
             <hr />
             <ClayButton type="submit">
                 Login
@@ -23,5 +27,10 @@
         display: flex;
         flex-direction: column;
         gap: 1em;
+
+        hr
+        {
+            width: 100%;
+        }
     }
 </style>

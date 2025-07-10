@@ -17,7 +17,7 @@ export const Primary: StoryObj<StoryArgs> = {
         components: { LoginForm },
         setup: () => ({ args }),
         template: `
-            <LoginForm />
+            <LoginForm style="margin: 2rem 4rem;" />
         `
     })
 };
