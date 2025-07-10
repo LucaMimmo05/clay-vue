@@ -74,7 +74,7 @@ import ClayCard from './ClayCard.vue';
   display: flex;
   flex-direction: column;
   width: 280px;
-  height: 100vh;
+  height: auto;
   font-family: variables.$font-family;
   padding: 1.5rem;
 
