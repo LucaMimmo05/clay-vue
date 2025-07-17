@@ -12,17 +12,28 @@ interface StoryArgs {
 }
 
 const defaultTabs = [
-    { id: "tab1",
+    {
+        id: "tab1",
         title: "Tab 1",
         content:
-        "<h3>Tab 1 Content</h3><p>This is the content for the first tab. It can contain HTML and other elements.</p>" },
-    { id: "tab2", title: "Tab 2",
-        content: "<h3>Tab 2 Content</h3><p>This is the content for the second tab with different information.</p>" },
-    { id: "tab3", title: "Tab 3",
-        content: "<h3>Tab 3 Content</h3><p>This is the content for the third tab.</p>" },
-    { id: "tab4", title: "Disabled Tab",
+        "<h3>Tab 1 Content</h3><p>This is the content for the first tab. It can contain HTML and other elements.</p>"
+    },
+    {
+        id: "tab2",
+        title: "Tab 2",
+        content: "<h3>Tab 2 Content</h3><p>This is the content for the second tab with different information.</p>"
+    },
+    {
+        id: "tab3",
+        title: "Tab 3",
+        content: "<h3>Tab 3 Content</h3><p>This is the content for the third tab.</p>"
+    },
+    {
+        id: "tab4",
+        title: "Disabled Tab",
         content: "<h3>Disabled Tab Content</h3><p>This tab is disabled and cannot be selected.</p>",
-        disabled: true }
+        disabled: true
+    }
 ];
 
 const meta: Meta<StoryArgs> = {
@@ -112,7 +123,26 @@ export const Default: StoryObj<StoryArgs> = {
                 :small="args.size === 'small'"
                 :large="args.size === 'large'"
                 @tab-changed="args.onTabChanged"
-            />
+            >
+                <template #default="{ activeTab }">
+                    <div v-if="activeTab.id === 'tab1'">
+                        <h3>Tab 1 Content</h3>
+                        <p>This is the content for the first tab. It can contain HTML and other elements.</p>
+                    </div>
+                    <div v-else-if="activeTab.id === 'tab2'">
+                        <h3>Tab 2 Content</h3>
+                        <p>This is the content for the second tab with different information.</p>
+                    </div>
+                    <div v-else-if="activeTab.id === 'tab3'">
+                        <h3>Tab 3 Content</h3>
+                        <p>This is the content for the third tab.</p>
+                    </div>
+                    <div v-else-if="activeTab.id === 'tab4'">
+                        <h3>Disabled Tab Content</h3>
+                        <p>This tab is disabled and cannot be selected.</p>
+                    </div>
+                </template>
+            </ClayTabs>
         `
     })
 };
@@ -133,49 +163,22 @@ export const Vertical: StoryObj<StoryArgs> = {
                 :small="args.size === 'small'"
                 :large="args.size === 'large'"
                 @tab-changed="args.onTabChanged"
-            />
-        `
-    })
-};
-
-export const Small: StoryObj<StoryArgs> = {
-    args: {
-        size: "small",
-        tabs: defaultTabs.slice(0, 3)
-    },
-    render: (args: StoryArgs) => ({
-        components: { ClayTabs },
-        setup: () => ({ args }),
-        template: `
-            <ClayTabs 
-                :tabs="args.tabs"
-                :model-value="args.modelValue"
-                :vertical="args.vertical"
-                :small="args.size === 'small'"
-                :large="args.size === 'large'"
-                @tab-changed="args.onTabChanged"
-            />
-        `
-    })
-};
-
-export const Large: StoryObj<StoryArgs> = {
-    args: {
-        size: "large",
-        tabs: defaultTabs.slice(0, 3)
-    },
-    render: (args: StoryArgs) => ({
-        components: { ClayTabs },
-        setup: () => ({ args }),
-        template: `
-            <ClayTabs 
-                :tabs="args.tabs"
-                :model-value="args.modelValue"
-                :vertical="args.vertical"
-                :small="args.size === 'small'"
-                :large="args.size === 'large'"
-                @tab-changed="args.onTabChanged"
-            />
+            >
+                <template #default="{ activeTab }">
+                    <div v-if="activeTab.id === 'tab1'">
+                        <h3>Tab 1 Content</h3>
+                        <p>This is the content for the first tab. It can contain HTML and other elements.</p>
+                    </div>
+                    <div v-else-if="activeTab.id === 'tab2'">
+                        <h3>Tab 2 Content</h3>
+                        <p>This is the content for the second tab with different information.</p>
+                    </div>
+                    <div v-else-if="activeTab.id === 'tab3'">
+                        <h3>Tab 3 Content</h3>
+                        <p>This is the content for the third tab.</p>
+                    </div>
+                </template>
+            </ClayTabs>
         `
     })
 };
@@ -219,21 +222,7 @@ export const WithCustomContent: StoryObj<StoryArgs> = {
                             <input type="checkbox" checked> Auto-save
                         </label>
                     </div>
-                    <div v-else-if="activeTab.id === 'notifications'">
-                        <h2>Notifications</h2>
-                        <div style="padding: 1rem; background: #f0f0f0; border-radius: 0.5rem; margin-bottom: 1rem;">
-                            <strong>New message from Sarah</strong><br>
-                            <small>2 minutes ago</small>
-                        </div>
-                        <div style="padding: 1rem; background: #f0f0f0; border-radius: 0.5rem; margin-bottom: 1rem;">
-                            <strong>System update available</strong><br>
-                            <small>1 hour ago</small>
-                        </div>
-                        <div style="padding: 1rem; background: #f0f0f0; border-radius: 0.5rem;">
-                            <strong>Welcome to Clay UI!</strong><br>
-                            <small>Yesterday</small>
-                        </div>
-                    </div>
+                    <!-- Nessun template per notifications: gestito dal componente -->
                 </template>
             </ClayTabs>
         `
@@ -266,7 +255,26 @@ export const WithDisabledTabs: StoryObj<StoryArgs> = {
                 :small="args.size === 'small'"
                 :large="args.size === 'large'"
                 @tab-changed="args.onTabChanged"
-            />
+            >
+                <template #default="{ activeTab }">
+                    <div v-if="activeTab.id === 'available'">
+                        <h3>Available Tab</h3>
+                        <p>This tab is available and can be selected.</p>
+                    </div>
+                    <div v-else-if="activeTab.id === 'disabled1'">
+                        <h3>Disabled Content</h3>
+                        <p>This content won't be shown.</p>
+                    </div>
+                    <div v-else-if="activeTab.id === 'enabled'">
+                        <h3>Another Available Tab</h3>
+                        <p>This tab is also available.</p>
+                    </div>
+                    <div v-else-if="activeTab.id === 'disabled2'">
+                        <h3>Disabled Content</h3>
+                        <p>This content won't be shown either.</p>
+                    </div>
+                </template>
+            </ClayTabs>
         `
     })
 };

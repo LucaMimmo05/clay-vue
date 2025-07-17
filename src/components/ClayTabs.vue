@@ -32,6 +32,12 @@
     const activeTab = ref(props.modelValue);
     const $el = ref<HTMLElement | null>(null);
 
+    const notifications = [
+        { title: "New message from Sarah", time: "2 minutes ago" },
+        { title: "System update available", time: "1 hour ago" },
+        { title: "Welcome to Clay UI!", time: "Yesterday" }
+    ];
+
     const classes = computed((): Record<string, boolean> => ({
         "clay-tabs--vertical": props.vertical,
         "clay-tabs--small": props.small,
@@ -96,10 +102,18 @@
 
         <div class="clay-tabs__content">
             <div class="clay-tabs__panel">
-                <slot :active-tab="activeTabData">
-                    <!-- eslint-disable-next-line vue/no-v-html -->
-                    <div v-if="activeTabData?.content" v-html="activeTabData.content"></div>
-                </slot>
+                <template v-if="activeTabData?.id === 'notifications'">
+                    <h2>Notifications</h2>
+                    <div v-for="(notification, idx) in notifications"
+                         :key="idx"
+                         class="clay-tabs__notification">
+                        <strong>{{ notification.title }}</strong><br />
+                        <small>{{ notification.time }}</small>
+                    </div>
+                </template>
+                <template v-else>
+                    <slot :active-tab="activeTabData"></slot>
+                </template>
             </div>
         </div>
     </div>
@@ -112,7 +126,7 @@
     --clay-tabs-color-background: var(--clay-primary-color);
     --clay-tabs-color-background-hover: oklch(from var(--clay-tabs-color-background) calc(l + 0.1) c h);
     --clay-tabs-color-background-active: oklch(from var(--clay-tabs-color-background) calc(l - 0.1) c h);
-    --clay-tabs-color-outline: oklch(from var(--clay-tabs-color-background) l c calc(h + 180));
+    --clay-tabs-color-outline: oklch(from var(--clay-tabs-color-background) calc(l + 0.2) c h);
     --clay-tabs-color-shadow: oklch(from var(--clay-tabs-color-background) calc(l - 0.25) c h);
     --clay-tabs-color-shadow-light: oklch(from var(--clay-tabs-color-background) calc(l + 0.15) c h);
     --clay-tabs-color-text: var(--white);
@@ -129,7 +143,6 @@
     --clay-tabs-roundness: 1.2em;
     --clay-tabs-border-width: 2px;
 
-    /* Claymorphism 3D variables */
     --clay-tabs-depth: 0.8em;
     --clay-tabs-squash-factor: 0.15;
     --clay-tabs-bounce-duration: 0.6s;
@@ -243,8 +256,8 @@
 
 .clay-tabs__tab {
     background: linear-gradient(145deg,
-        oklch(from var(--clay-tabs-color-background) calc(l + 0.15) calc(c * 0.8) h),
-        oklch(from var(--clay-tabs-color-background) calc(l - 0.05) calc(c * 0.6) h));
+        oklch(from var(--clay-tabs-color-background-active) calc(l + 0.1) calc(c * 0.9) h),
+        oklch(from var(--clay-tabs-color-background-active) calc(l - 0.15) calc(c * 0.7) h));
     border: none;
     color: var(--clay-tabs-color-text);
     cursor: pointer;
@@ -258,6 +271,50 @@
     border-radius: var(--clay-tabs-roundness) var(--clay-tabs-roundness) 0 0;
 
     box-shadow:
+        0 0 0 0 rgba(from var(--clay-tabs-color-outline) r g b / 0),
+        0 0.1em 0.2em -0.1em rgba(from var(--clay-tabs-color-shadow) r g b / 0.75);
+
+    &:focus-visible {
+        box-shadow:
+            0 0 0 0.15em var(--clay-tabs-color-outline),
+            0 0.25em 0.25em 0 rgba(from var(--clay-tabs-color-shadow) r g b / 0.333);
+        transform: translateY(-0.0625em) scale(1.1);
+    }
+    &:active:not(.clay-tabs__tab--disabled),
+    &.clay-tabs__tab--active {
+        box-shadow:
+            0 0 0 0 rgba(from var(--clay-tabs-color-outline) r g b / 0),
+            0 0.1em 0.2em -0.1em rgba(from var(--clay-tabs-color-shadow) r g b / 0.75),
+            inset 0.3em 0.3em 0.6em rgba(
+                from var(--clay-tabs-color-shadow-light) r g b / 0.4),
+            inset -0.3em -0.3em 0.6em rgba(
+                from var(--clay-tabs-color-shadow) r g b / 0.3),
+            0 var(--clay-tabs-depth) calc(var(--clay-tabs-depth) * 1.5) rgba(
+                from var(--clay-tabs-color-shadow) r g b / 0.6),
+            0 calc(var(--clay-tabs-depth) * 0.5) calc(var(--clay-tabs-depth) * 2) rgba(
+                from var(--clay-tabs-color-shadow) r g b / 0.3);
+
+        transform: none;
+
+        &::after {
+            content: "";
+            position: absolute;
+            top: -2px;
+            left: -2px;
+            right: -2px;
+            bottom: -2px;
+            background: linear-gradient(145deg,
+                rgba(from var(--clay-tabs-color-background-active) r g b / 0.3),
+                rgba(from var(--clay-tabs-color-background-active) r g b / 0.1));
+            border-radius: calc(var(--clay-tabs-roundness) + 2px)
+                calc(var(--clay-tabs-roundness) + 2px) 0 0;
+            z-index: -1;
+            filter: blur(1px);
+            animation: clay-tabs-squishy-pulse 4s ease-in-out infinite;
+        }
+    }
+
+    box-shadow:
         inset 0.3em 0.3em 0.6em rgba(
             from var(--clay-tabs-color-shadow-light) r g b / 0.4),
         inset -0.3em -0.3em 0.6em rgba(
@@ -266,10 +323,6 @@
             from var(--clay-tabs-color-shadow) r g b / 0.6),
         0 calc(var(--clay-tabs-depth) * 0.5) calc(var(--clay-tabs-depth) * 2) rgba(
             from var(--clay-tabs-color-shadow) r g b / 0.3);
-
-    transition:
-        all var(--clay-tabs-bounce-duration) var(--clay-tabs-bounce-function),
-        box-shadow var(--clay-ease-duration) var(--clay-tabs-squishy-function);
 
     &:not(.clay-tabs__tab--active):not(.clay-tabs__tab--disabled) {
         animation: clay-tabs-breathe 8s ease-in-out infinite;
@@ -298,65 +351,25 @@
         opacity: 0.7;
     }
 
-    &:hover:not(&--disabled) {
-        background: linear-gradient(145deg,
-            oklch(from var(--clay-tabs-color-background-hover) calc(l + 0.2) calc(c * 0.9) h),
-            oklch(from var(--clay-tabs-color-background-hover) calc(l - 0.05) calc(c * 0.7) h));
-        color: var(--clay-tabs-color-text);
-        transform: translateY(calc(var(--clay-tabs-depth) * -0.3))
-                   scaleY(calc(1 + var(--clay-tabs-squash-factor)))
-                   scaleX(calc(1 - var(--clay-tabs-squash-factor) * 0.5));
-
-        box-shadow:
-            inset 0.4em 0.4em 0.8em rgba(from var(--clay-tabs-color-shadow-light) r g b / 0.5),
-            inset -0.4em -0.4em 0.8em rgba(from var(--clay-tabs-color-shadow) r g b / 0.4),
-            0 calc(var(--clay-tabs-depth) * 1.5) calc(var(--clay-tabs-depth) * 2)
-                rgba(from var(--clay-tabs-color-shadow) r g b / 0.5),
-            0 calc(var(--clay-tabs-depth) * 0.8) calc(var(--clay-tabs-depth) * 3)
-                rgba(from var(--clay-tabs-color-shadow) r g b / 0.2);
-    }
-
-    &:active:not(&--disabled) {
-        transform: translateY(calc(var(--clay-tabs-depth) * 0.6))
-                   scaleY(calc(1 - var(--clay-tabs-squash-factor) * 1.5))
-                   scaleX(calc(1 + var(--clay-tabs-squash-factor)));
-
-        box-shadow:
-            inset 0.2em 0.2em 0.4em rgba(from var(--clay-tabs-color-shadow) r g b / 0.6),
-            inset -0.2em -0.2em 0.4em rgba(from var(--clay-tabs-color-shadow-light) r g b / 0.3),
-            0 calc(var(--clay-tabs-depth) * 0.3) calc(var(--clay-tabs-depth) * 0.8)
-                rgba(from var(--clay-tabs-color-shadow) r g b / 0.8);
-
-        transition: all 0.1s var(--clay-tabs-squishy-function);
-    }
-
-    &:focus-visible {
-        box-shadow:
-            inset 0.3em 0.3em 0.6em rgba(from var(--clay-tabs-color-shadow-light) r g b / 0.4),
-            inset -0.3em -0.3em 0.6em rgba(from var(--clay-tabs-color-shadow) r g b / 0.3),
-            0 var(--clay-tabs-depth) calc(var(--clay-tabs-depth) * 1.5)
-                rgba(from var(--clay-tabs-color-shadow) r g b / 0.6),
-            0 0 0 3px var(--clay-tabs-color-outline);
-        z-index: 1;
-    }
-
     &.clay-tabs__tab--active {
         background: linear-gradient(145deg,
-            oklch(from var(--clay-tabs-color-background-active) calc(l + 0.1) calc(c * 0.9) h),
-            oklch(from var(--clay-tabs-color-background-active) calc(l - 0.15) calc(c * 0.7) h));
+            oklch(from var(--clay-tabs-color-background) calc(l + 0.15) calc(c * 0.8) h),
+            oklch(from var(--clay-tabs-color-background) calc(l - 0.05) calc(c * 0.6) h));
         color: var(--clay-tabs-color-text);
 
-        transform: translateY(calc(var(--clay-tabs-depth) * 0.4))
-                   scaleY(calc(1 - var(--clay-tabs-squash-factor) * 0.8))
-                   scaleX(calc(1 + var(--clay-tabs-squash-factor) * 0.5));
-
         box-shadow:
-            inset 0.4em 0.4em 0.8em rgba(from var(--clay-tabs-color-shadow) r g b / 0.5),
-            inset -0.2em -0.2em 0.4em rgba(from var(--clay-tabs-color-shadow-light) r g b / 0.4),
-            0 calc(var(--clay-tabs-depth) * 0.5) calc(var(--clay-tabs-depth) * 1.2)
-                rgba(from var(--clay-tabs-color-shadow) r g b / 0.7),
-            0 0 calc(var(--clay-tabs-depth) * 2)
-                rgba(from var(--clay-tabs-color-background-active) r g b / 0.3);
+            0 0 0 0 rgba(from var(--clay-tabs-color-outline) r g b / 0),
+            0 0.1em 0.2em -0.1em rgba(from var(--clay-tabs-color-shadow) r g b / 0.75),
+            inset 0.3em 0.3em 0.6em rgba(
+                from var(--clay-tabs-color-shadow-light) r g b / 0.4),
+            inset -0.3em -0.3em 0.6em rgba(
+                from var(--clay-tabs-color-shadow) r g b / 0.3),
+            0 var(--clay-tabs-depth) calc(var(--clay-tabs-depth) * 1.5) rgba(
+                from var(--clay-tabs-color-shadow) r g b / 0.6),
+            0 calc(var(--clay-tabs-depth) * 0.5) calc(var(--clay-tabs-depth) * 2) rgba(
+                from var(--clay-tabs-color-shadow) r g b / 0.3);
+
+        transform: none;
 
         &::after {
             content: "";
@@ -380,14 +393,6 @@
         opacity: 0.4;
         cursor: not-allowed;
         filter: grayscale(0.8);
-
-        &:hover {
-            background: linear-gradient(145deg,
-                oklch(from var(--clay-tabs-color-background) calc(l + 0.15) calc(c * 0.8) h),
-                oklch(from var(--clay-tabs-color-background) calc(l - 0.05) calc(c * 0.6) h));
-            color: var(--clay-tabs-color-text);
-            transform: none;
-        }
     }
 }
 
@@ -504,7 +509,7 @@
     0%, 100% {
         transform: scale(1);
         box-shadow:
-            inset 0.3em 0.3em 0.6em rgba(from var(--clay-tabs-color-shadow-light) r g b / 0.4),
+            inset 0.3em 0.3em 0.6em rgba(from var(--clay-tabs-color-shadow) r g b / 0.4),
             inset -0.3em -0.3em 0.6em rgba(from var(--clay-tabs-color-shadow) r g b / 0.3),
             0 var(--clay-tabs-depth) calc(var(--clay-tabs-depth) * 1.5)
                 rgba(from var(--clay-tabs-color-shadow) r g b / 0.6),
@@ -514,7 +519,7 @@
     50% {
         transform: scale(1.005);
         box-shadow:
-            inset 0.35em 0.35em 0.7em rgba(from var(--clay-tabs-color-shadow-light) r g b / 0.45),
+            inset 0.35em 0.35em 0.7em rgba(from var(--clay-tabs-color-shadow) r g b / 0.45),
             inset -0.35em -0.35em 0.7em rgba(from var(--clay-tabs-color-shadow) r g b / 0.35),
             0 calc(var(--clay-tabs-depth) * 1.1) calc(var(--clay-tabs-depth) * 1.6)
                 rgba(from var(--clay-tabs-color-shadow) r g b / 0.65),
@@ -561,21 +566,6 @@
             0 calc(var(--clay-tabs-depth) * 0.5) calc(var(--clay-tabs-depth) * 2)
                 rgba(from var(--clay-tabs-color-shadow) r g b / 0.5);
 
-        &:hover:not(&--disabled) {
-            background: linear-gradient(145deg,
-                oklch(from var(--clay-tabs-color-background-hover) calc(l + 0.1) calc(c * 0.9) h),
-                oklch(from var(--clay-tabs-color-background-hover) calc(l - 0.15) calc(c * 0.7) h));
-            box-shadow:
-                inset 0.4em 0.4em 0.8em rgba(from var(--clay-tabs-color-shadow-light) r g b / 0.3),
-                inset -0.4em -0.4em 0.8em rgba(from var(--clay-tabs-color-shadow) r g b / 0.6),
-                0 calc(var(--clay-tabs-depth) * 1.5) calc(var(--clay-tabs-depth) * 2)
-                    rgba(from var(--clay-tabs-color-shadow) r g b / 0.7),
-                0 calc(var(--clay-tabs-depth) * 0.8) calc(var(--clay-tabs-depth) * 3)
-                    rgba(from var(--clay-tabs-color-shadow) r g b / 0.4),
-                0 0 calc(var(--clay-tabs-depth) * 3)
-                    rgba(from var(--clay-tabs-color-background-hover) r g b / 0.2);
-        }
-
         &.clay-tabs__tab--active {
             background: linear-gradient(145deg,
                 oklch(from var(--clay-tabs-color-background-active) calc(l + 0.05) calc(c * 0.9) h),
@@ -596,8 +586,37 @@
             oklch(from var(--clay-tabs-color-panel-background) calc(l - 0.05) calc(c * 0.1) h));
         box-shadow:
             inset 0.5em 0.5em 1.5em rgba(from var(--clay-tabs-color-shadow) r g b / 0.3),
-            inset -0.3em -0.3em 1em rgba(from var(--clay-tabs-color-shadow-light) r g b / 0.1),
+            inset -0.3em -0.3em 1em rgba(from var(--clay-tabs-color-shadow) r g b / 0.1),
             0 0.2em 0.8em rgba(from var(--clay-tabs-color-shadow) r g b / 0.2);
+    }
+}
+
+.clay-tabs__notification {
+    padding: 1rem;
+    background: linear-gradient(145deg,
+        oklch(from var(--clay-tabs-color-panel-background) calc(l + 0.03) calc(c * 0.1) h),
+        oklch(from var(--clay-tabs-color-panel-background) calc(l - 0.01) calc(c * 0.05) h));
+    border-radius: 0.5rem;
+    margin-bottom: 1rem;
+    box-shadow:
+        0 2px 8px rgba(from var(--clay-tabs-color-shadow) r g b / 0.08),
+        0 1px 2px rgba(from var(--clay-tabs-color-shadow-light) r g b / 0.04);
+    color: var(--clay-tabs-color-panel-text);
+    font-size: 1em;
+
+    strong {
+        font-weight: 600;
+        display: block;
+        margin-bottom: 0.2em;
+    }
+
+    small {
+        color: oklch(from var(--clay-tabs-color-panel-text) calc(l - 0.3) c h);
+        font-size: 0.9em;
+    }
+
+    &:last-child {
+        margin-bottom: 0;
     }
 }
 </style>
