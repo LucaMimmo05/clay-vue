@@ -59,6 +59,14 @@
 
         if ($el.value)
         {
+            const clickedTab = $el.value.querySelector(`[data-tab-id="${tab.id}"]`) as HTMLElement;
+            if (clickedTab)
+            {
+                clickedTab.style.animation = "none";
+                void clickedTab.offsetHeight;
+                clickedTab.style.animation = "clay-tabs-candy-bounce 0.6s var(--clay-tabs-candy-bounce) forwards";
+            }
+
             const content = $el.value.querySelector(".clay-tabs__panel") as HTMLElement;
             if (content)
             {
@@ -94,6 +102,7 @@
                         'clay-tabs__tab--disabled': tab.disabled
                     }"
                     class="clay-tabs__tab"
+                    :data-tab-id="tab.id"
                     :disabled="tab.disabled"
                     @click="selectTab(tab)">
                 {{ tab.title }}
@@ -148,6 +157,9 @@
     --clay-tabs-bounce-duration: 0.6s;
     --clay-tabs-bounce-function: cubic-bezier(0.68, -0.55, 0.265, 1.55);
     --clay-tabs-squishy-function: cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    --clay-tabs-hover-scale: 1.05;
+    --clay-tabs-candy-bounce: cubic-bezier(0.68, -0.6, 0.32, 1.6);
+    --clay-tabs-candy-squash: 0.9;
 }
 
 .clay-tabs {
@@ -182,7 +194,7 @@
             &.clay-tabs__tab--active {
                 border-right: none;
                 border-bottom: none;
-                transform: translateX(var(--clay-tabs-squash-factor)) rotateY(-5deg) scale(1.02);
+                transform: scaleX(1) translateX(var(--clay-tabs-squash-factor)) rotateY(-5deg) scale(1.02);
             }
 
             &:last-child {
@@ -269,10 +281,21 @@
     position: relative;
     margin: 0 0.2em;
     border-radius: var(--clay-tabs-roundness) var(--clay-tabs-roundness) 0 0;
-
     box-shadow:
         0 0 0 0 rgba(from var(--clay-tabs-color-outline) r g b / 0),
         0 0.1em 0.2em -0.1em rgba(from var(--clay-tabs-color-shadow) r g b / 0.75);
+
+    &:hover:not(.clay-tabs__tab--disabled):not(.clay-tabs__tab--active) {
+        transform: scaleY(1) translateY(var(--clay-tabs-hover-lift)) scale(var(--clay-tabs-hover-scale));
+        background: linear-gradient(145deg,
+            oklch(from var(--clay-tabs-color-background-hover) calc(l + 0.15) calc(c * 1.1) h),
+            oklch(from var(--clay-tabs-color-background-hover) calc(l - 0.1) calc(c * 0.8) h));
+        box-shadow:
+            0 0 0 0 rgba(from var(--clay-tabs-color-outline) r g b / 0),
+            0 0.4em 0.8em -0.2em rgba(from var(--clay-tabs-color-shadow) r g b / 0.4),
+            0 0 1em rgba(from var(--clay-tabs-color-background-hover) r g b / 0.3);
+        filter: brightness(1.1);
+    }
 
     &:focus-visible {
         box-shadow:
@@ -280,8 +303,24 @@
             0 0.25em 0.25em 0 rgba(from var(--clay-tabs-color-shadow) r g b / 0.333);
         transform: translateY(-0.0625em) scale(1.1);
     }
-    &:active:not(.clay-tabs__tab--disabled),
+    &:active:not(.clay-tabs__tab--disabled) {
+        transform: scaleY(var(--clay-tabs-candy-squash)) scaleX(1.1) translateY(0.1em);
+        transition: all 0.1s var(--clay-tabs-candy-bounce);
+        background: linear-gradient(145deg,
+            oklch(from var(--clay-tabs-color-background-active) calc(l + 0.05) calc(c * 1.2) h),
+            oklch(from var(--clay-tabs-color-background-active) calc(l - 0.2) calc(c * 0.9) h));
+        box-shadow:
+            0 0 0 0 rgba(from var(--clay-tabs-color-outline) r g b / 0),
+            0 0.05em 0.1em -0.05em rgba(from var(--clay-tabs-color-shadow) r g b / 0.8),
+            inset 0.2em 0.2em 0.4em rgba(from var(--clay-tabs-color-shadow-light) r g b / 0.3),
+            inset -0.2em -0.2em 0.4em rgba(from var(--clay-tabs-color-shadow) r g b / 0.4);
+    }
+
     &.clay-tabs__tab--active {
+        transform: scaleY(1) translateY(0);
+        background: linear-gradient(145deg,
+            oklch(from var(--clay-tabs-color-background) calc(l + 0.15) calc(c * 0.8) h),
+            oklch(from var(--clay-tabs-color-background) calc(l - 0.05) calc(c * 0.6) h));
         box-shadow:
             0 0 0 0 rgba(from var(--clay-tabs-color-outline) r g b / 0),
             0 0.1em 0.2em -0.1em rgba(from var(--clay-tabs-color-shadow) r g b / 0.75),
@@ -293,8 +332,6 @@
                 from var(--clay-tabs-color-shadow) r g b / 0.6),
             0 calc(var(--clay-tabs-depth) * 0.5) calc(var(--clay-tabs-depth) * 2) rgba(
                 from var(--clay-tabs-color-shadow) r g b / 0.3);
-
-        transform: none;
 
         &::after {
             content: "";
@@ -313,16 +350,6 @@
             animation: clay-tabs-squishy-pulse 4s ease-in-out infinite;
         }
     }
-
-    box-shadow:
-        inset 0.3em 0.3em 0.6em rgba(
-            from var(--clay-tabs-color-shadow-light) r g b / 0.4),
-        inset -0.3em -0.3em 0.6em rgba(
-            from var(--clay-tabs-color-shadow) r g b / 0.3),
-        0 var(--clay-tabs-depth) calc(var(--clay-tabs-depth) * 1.5) rgba(
-            from var(--clay-tabs-color-shadow) r g b / 0.6),
-        0 calc(var(--clay-tabs-depth) * 0.5) calc(var(--clay-tabs-depth) * 2) rgba(
-            from var(--clay-tabs-color-shadow) r g b / 0.3);
 
     &:not(.clay-tabs__tab--active):not(.clay-tabs__tab--disabled) {
         animation: clay-tabs-breathe 8s ease-in-out infinite;
@@ -349,44 +376,6 @@
         border-radius: inherit;
         pointer-events: none;
         opacity: 0.7;
-    }
-
-    &.clay-tabs__tab--active {
-        background: linear-gradient(145deg,
-            oklch(from var(--clay-tabs-color-background) calc(l + 0.15) calc(c * 0.8) h),
-            oklch(from var(--clay-tabs-color-background) calc(l - 0.05) calc(c * 0.6) h));
-        color: var(--clay-tabs-color-text);
-
-        box-shadow:
-            0 0 0 0 rgba(from var(--clay-tabs-color-outline) r g b / 0),
-            0 0.1em 0.2em -0.1em rgba(from var(--clay-tabs-color-shadow) r g b / 0.75),
-            inset 0.3em 0.3em 0.6em rgba(
-                from var(--clay-tabs-color-shadow-light) r g b / 0.4),
-            inset -0.3em -0.3em 0.6em rgba(
-                from var(--clay-tabs-color-shadow) r g b / 0.3),
-            0 var(--clay-tabs-depth) calc(var(--clay-tabs-depth) * 1.5) rgba(
-                from var(--clay-tabs-color-shadow) r g b / 0.6),
-            0 calc(var(--clay-tabs-depth) * 0.5) calc(var(--clay-tabs-depth) * 2) rgba(
-                from var(--clay-tabs-color-shadow) r g b / 0.3);
-
-        transform: none;
-
-        &::after {
-            content: "";
-            position: absolute;
-            top: -2px;
-            left: -2px;
-            right: -2px;
-            bottom: -2px;
-            background: linear-gradient(145deg,
-                rgba(from var(--clay-tabs-color-background-active) r g b / 0.3),
-                rgba(from var(--clay-tabs-color-background-active) r g b / 0.1));
-            border-radius: calc(var(--clay-tabs-roundness) + 2px)
-                calc(var(--clay-tabs-roundness) + 2px) 0 0;
-            z-index: -1;
-            filter: blur(1px);
-            animation: clay-tabs-squishy-pulse 4s ease-in-out infinite;
-        }
     }
 
     &.clay-tabs__tab--disabled {
@@ -505,26 +494,15 @@
     }
 }
 
-@keyframes clay-tabs-breathe {
-    0%, 100% {
-        transform: scale(1);
-        box-shadow:
-            inset 0.3em 0.3em 0.6em rgba(from var(--clay-tabs-color-shadow) r g b / 0.4),
-            inset -0.3em -0.3em 0.6em rgba(from var(--clay-tabs-color-shadow) r g b / 0.3),
-            0 var(--clay-tabs-depth) calc(var(--clay-tabs-depth) * 1.5)
-                rgba(from var(--clay-tabs-color-shadow) r g b / 0.6),
-            0 calc(var(--clay-tabs-depth) * 0.5) calc(var(--clay-tabs-depth) * 2)
-                rgba(from var(--clay-tabs-color-shadow) r g b / 0.3);
+@keyframes clay-tabs-candy-bounce {
+    0% {
+        transform: scaleY(var(--clay-tabs-candy-squash)) scaleX(1.1) translateY(0.1em);
     }
     50% {
-        transform: scale(1.005);
-        box-shadow:
-            inset 0.35em 0.35em 0.7em rgba(from var(--clay-tabs-color-shadow) r g b / 0.45),
-            inset -0.35em -0.35em 0.7em rgba(from var(--clay-tabs-color-shadow) r g b / 0.35),
-            0 calc(var(--clay-tabs-depth) * 1.1) calc(var(--clay-tabs-depth) * 1.6)
-                rgba(from var(--clay-tabs-color-shadow) r g b / 0.65),
-            0 calc(var(--clay-tabs-depth) * 0.6) calc(var(--clay-tabs-depth) * 2.2)
-                rgba(from var(--clay-tabs-color-shadow) r g b / 0.35);
+        transform: scaleY(1.1) scaleX(0.95) translateY(-0.1em);
+    }
+    100% {
+        transform: scaleY(1) scaleX(1) translateY(0);
     }
 }
 
