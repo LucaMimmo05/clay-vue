@@ -73,12 +73,17 @@
 
     onMounted(() =>
     {
-        if (!activeTab.value && props.tabs.length > 0)
+        if (props.tabs.length > 0)
         {
-            const firstEnabledTab = props.tabs.find((tab) => !tab.disabled);
-            if (firstEnabledTab)
+            let initialTab: Tab | undefined = props.tabs.find((tab) => tab.id === activeTab.value && !tab.disabled);
+            if (!initialTab)
             {
-                selectTab(firstEnabledTab);
+                initialTab = props.tabs.find((tab) => !tab.disabled);
+            }
+            if (initialTab)
+            {
+                activeTab.value = initialTab.id;
+                selectTab(initialTab);
             }
         }
     });
