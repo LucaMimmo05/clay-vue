@@ -32,12 +32,6 @@
     const activeTab = ref(props.modelValue);
     const $el = ref<HTMLElement | null>(null);
 
-    const notifications = [
-        { title: "New message from Sarah", time: "2 minutes ago" },
-        { title: "System update available", time: "1 hour ago" },
-        { title: "Welcome to Clay UI!", time: "Yesterday" }
-    ];
-
     const classes = computed((): Record<string, boolean> => ({
         "clay-tabs--vertical": props.vertical,
         "clay-tabs--small": props.small,
@@ -111,18 +105,7 @@
 
         <div class="clay-tabs__content">
             <div class="clay-tabs__panel">
-                <template v-if="activeTabData?.id === 'notifications'">
-                    <h2>Notifications</h2>
-                    <div v-for="(notification, idx) in notifications"
-                         :key="idx"
-                         class="clay-tabs__notification">
-                        <strong>{{ notification.title }}</strong><br />
-                        <small>{{ notification.time }}</small>
-                    </div>
-                </template>
-                <template v-else>
-                    <slot :active-tab="activeTabData"></slot>
-                </template>
+                <slot :active-tab="activeTabData"></slot>
             </div>
         </div>
     </div>
@@ -160,6 +143,7 @@
     --clay-tabs-hover-scale: 1.05;
     --clay-tabs-candy-bounce: cubic-bezier(0.68, -0.6, 0.32, 1.6);
     --clay-tabs-candy-squash: 0.9;
+    --clay-tabs-glow-color: rgba(255,255,255,0.25);
 }
 
 .clay-tabs {
@@ -177,6 +161,7 @@
             flex-direction: column;
             border-bottom: none;
             border-right: none;
+            border-radius: var(--clay-tabs-roundness) 0 0 var(--clay-tabs-roundness);
             background: linear-gradient(145deg,
                 oklch(from var(--clay-tabs-color-background) calc(l + 0.2) calc(c * 0.7) h),
                 oklch(from var(--clay-tabs-color-background) calc(l - 0.1) calc(c * 0.4) h));
@@ -184,12 +169,14 @@
                 inset 0.5em 0.5em 1em rgba(from var(--clay-tabs-color-shadow-light) r g b / 0.3),
                 inset -0.5em -0.5em 1em rgba(from var(--clay-tabs-color-shadow) r g b / 0.2),
                 0.5em 0.5em 1.5em rgba(from var(--clay-tabs-color-shadow) r g b / 0.4);
+            padding: 0.5em 0 0.5em 0.5em;
         }
 
         .clay-tabs__tab {
             border-bottom: none;
             border-radius: var(--clay-tabs-roundness) 0 0 var(--clay-tabs-roundness);
             margin-bottom: 0.3em;
+            margin-right: 0;
 
             &.clay-tabs__tab--active {
                 border-right: none;
@@ -237,9 +224,9 @@
     overflow: visible;
     position: relative;
     padding: 0.5em 0.5em 0 0.5em;
-
+    gap: 4px;
     box-shadow:
-        inset 0.5em 0.5em 1em rgba(from var(--clay-tabs-color-shadow-light) r g b / 0.3),
+        inset 0.5em 0.5em 1em rgba(from var(--clay-tabs-color-shadow) r g b / 0.3),
         inset -0.5em -0.5em 1em rgba(from var(--clay-tabs-color-shadow) r g b / 0.2),
         0 0.5em 1.5em rgba(from var(--clay-tabs-color-shadow) r g b / 0.4);
 
@@ -294,7 +281,7 @@
             0 0 0 0 rgba(from var(--clay-tabs-color-outline) r g b / 0),
             0 0.4em 0.8em -0.2em rgba(from var(--clay-tabs-color-shadow) r g b / 0.4),
             0 0 1em rgba(from var(--clay-tabs-color-background-hover) r g b / 0.3);
-        filter: brightness(1.1);
+        filter: brightness(0.95);
     }
 
     &:focus-visible {
@@ -322,6 +309,7 @@
             oklch(from var(--clay-tabs-color-background) calc(l + 0.15) calc(c * 0.8) h),
             oklch(from var(--clay-tabs-color-background) calc(l - 0.05) calc(c * 0.6) h));
         box-shadow:
+            0 0 24px 8px var(--clay-tabs-glow-color),
             0 0 0 0 rgba(from var(--clay-tabs-color-outline) r g b / 0),
             0 0.1em 0.2em -0.1em rgba(from var(--clay-tabs-color-shadow) r g b / 0.75),
             inset 0.3em 0.3em 0.6em rgba(
@@ -342,12 +330,13 @@
             bottom: -2px;
             background: linear-gradient(145deg,
                 rgba(from var(--clay-tabs-color-background-active) r g b / 0.3),
-                rgba(from var(--clay-tabs-color-background-active) r g b / 0.1));
+                rgba(from var(--clay-tabs-color-background-active) r g b / 0.1)),
+                radial-gradient(circle, var(--clay-tabs-glow-color) 0%, transparent 70%);
             border-radius: calc(var(--clay-tabs-roundness) + 2px)
                 calc(var(--clay-tabs-roundness) + 2px) 0 0;
             z-index: -1;
-            filter: blur(1px);
-            animation: clay-tabs-squishy-pulse 4s ease-in-out infinite;
+            filter: blur(2px) brightness(1.3);
+            animation: clay-tabs-squishy-pulse 8s ease-in-out infinite;
         }
     }
 
@@ -365,7 +354,7 @@
         background:
             radial-gradient(
                 circle at 30% 30%,
-                rgba(from var(--clay-tabs-color-shadow-light) r g b / 0.2) 0%,
+                rgba(from var(--clay-tabs-color-shadow) r g b / 0.2) 0%,
                 transparent 70%
             ),
             radial-gradient(
@@ -490,7 +479,7 @@
         transform: scale(1);
     }
     50% {
-        transform: scale(1.02) rotateX(2deg);
+        transform: scale(1.08) rotateX(8deg);
     }
 }
 
@@ -526,7 +515,7 @@
             oklch(from var(--clay-tabs-color-background) calc(l - 0.1) calc(c * 0.7) h),
             oklch(from var(--clay-tabs-color-background) calc(l - 0.3) calc(c * 0.4) h));
         box-shadow:
-            inset 0.5em 0.5em 1em rgba(from var(--clay-tabs-color-shadow-light) r g b / 0.2),
+            inset 0.5em 0.5em 1em rgba(from var(--clay-tabs-color-shadow) r g b / 0.2),
             inset -0.5em -0.5em 1em rgba(from var(--clay-tabs-color-shadow) r g b / 0.4),
             0 0.5em 1.5em rgba(from var(--clay-tabs-color-shadow) r g b / 0.6);
     }

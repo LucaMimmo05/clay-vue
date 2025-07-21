@@ -27,12 +27,6 @@ const defaultTabs = [
         id: "tab3",
         title: "Tab 3",
         content: "<h3>Tab 3 Content</h3><p>This is the content for the third tab.</p>"
-    },
-    {
-        id: "tab4",
-        title: "Disabled Tab",
-        content: "<h3>Disabled Tab Content</h3><p>This tab is disabled and cannot be selected.</p>",
-        disabled: true
     }
 ];
 
@@ -137,10 +131,6 @@ export const Default: StoryObj<StoryArgs> = {
                         <h3>Tab 3 Content</h3>
                         <p>This is the content for the third tab.</p>
                     </div>
-                    <div v-else-if="activeTab.id === 'tab4'">
-                        <h3>Disabled Tab Content</h3>
-                        <p>This tab is disabled and cannot be selected.</p>
-                    </div>
                 </template>
             </ClayTabs>
         `
@@ -177,52 +167,6 @@ export const Vertical: StoryObj<StoryArgs> = {
                         <h3>Tab 3 Content</h3>
                         <p>This is the content for the third tab.</p>
                     </div>
-                </template>
-            </ClayTabs>
-        `
-    })
-};
-
-export const WithCustomContent: StoryObj<StoryArgs> = {
-    args: {
-        tabs: [
-            { id: "profile", title: "Profile", content: "" },
-            { id: "settings", title: "Settings", content: "" },
-            { id: "notifications", title: "Notifications", content: "" }
-        ]
-    },
-    render: (args: StoryArgs) => ({
-        components: { ClayTabs },
-        setup: () => ({ args }),
-        template: `
-            <ClayTabs 
-                :tabs="args.tabs"
-                :model-value="args.modelValue"
-                :vertical="args.vertical"
-                :small="args.size === 'small'"
-                :large="args.size === 'large'"
-                @tab-changed="args.onTabChanged"
-            >
-                <template #default="{ activeTab }">
-                    <div v-if="activeTab.id === 'profile'">
-                        <h2>User Profile</h2>
-                        <p>Name: John Doe</p>
-                        <p>Email: john@example.com</p>
-                        <p>Role: Administrator</p>
-                    </div>
-                    <div v-else-if="activeTab.id === 'settings'">
-                        <h2>Settings</h2>
-                        <label>
-                            <input type="checkbox" checked> Enable notifications
-                        </label><br>
-                        <label>
-                            <input type="checkbox"> Dark mode
-                        </label><br>
-                        <label>
-                            <input type="checkbox" checked> Auto-save
-                        </label>
-                    </div>
-                    <!-- Nessun template per notifications: gestito dal componente -->
                 </template>
             </ClayTabs>
         `
