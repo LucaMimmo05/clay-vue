@@ -27,7 +27,6 @@ const meta: Meta<StoryArgs> = {
                 type: "boolean"
             }
         },
-
         size: {
             name: "Size",
             type: { name: "string", required: false },

@@ -1,19 +1,21 @@
 import type { Preview } from "@storybook/vue3-vite";
 
 import "@/assets/scss/main.scss";
-import type { ColorScheme } from "@/types";
-
-const _setColorScheme = (colorScheme: ColorScheme, body: HTMLBodyElement) => { body.style.colorScheme = colorScheme; };
 
 const preview: Preview = {
     decorators: [(Story, context) =>
     {
         const { theme } = context.globals;
 
-        const body = window.parent.document.querySelector<HTMLBodyElement>("body");
-        if (!(body)) { return Story(); }
+        const html = window.document.querySelector<HTMLElement>("html");
+        if (!(html)) { return Story(); }
 
-        _setColorScheme(theme, body);
+        html.style.colorScheme = theme;
+
+        const wrapper = window.parent.document.querySelector<HTMLDivElement>("#storybook-preview-wrapper");
+        if (!(wrapper)) { return Story(); }
+
+        wrapper.style.colorScheme = theme;
 
         return Story();
     }],
