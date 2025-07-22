@@ -11,10 +11,7 @@
     --clay-dark-color: #{variables.$dark-color};
 
     --clay-primary-color: #{variables.$primary-color};
-    --clay-input-primary-color-light : #{variables.$primary-color-input-light};
-    --clay-input-primary-color-dark : #{variables.$primary-color-input-dark};
     --clay-ease-duration: #{variables.$ease-duration};
-    --clay-ease-duration-dark-theme-input: #{variables.$ease-duration-dark-theme-input};
     --clay-ease-function: #{variables.$ease-function};
 
     --clay-text-color: var(--black);
@@ -39,14 +36,9 @@ body
     height: 100%;
     font-family: #{variables.$font-family};
     text-align: center;
-<<<<<<< HEAD
-    transition: background-color var(--clay-ease-duration) var(--clay-ease-function);
-    font-family: variables.$font-family;
-=======
     transition: background-color var(--clay-ease-duration) var(--clay-ease-function),
                 color var(--clay-ease-duration) var(--clay-ease-function);
 
->>>>>>> Byloth/master
     &[light]
     {
         color-scheme: light;
