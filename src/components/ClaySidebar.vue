@@ -53,7 +53,9 @@
 
       <!-- Footer -->
       <div class="clay-sidebar__footer">
-        <button class="upgrade-btn">Upgrade to PRO</button>
+        <ClayButton class="w-full mb-4">
+          Upgrade to PRO
+        </ClayButton>
         <ul>
           <li><a href="#"><i class="icon-user"></i> Account</a></li>
           <li><a href="#"><i class="icon-logout"></i> Logout</a></li>
@@ -65,6 +67,7 @@
 
 <script lang="ts" setup>
 import ClayCard from './ClayCard.vue';
+import ClayButton from './ClayButton.vue';
 </script>
 
 <style lang="scss">
@@ -74,11 +77,9 @@ import ClayCard from './ClayCard.vue';
   display: flex;
   flex-direction: column;
   width: 280px;
-  height: auto;
   font-family: variables.$font-family;
   padding: 1.5rem;
-
-  color: #000; // light mode default
+  color: #000;
 
   &__nav ul,
   &__footer ul {
@@ -93,15 +94,15 @@ import ClayCard from './ClayCard.vue';
         position: relative;
         display: flex;
         align-items: center;
-        justify-content: flex-start;
-        text-decoration: none;
         padding: 0.75rem 1rem;
+        text-decoration: none;
         border-radius: 8px;
         color: #333;
         transition:
-          box-shadow 0.3s ease,
           transform 0.3s ease,
-          color 0.3s ease;
+          box-shadow 0.3s ease,
+          color 0.3s ease,
+          border 0.3s ease;
 
         i {
           margin-right: 0.75rem;
@@ -109,16 +110,19 @@ import ClayCard from './ClayCard.vue';
 
         &.active,
         &:hover {
-          color: #fff;
           background: variables.$primary-color;
-          transform: translateY(-2px) scale(1.05);
+          color: #fff;
+          border: none;
           box-shadow:
             0 4px 10px rgba(variables.$primary-color, 0.6),
             inset 0 0 8px rgba(255, 255, 255, 0.3);
+          transform: translateY(-2px) scale(1.05);
         }
 
         &:focus-visible {
           outline: none;
+          background: variables.$primary-color;
+          color: #fff;
           box-shadow:
             0 0 0 3px rgba(variables.$primary-color, 0.8),
             0 4px 12px rgba(variables.$primary-color, 0.7),
@@ -127,11 +131,11 @@ import ClayCard from './ClayCard.vue';
         }
 
         .badge {
-          background: variables.$primary-color;
+          background: #fff;
           font-size: 0.75rem;
           border-radius: 12px;
           padding: 0.2rem 0.6rem;
-          color: white;
+          color: variables.$primary-color;
           margin-left: auto;
         }
       }
@@ -156,9 +160,6 @@ import ClayCard from './ClayCard.vue';
     }
 
     .contacts-list {
-      list-style: none;
-      padding: 0;
-
       li {
         display: flex;
         align-items: center;
@@ -181,14 +182,12 @@ import ClayCard from './ClayCard.vue';
         p {
           margin: 0;
           font-weight: 500;
-          text-align: left;
           color: #111;
         }
 
         small {
           font-size: 0.75rem;
           color: #777;
-          text-align: left;
         }
       }
     }
@@ -197,34 +196,17 @@ import ClayCard from './ClayCard.vue';
   &__footer {
     margin-top: auto;
 
-    .upgrade-btn {
+    .w-full {
       width: 100%;
-      padding: 0.75rem;
-      background: variables.$primary-color;
-      border: none;
-      color: white;
-      font-weight: 600;
-      border-radius: 0.5rem;
-      margin-bottom: 1rem;
-      cursor: pointer;
-      transition:
-        box-shadow 0.3s ease,
-        transform 0.3s ease,
-        background-color 0.3s ease;
+    }
 
-      &:hover,
-      &:focus-visible {
-        background: darken(variables.$primary-color, 10%);
-        transform: translateY(-2px) scale(1.05);
-        box-shadow:
-          0 6px 15px rgba(variables.$primary-color, 0.6),
-          inset 0 0 12px rgba(255, 255, 255, 0.3);
-        outline: none;
-      }
+    .mb-4 {
+      margin-bottom: 1rem;
     }
   }
 }
 
+// Dark mode support
 @media (prefers-color-scheme: dark) {
   .clay-sidebar {
     color: #fff;
@@ -237,16 +219,19 @@ import ClayCard from './ClayCard.vue';
 
           &.active,
           &:hover {
-            color: #fff;
             background: variables.$primary-color;
-            transform: translateY(-2px) scale(1.05);
+            color: #fff;
+            border: none;
             box-shadow:
               0 4px 10px rgba(variables.$primary-color, 0.8),
               inset 0 0 10px rgba(255, 255, 255, 0.5);
+            transform: translateY(-2px) scale(1.05);
           }
 
           &:focus-visible {
             outline: none;
+            background: variables.$primary-color;
+            color: #fff;
             box-shadow:
               0 0 0 3px rgba(variables.$primary-color, 1),
               0 4px 12px rgba(variables.$primary-color, 0.9),
@@ -265,35 +250,23 @@ import ClayCard from './ClayCard.vue';
       .contacts-header {
         color: #aaa;
       }
-      .contacts-list {
-        li {
-          img,
-          .avatar {
-            background: #666;
-            color: white;
-          }
-          p,
-          small {
-            color: #aaa;
-          }
+
+      .contacts-list li {
+        img,
+        .avatar {
+          background: #666;
+          color: white;
+        }
+
+        p,
+        small {
+          color: #aaa;
         }
       }
     }
 
     &__footer {
-      .upgrade-btn {
-        background: darken(variables.$primary-color, 20%);
-
-        &:hover,
-        &:focus-visible {
-          background: darken(variables.$primary-color, 30%);
-          transform: translateY(-2px) scale(1.05);
-          box-shadow:
-            0 6px 15px rgba(variables.$primary-color, 0.8),
-            inset 0 0 15px rgba(255, 255, 255, 0.4);
-          outline: none;
-        }
-      }
+      // ClayButton già supporta dark, nessuna modifica necessaria
     }
   }
 }
