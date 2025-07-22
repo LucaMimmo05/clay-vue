@@ -1,7 +1,6 @@
 <template>
   <ClayCard>
     <aside class="clay-sidebar">
-      <!-- Navigation -->
       <nav class="clay-sidebar__nav">
         <ul>
           <li><a href="#"><i class="icon-home"></i> Dashboard</a></li>
@@ -20,7 +19,6 @@
 
       <hr class="divider" />
 
-      <!-- Contacts -->
       <div class="clay-sidebar__contacts">
         <div class="contacts-header">
           <span>Contacts</span>
@@ -51,11 +49,8 @@
         </ul>
       </div>
 
-      <!-- Footer -->
       <div class="clay-sidebar__footer">
-        <ClayButton class="w-full mb-4">
-          Upgrade to PRO
-        </ClayButton>
+        <ClayButton class="w-full mb-4">Upgrade to PRO</ClayButton>
         <ul>
           <li><a href="#"><i class="icon-user"></i> Account</a></li>
           <li><a href="#"><i class="icon-logout"></i> Logout</a></li>
@@ -66,18 +61,18 @@
 </template>
 
 <script lang="ts" setup>
-import ClayCard from './ClayCard.vue';
-import ClayButton from './ClayButton.vue';
+import ClayCard from './ClayCard.vue'
+import ClayButton from './ClayButton.vue'
 </script>
 
 <style lang="scss">
-@use "@/assets/scss/variables";
+@use "@/assets/scss/variables" as *;
 
 .clay-sidebar {
   display: flex;
   flex-direction: column;
   width: 280px;
-  font-family: variables.$font-family;
+  font-family: $font-family;
   padding: 1.5rem;
   color: #000;
 
@@ -96,11 +91,10 @@ import ClayButton from './ClayButton.vue';
         align-items: center;
         padding: 0.75rem 1rem;
         text-decoration: none;
-        border-radius: 8px;
+        border-radius: 12px;
         color: #333;
+        border: 2px solid transparent;
         transition:
-          transform 0.3s ease,
-          box-shadow 0.3s ease,
           color 0.3s ease,
           border 0.3s ease;
 
@@ -110,32 +104,26 @@ import ClayButton from './ClayButton.vue';
 
         &.active,
         &:hover {
-          background: variables.$primary-color;
-          color: #fff;
-          border: none;
-          box-shadow:
-            0 4px 10px rgba(variables.$primary-color, 0.6),
-            inset 0 0 8px rgba(255, 255, 255, 0.3);
-          transform: translateY(-2px) scale(1.05);
+          background: #fff;
+          color: $primary-color;
+          border-color:  rgba($primary-color, 0.5);
+          box-shadow: none;
         }
 
         &:focus-visible {
           outline: none;
-          background: variables.$primary-color;
-          color: #fff;
-          box-shadow:
-            0 0 0 3px rgba(variables.$primary-color, 0.8),
-            0 4px 12px rgba(variables.$primary-color, 0.7),
-            inset 0 0 10px rgba(255, 255, 255, 0.5);
-          transform: translateY(-2px) scale(1.05);
+          background: transparent;
+          color: $primary-color;
+          border-color:  rgba($primary-color, 0.5);
+          box-shadow: 0 0 0 4px rgba($primary-color, 0.3);
         }
 
         .badge {
-          background: #fff;
+          background: $primary-color;
           font-size: 0.75rem;
           border-radius: 12px;
           padding: 0.2rem 0.6rem;
-          color: variables.$primary-color;
+          color: white;
           margin-left: auto;
         }
       }
@@ -206,7 +194,7 @@ import ClayButton from './ClayButton.vue';
   }
 }
 
-// Dark mode support
+// Dark mode
 @media (prefers-color-scheme: dark) {
   .clay-sidebar {
     color: #fff;
@@ -216,27 +204,22 @@ import ClayButton from './ClayButton.vue';
       li {
         a {
           color: #c2c5cc;
+          border: 2px solid transparent;
 
           &.active,
           &:hover {
-            background: variables.$primary-color;
-            color: #fff;
-            border: none;
-            box-shadow:
-              0 4px 10px rgba(variables.$primary-color, 0.8),
-              inset 0 0 10px rgba(255, 255, 255, 0.5);
-            transform: translateY(-2px) scale(1.05);
+            background: rgba(255, 255, 255, 0.05);
+            color: $primary-color;
+            border-color: rgba($primary-color, 0.5);
+            box-shadow: none;
           }
 
           &:focus-visible {
             outline: none;
-            background: variables.$primary-color;
-            color: #fff;
-            box-shadow:
-              0 0 0 3px rgba(variables.$primary-color, 1),
-              0 4px 12px rgba(variables.$primary-color, 0.9),
-              inset 0 0 12px rgba(255, 255, 255, 0.6);
-            transform: translateY(-2px) scale(1.05);
+            background: transparent;
+            color: $primary-color;
+            border-color: rgba($primary-color, 0.5);
+            box-shadow: 0 0 0 4px rgba($primary-color, 0.4);
           }
         }
       }
@@ -263,10 +246,6 @@ import ClayButton from './ClayButton.vue';
           color: #aaa;
         }
       }
-    }
-
-    &__footer {
-      // ClayButton già supporta dark, nessuna modifica necessaria
     }
   }
 }
