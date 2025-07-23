@@ -506,7 +506,7 @@
         --clay-tabs-color-background-hover: oklch(from var(--clay-tabs-color-background) calc(l + 0.1) c h);
         --clay-tabs-color-background-active: oklch(from var(--clay-tabs-color-background) calc(l + 0.2) c h);
         --clay-tabs-color-outline: oklch(from var(--clay-tabs-color-background) calc(l + 0.2) c calc(h + 180));
-        --clay-tabs-color-shadow: oklch(from var(--clay-tabs-color-background) calc(l - 0.4) c h);
+        --clay-tabs-color-shadow: oklch(from var(--clay-dark-color) calc(l - 0.4) c h);
         --clay-tabs-color-shadow-light: oklch(from var(--clay-tabs-color-background) calc(l + 0.1) c h);
         --clay-tabs-color-text: var(--white);
         --clay-tabs-color-text-inactive: oklch(from var(--clay-tabs-color-text) calc(l - 0.4) c h);
@@ -560,35 +560,6 @@
             inset 0.5em 0.5em 1.5em rgba(from var(--clay-tabs-color-shadow) r g b / 0.3),
             inset -0.3em -0.3em 1em rgba(from var(--clay-tabs-color-shadow) r g b / 0.1),
             0 0.2em 0.8em rgba(from var(--clay-tabs-color-shadow) r g b / 0.2);
-    }
-}
-
-.clay-tabs__notification {
-    padding: 1rem;
-    background: linear-gradient(145deg,
-        oklch(from var(--clay-tabs-color-panel-background) calc(l + 0.03) calc(c * 0.1) h),
-        oklch(from var(--clay-tabs-color-panel-background) calc(l - 0.01) calc(c * 0.05) h));
-    border-radius: 0.5rem;
-    margin-bottom: 1rem;
-    box-shadow:
-        0 2px 8px rgba(from var(--clay-tabs-color-shadow) r g b / 0.08),
-        0 1px 2px rgba(from var(--clay-tabs-color-shadow-light) r g b / 0.04);
-    color: var(--clay-tabs-color-panel-text);
-    font-size: 1em;
-
-    strong {
-        font-weight: 600;
-        display: block;
-        margin-bottom: 0.2em;
-    }
-
-    small {
-        color: oklch(from var(--clay-tabs-color-panel-text) calc(l - 0.3) c h);
-        font-size: 0.9em;
-    }
-
-    &:last-child {
-        margin-bottom: 0;
     }
 }
 </style>
