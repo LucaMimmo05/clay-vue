@@ -105,7 +105,7 @@ export default defineComponent({
 }
 
 .clay-carosel.vertical {
-  height: 100%;
+  height: 80%;
   padding: 24px 0;
 }
 
@@ -126,7 +126,7 @@ export default defineComponent({
   flex-direction: column;
   scroll-snap-type: y mandatory;
   height: 100%;
-  padding: 0 24px;
+  padding: 0 12px;
 }
 
 .clay-carosel__container::-webkit-scrollbar {
