@@ -180,7 +180,7 @@
     --clay-tabs-color-background: var(--clay-primary-color);
     --clay-tabs-color-background-hover: oklch(from var(--clay-tabs-color-background) calc(l + 0.1) c h);
     --clay-tabs-color-background-active: oklch(from var(--clay-tabs-color-background) calc(l - 0.1) c h);
-    --clay-tabs-color-outline: oklch(from var(--clay-tabs-color-background) calc(l + 0.2) c h);
+    --clay-tabs-color-outline: oklch(from var(--clay-tabs-color-background) calc(l + 0.2) calc(c * 1.2) calc(h + 180));
     --clay-tabs-color-shadow: oklch(from var(--clay-tabs-color-background) calc(l - 0.25) c h);
     --clay-tabs-color-shadow-light: oklch(from var(--clay-tabs-color-background) calc(l + 0.15) c h);
     --clay-tabs-color-text: var(--white);
@@ -312,6 +312,19 @@
                         rgba(from var(--clay-tabs-color-shadow) r g b / 0.4);
             }
 
+            &:focus-visible {
+                outline: none;
+                box-shadow:
+                    0 0 0 0.2em var(--clay-tabs-color-outline),
+                    0 0 0 0.35em rgba(from var(--clay-tabs-color-outline) r g b / 0.3),
+                    0 0 1.5em 0.5em rgba(from var(--clay-tabs-color-outline) r g b / 0.2),
+                    var(--clay-tabs-shadow-base),
+                    0 0.2em 0.5em -0.1em rgba(from var(--clay-tabs-color-shadow) r g b / 0.85);
+                transform: translateX(0.0625em) scale(1.02);
+                z-index: 10;
+                position: relative;
+            }
+
             &:last-child {
                 border-bottom: none;
                 margin-bottom: 0;
@@ -405,10 +418,16 @@
     }
 
     &:focus-visible {
+        outline: none;
         box-shadow:
-            0 0 0 0.15em var(--clay-tabs-color-outline),
-            0 0.25em 0.25em 0 rgba(from var(--clay-tabs-color-shadow) r g b / 0.333);
-        transform: translateY(-0.0625em) scale(1.1);
+            0 0 0 0.2em var(--clay-tabs-color-outline),
+            0 0 0 0.35em rgba(from var(--clay-tabs-color-outline) r g b / 0.3),
+            0 0 1.5em 0.5em rgba(from var(--clay-tabs-color-outline) r g b / 0.2),
+            var(--clay-tabs-shadow-base),
+            var(--clay-tabs-shadow-subtle);
+        transform: translateY(-0.0625em) scale(1.02);
+        z-index: 10;
+        position: relative;
     }
 
     &:active:not(.clay-tabs__tab--disabled) {
@@ -595,7 +614,12 @@
         --clay-tabs-color-background: oklch(from var(--clay-primary-color) calc(l - 0.3) c h);
         --clay-tabs-color-background-hover: oklch(from var(--clay-tabs-color-background) calc(l + 0.1) c h);
         --clay-tabs-color-background-active: oklch(from var(--clay-tabs-color-background) calc(l + 0.2) c h);
-        --clay-tabs-color-outline: oklch(from var(--clay-tabs-color-background) calc(l + 0.2) c calc(h + 180));
+        --clay-tabs-color-outline: oklch(
+            from var(--clay-tabs-color-background)
+            calc(l + 0.3)
+            calc(c * 1.3)
+            calc(h + 180)
+        );
         --clay-tabs-color-shadow: oklch(from var(--clay-dark-color) calc(l - 0.4) c h);
         --clay-tabs-color-shadow-light: oklch(from var(--clay-tabs-color-background) calc(l + 0.1) c h);
         --clay-tabs-color-text: var(--white);
