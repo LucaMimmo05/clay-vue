@@ -310,6 +310,26 @@
                         rgba(from var(--clay-tabs-color-shadow) r g b / 0.7),
                     0 calc(var(--clay-tabs-depth) * 0.5) calc(var(--clay-tabs-depth) * 2)
                         rgba(from var(--clay-tabs-color-shadow) r g b / 0.4);
+
+                &:focus-visible {
+                    outline: none;
+                    box-shadow:
+                        0 0 0.3em 0.1em rgba(from var(--clay-tabs-color-outline) r g b / 0.9),
+                        0 0 0.6em 0.2em rgba(from var(--clay-tabs-color-outline) r g b / 0.7),
+                        0 0 1em 0.3em rgba(from var(--clay-tabs-color-outline) r g b / 0.5),
+                        0 0 1.5em 0.4em rgba(from var(--clay-tabs-color-outline) r g b / 0.3),
+                        0 0 2.5em 0.6em rgba(from var(--clay-tabs-color-outline) r g b / 0.15),
+                        var(--clay-tabs-shadow-glow),
+                        inset 0.3em 0.3em 0.6em rgba(from var(--clay-tabs-color-shadow-light) r g b / 0.5),
+                        inset -0.3em -0.3em 0.6em rgba(from var(--clay-tabs-color-shadow) r g b / 0.4);
+                    transform:
+                        scaleX(1)
+                        translateX(calc(var(--clay-tabs-squash-factor) + 0.0625em))
+                        rotateY(-5deg)
+                        scale(1.04);
+                    z-index: 10;
+                    position: relative;
+                }
             }
 
             &:focus-visible {
@@ -451,6 +471,21 @@
         transform: scaleY(1) translateY(0);
         background: var(--clay-tabs-gradient-tab-active);
         @include active-tab-shadow();
+
+        &:focus-visible {
+            outline: none;
+            box-shadow:
+                0 0 0.3em 0.1em rgba(from var(--clay-tabs-color-outline) r g b / 0.9),
+                0 0 0.6em 0.2em rgba(from var(--clay-tabs-color-outline) r g b / 0.7),
+                0 0 1em 0.3em rgba(from var(--clay-tabs-color-outline) r g b / 0.5),
+                0 0 1.5em 0.4em rgba(from var(--clay-tabs-color-outline) r g b / 0.3),
+                0 0 2.5em 0.6em rgba(from var(--clay-tabs-color-outline) r g b / 0.15),
+                var(--clay-tabs-shadow-glow),
+                var(--clay-tabs-shadow-inset-light);
+            transform: translateY(-0.0625em) scale(1.02);
+            z-index: 10;
+            position: relative;
+        }
 
         &::after {
             content: "";
