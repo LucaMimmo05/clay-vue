@@ -16,9 +16,9 @@
     });
 
     const images = [
-        "https://placehold.co/600x400/222/fff?text=Image+1",
-        "https://placehold.co/600x400/444/fff?text=Image+2",
-        "https://placehold.co/600x400/666/fff?text=Image+3"
+        "https://picsum.photos/1920/1080",
+        "https://picsum.photos/1920/1080",
+        "https://picsum.photos/1920/1080"
     ];
 
     const carouselRef = ref<HTMLElement | null>(null);
