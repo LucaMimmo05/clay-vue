@@ -1,45 +1,65 @@
 import type { Meta, StoryObj } from "@storybook/vue3-vite";
 import ClayCarosel from "./ClayCarosel.vue";
 
-// eslint-disable-next-line @typescript-eslint/no-empty-object-type
-interface StoryArgs { }
+interface StoryArgs {
+  buttons: boolean;
+}
 
 const meta: Meta<StoryArgs> = {
     title: "ClayCarosel",
     component: ClayCarosel,
-    tags: ["autodocs"]
+    tags: ["autodocs"],
+    argTypes: {
+        buttons: {
+            name: "Show Buttons",
+            type: { name: "boolean", required: false },
+            description: "Toggle navigation buttons",
+            table: {
+                category: "Component's",
+                type: { summary: "boolean" },
+                defaultValue: { summary: "false" }
+            },
+            control: "boolean"
+        }
+    },
+    args: {
+        buttons: false
+    }
 };
 
 export const Primary: StoryObj<StoryArgs> = {
+    args: {
+        buttons: false
+    },
     render: (args: StoryArgs) => ({
         components: { ClayCarosel },
+        setup: () =>
+        {
+            return { args };
+        },
         template: `
-            <div style="max-width: 600px; margin: auto;">
-                <ClayCarosel />
-            </div>
-        `
+      <div style="max-width: 600px; margin: auto;">
+        <ClayCarosel :with-buttons="args.buttons" />
+      </div>
+    `
     })
 };
 
 export const Vertical: StoryObj<StoryArgs> = {
+    args: {
+        buttons: false
+    },
     render: (args: StoryArgs) => ({
         components: { ClayCarosel },
+        setup: () =>
+        {
+            return { args };
+        },
         template: `
-            <div style="max-width: 600px; height: 600px; margin: auto;">
-                <ClayCarosel vertical />
-            </div>
-        `
-    })
-};
-
-export const WithButtons: StoryObj<StoryArgs> = {
-    render: (args: StoryArgs) => ({
-        components: { ClayCarosel },
-        template: `
-            <div style="max-width: 600px; height: 600px; margin: auto;">
-                <ClayCarosel with-buttons />
-            </div>
-        `
+      <div style="max-width: 600px; height: 600px; margin: auto;">
+        <ClayCarosel vertical :with-buttons="args.buttons" />
+      </div>
+    `
     })
 };
 

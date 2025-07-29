@@ -27,9 +27,10 @@
     const scrollStart = ref(0);
     const scrollAmount = 300;
 
-    const scrollNext = () =>
+    const scrollNext = (): void =>
     {
         if (!carouselRef.value) { return; }
+
         if (props.vertical)
         {
             carouselRef.value.scrollTop += scrollAmount;
@@ -40,9 +41,10 @@
         }
     };
 
-    const scrollPrev = () =>
+    const scrollPrev = (): void =>
     {
         if (!carouselRef.value) { return; }
+
         if (props.vertical)
         {
             carouselRef.value.scrollTop -= scrollAmount;
@@ -55,9 +57,10 @@
 
     defineExpose({ scrollNext, scrollPrev });
 
-    const onWheel = (e: WheelEvent) =>
+    const onWheel = (e: WheelEvent): void =>
     {
         if (!carouselRef.value) { return; }
+
         if (props.vertical)
         {
             carouselRef.value.scrollTop += e.deltaY;
@@ -68,26 +71,42 @@
         }
     };
 
-    const onDragStart = (e: MouseEvent) =>
+    const onDragStart = (e: MouseEvent): void =>
     {
         if (!carouselRef.value) { return; }
+
         isDragging.value = true;
         carouselRef.value.classList.add("dragging");
-        startPos.value = props.vertical ?
-            e.pageY - carouselRef.value.offsetTop :
-            e.pageX - carouselRef.value.offsetLeft;
-        scrollStart.value = props.vertical ?
-            carouselRef.value.scrollTop :
-            carouselRef.value.scrollLeft;
+
+        if (props.vertical)
+        {
+            startPos.value = e.pageY - carouselRef.value.offsetTop;
+            scrollStart.value = carouselRef.value.scrollTop;
+        }
+        else
+        {
+            startPos.value = e.pageX - carouselRef.value.offsetLeft;
+            scrollStart.value = carouselRef.value.scrollLeft;
+        }
     };
 
-    const onDragMove = (e: MouseEvent) =>
+    const onDragMove = (e: MouseEvent): void =>
     {
         if (!isDragging.value || !carouselRef.value) { return; }
-        const current = props.vertical ?
-            e.pageY - carouselRef.value.offsetTop :
-            e.pageX - carouselRef.value.offsetLeft;
+
+        let current = 0;
+
+        if (props.vertical)
+        {
+            current = e.pageY - carouselRef.value.offsetTop;
+        }
+        else
+        {
+            current = e.pageX - carouselRef.value.offsetLeft;
+        }
+
         const walk = current - startPos.value;
+
         if (props.vertical)
         {
             carouselRef.value.scrollTop = scrollStart.value - walk;
@@ -98,63 +117,79 @@
         }
     };
 
-    const onDragEnd = () =>
+    const onDragEnd = (): void =>
     {
         if (!carouselRef.value) { return; }
+
         isDragging.value = false;
         carouselRef.value.classList.remove("dragging");
     };
 </script>
 
 <template>
-    <div class="clay-carosel" :class="{ vertical }">
-        <ClayButton v-if="withButtons"
-                    class="clay-carosel__button left"
-                    aria-label="Scroll previous"
-                    @click="scrollPrev">
-            ←
-        </ClayButton>
-
-        <div ref="carouselRef"
-             class="clay-carosel__container"
-             @wheel.prevent="onWheel"
-             @mousedown="onDragStart"
-             @mousemove="onDragMove"
-             @mouseup="onDragEnd"
-             @mouseleave="onDragEnd">
-            <div v-for="(image, index) in images"
-                 :key="index"
-                 class="clay-carosel__item"
-                 :class="{ vertical }">
-                <ClayCard :style="{ background: 'none', boxShadow: 'var(--clay-shadow)' }">
-                    <img :src="image"
-                         alt="Image"
-                         class="clay-carosel__image"
-                         @mousedown.prevent />
-                </ClayCard>
+    <div class="clay-carosel-wrapper" :class="{ vertical }">
+        <div class="clay-carosel" :class="{ vertical }">
+            <div ref="carouselRef"
+                 class="clay-carosel__container"
+                 @wheel.prevent="onWheel"
+                 @mousedown="onDragStart"
+                 @mousemove="onDragMove"
+                 @mouseup="onDragEnd"
+                 @mouseleave="onDragEnd">
+                <div v-for="(image, index) in images"
+                     :key="index"
+                     class="clay-carosel__item"
+                     :class="{ vertical }">
+                    <ClayCard :style="{ background: 'none', boxShadow: 'var(--clay-shadow)' }">
+                        <img :src="image"
+                             alt="Image"
+                             class="clay-carosel__image"
+                             @mousedown.prevent />
+                    </ClayCard>
+                </div>
             </div>
         </div>
 
         <ClayButton v-if="withButtons"
-                    class="clay-carosel__button right"
+                    class="clay-carosel__button prev"
+                    :class="{ vertical: props.vertical }"
+                    aria-label="Scroll previous"
+                    @click="scrollPrev">
+            {{ props.vertical ? '↑' : '←' }}
+        </ClayButton>
+
+        <ClayButton v-if="withButtons"
+                    class="clay-carosel__button next"
+                    :class="{ vertical: props.vertical }"
                     aria-label="Scroll next"
                     @click="scrollNext">
-            →
+            {{ props.vertical ? '↓' : '→' }}
         </ClayButton>
     </div>
 </template>
 
-<style scoped>
+<style lang="scss">
+.clay-carosel-wrapper {
+  position: relative;
+
+  &.vertical {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 80%;
+  }
+}
+
 .clay-carosel {
   width: 100%;
   overflow: hidden;
   padding: 24px 0;
   position: relative;
-}
 
-.clay-carosel.vertical {
-  height: 80%;
-  padding: 24px 0;
+  &.vertical {
+    height: 100%;
+    padding: 24px 0;
+  }
 }
 
 .clay-carosel__container {
@@ -186,12 +221,10 @@
   flex: 0 0 80%;
   scroll-snap-align: center;
   transition: transform 0.3s ease;
-}
 
-.clay-carosel__item.vertical {
-  flex: 0 0 80%;
-  scroll-snap-align: center;
-  transition: transform 0.3s ease;
+  &.vertical {
+    flex: 0 0 70%;
+  }
 }
 
 .clay-carosel__image {
@@ -203,5 +236,40 @@
 .dragging {
   cursor: grabbing;
   user-select: none;
+}
+
+.clay-carosel__button {
+  padding: 8px 12px;
+  transition: transform 0.2s ease;
+  z-index: 2;
+
+  &.prev,
+  &.next {
+    position: absolute;
+  }
+
+  &.prev:not(.vertical) {
+    left: -45px;
+    top: 50%;
+    transform: translateY(-50%);
+  }
+
+  &.next:not(.vertical) {
+    right: -45px;
+    top: 50%;
+    transform: translateY(-50%);
+  }
+
+  &.vertical.prev {
+    top: 50%;
+    right: -24px;
+    transform: translateY(-50%);
+  }
+
+  &.vertical.next {
+    top: 60%;
+    right: -24px;
+    transform: translateY(-50%);
+  }
 }
 </style>
