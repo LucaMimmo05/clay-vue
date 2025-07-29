@@ -17,11 +17,29 @@ export default defineComponent({
       default: false,
     },
   },
-  setup(props) {
+  setup(props, { expose }) {
     const carouselRef = ref<HTMLElement | null>(null);
     const isDragging = ref(false);
     const startPos = ref(0);
     const scrollStart = ref(0);
+
+    const scrollAmount = 300;
+
+    const scrollNext = () => {
+      if (!carouselRef.value) return;
+      props.vertical
+        ? (carouselRef.value.scrollTop += scrollAmount)
+        : (carouselRef.value.scrollLeft += scrollAmount);
+    };
+
+    const scrollPrev = () => {
+      if (!carouselRef.value) return;
+      props.vertical
+        ? (carouselRef.value.scrollTop -= scrollAmount)
+        : (carouselRef.value.scrollLeft -= scrollAmount);
+    };
+
+    expose({ scrollNext, scrollPrev });
 
     const onWheel = (e: WheelEvent) => {
       if (!carouselRef.value) return;
@@ -90,7 +108,7 @@ export default defineComponent({
         :class="{ vertical: isVertical }"
       >
         <ClayCard :style="{ background: 'none', boxShadow: 'var(--clay-shadow)' }">
-          <img :src="image" alt="Image" class="clay-carosel__image" @mousedown.prevent /> 
+          <img :src="image" alt="Image" class="clay-carosel__image" @mousedown.prevent />
         </ClayCard>
       </div>
     </div>
