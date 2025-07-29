@@ -1,7 +1,19 @@
-<script lang="ts">
-    import { ref, defineComponent } from "vue";
+<script lang="ts" setup>
+    import { ref } from "vue";
+
     import ClayCard from "./ClayCard.vue";
     import ClayButton from "./ClayButton.vue";
+
+    const props = defineProps({
+        vertical: {
+            type: Boolean,
+            default: false
+        },
+        withButtons: {
+            type: Boolean,
+            default: false
+        }
+    });
 
     const images = [
         "https://placehold.co/600x400/222/fff?text=Image+1",
@@ -9,123 +21,93 @@
         "https://placehold.co/600x400/666/fff?text=Image+3"
     ];
 
-    export default defineComponent({
-        name: "ClayCarosel",
-        components: { ClayCard, ClayButton },
-        props: {
-            vertical: {
-                type: Boolean,
-                default: false
-            },
-            withButtons: {
-                type: Boolean,
-                default: false
-            }
-        },
-        setup: (props, { expose }) =>
+    const carouselRef = ref<HTMLElement | null>(null);
+    const isDragging = ref(false);
+    const startPos = ref(0);
+    const scrollStart = ref(0);
+    const scrollAmount = 300;
+
+    const scrollNext = () =>
+    {
+        if (!carouselRef.value) { return; }
+        if (props.vertical)
         {
-            const carouselRef = ref<HTMLElement | null>(null);
-            const isDragging = ref(false);
-            const startPos = ref(0);
-            const scrollStart = ref(0);
-            const scrollAmount = 300;
-
-            const scrollNext = () =>
-            {
-                if (!carouselRef.value) { return; }
-                if (props.vertical)
-                {
-                    carouselRef.value.scrollTop += scrollAmount;
-                }
-                else
-                {
-                    carouselRef.value.scrollLeft += scrollAmount;
-                }
-            };
-
-            const scrollPrev = () =>
-            {
-                if (!carouselRef.value) { return; }
-                if (props.vertical)
-                {
-                    carouselRef.value.scrollTop -= scrollAmount;
-                }
-                else
-                {
-                    carouselRef.value.scrollLeft -= scrollAmount;
-                }
-            };
-
-            expose({ scrollNext, scrollPrev });
-
-            const onWheel = (e: WheelEvent) =>
-            {
-                if (!carouselRef.value) { return; }
-                if (props.vertical)
-                {
-                    carouselRef.value.scrollTop += e.deltaY;
-                }
-                else
-                {
-                    carouselRef.value.scrollLeft += e.deltaY;
-                }
-            };
-
-            const onDragStart = (e: MouseEvent) =>
-            {
-                if (!carouselRef.value) { return; }
-                isDragging.value = true;
-                carouselRef.value.classList.add("dragging");
-                startPos.value = props.vertical ?
-                    e.pageY - carouselRef.value.offsetTop :
-                    e.pageX - carouselRef.value.offsetLeft;
-                scrollStart.value = props.vertical ?
-                    carouselRef.value.scrollTop :
-                    carouselRef.value.scrollLeft;
-            };
-
-            const onDragMove = (e: MouseEvent) =>
-            {
-                if (!isDragging.value || !carouselRef.value) { return; }
-                const current = props.vertical ?
-                    e.pageY - carouselRef.value.offsetTop :
-                    e.pageX - carouselRef.value.offsetLeft;
-                const walk = current - startPos.value;
-                if (props.vertical)
-                {
-                    carouselRef.value.scrollTop = scrollStart.value - walk;
-                }
-                else
-                {
-                    carouselRef.value.scrollLeft = scrollStart.value - walk;
-                }
-            };
-
-            const onDragEnd = () =>
-            {
-                if (!carouselRef.value) { return; }
-                isDragging.value = false;
-                carouselRef.value.classList.remove("dragging");
-            };
-
-            return {
-                images,
-                carouselRef,
-                onWheel,
-                onDragStart,
-                onDragMove,
-                onDragEnd,
-                scrollNext,
-                scrollPrev
-            };
+            carouselRef.value.scrollTop += scrollAmount;
         }
-    });
+        else
+        {
+            carouselRef.value.scrollLeft += scrollAmount;
+        }
+    };
+
+    const scrollPrev = () =>
+    {
+        if (!carouselRef.value) { return; }
+        if (props.vertical)
+        {
+            carouselRef.value.scrollTop -= scrollAmount;
+        }
+        else
+        {
+            carouselRef.value.scrollLeft -= scrollAmount;
+        }
+    };
+
+    defineExpose({ scrollNext, scrollPrev });
+
+    const onWheel = (e: WheelEvent) =>
+    {
+        if (!carouselRef.value) { return; }
+        if (props.vertical)
+        {
+            carouselRef.value.scrollTop += e.deltaY;
+        }
+        else
+        {
+            carouselRef.value.scrollLeft += e.deltaY;
+        }
+    };
+
+    const onDragStart = (e: MouseEvent) =>
+    {
+        if (!carouselRef.value) { return; }
+        isDragging.value = true;
+        carouselRef.value.classList.add("dragging");
+        startPos.value = props.vertical ?
+            e.pageY - carouselRef.value.offsetTop :
+            e.pageX - carouselRef.value.offsetLeft;
+        scrollStart.value = props.vertical ?
+            carouselRef.value.scrollTop :
+            carouselRef.value.scrollLeft;
+    };
+
+    const onDragMove = (e: MouseEvent) =>
+    {
+        if (!isDragging.value || !carouselRef.value) { return; }
+        const current = props.vertical ?
+            e.pageY - carouselRef.value.offsetTop :
+            e.pageX - carouselRef.value.offsetLeft;
+        const walk = current - startPos.value;
+        if (props.vertical)
+        {
+            carouselRef.value.scrollTop = scrollStart.value - walk;
+        }
+        else
+        {
+            carouselRef.value.scrollLeft = scrollStart.value - walk;
+        }
+    };
+
+    const onDragEnd = () =>
+    {
+        if (!carouselRef.value) { return; }
+        isDragging.value = false;
+        carouselRef.value.classList.remove("dragging");
+    };
 </script>
 
 <template>
-    <div class="clay-carosel"
-         :class="{ vertical }"
-         style="position: relative;">
+    <div class="clay-carosel" :class="{ vertical }">
         <ClayButton v-if="withButtons"
                     class="clay-carosel__button left"
                     aria-label="Scroll previous"
@@ -167,6 +149,7 @@
   width: 100%;
   overflow: hidden;
   padding: 24px 0;
+  position: relative;
 }
 
 .clay-carosel.vertical {
@@ -185,6 +168,7 @@
   scroll-snap-type: x mandatory;
   scrollbar-width: none;
   flex-direction: row;
+  cursor: grab;
 }
 
 .clay-carosel.vertical .clay-carosel__container {
@@ -217,7 +201,7 @@
 }
 
 .dragging {
-  cursor: grabbing !important;
+  cursor: grabbing;
   user-select: none;
 }
 </style>
