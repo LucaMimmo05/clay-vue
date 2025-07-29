@@ -1,118 +1,165 @@
 <script lang="ts">
-import { ref, defineComponent } from 'vue';
-import ClayCard from './ClayCard.vue';
+    import { ref, defineComponent } from "vue";
+    import ClayCard from "./ClayCard.vue";
+    import ClayButton from "./ClayButton.vue";
 
-const images = [
-  'https://placehold.co/600x400/222/fff?text=Image+1',
-  'https://placehold.co/600x400/444/fff?text=Image+2',
-  'https://placehold.co/600x400/666/fff?text=Image+3',
-];
+    const images = [
+        "https://placehold.co/600x400/222/fff?text=Image+1",
+        "https://placehold.co/600x400/444/fff?text=Image+2",
+        "https://placehold.co/600x400/666/fff?text=Image+3"
+    ];
 
-export default defineComponent({
-  name: 'ClayCarosel',
-  components: { ClayCard },
-  props: {
-    vertical: {
-      type: Boolean,
-      default: false,
-    },
-  },
-  setup(props, { expose }) {
-    const carouselRef = ref<HTMLElement | null>(null);
-    const isDragging = ref(false);
-    const startPos = ref(0);
-    const scrollStart = ref(0);
+    export default defineComponent({
+        name: "ClayCarosel",
+        components: { ClayCard, ClayButton },
+        props: {
+            vertical: {
+                type: Boolean,
+                default: false
+            },
+            withButtons: {
+                type: Boolean,
+                default: false
+            }
+        },
+        setup: (props, { expose }) =>
+        {
+            const carouselRef = ref<HTMLElement | null>(null);
+            const isDragging = ref(false);
+            const startPos = ref(0);
+            const scrollStart = ref(0);
+            const scrollAmount = 300;
 
-    const scrollAmount = 300;
+            const scrollNext = () =>
+            {
+                if (!carouselRef.value) { return; }
+                if (props.vertical)
+                {
+                    carouselRef.value.scrollTop += scrollAmount;
+                }
+                else
+                {
+                    carouselRef.value.scrollLeft += scrollAmount;
+                }
+            };
 
-    const scrollNext = () => {
-      if (!carouselRef.value) return;
-      props.vertical
-        ? (carouselRef.value.scrollTop += scrollAmount)
-        : (carouselRef.value.scrollLeft += scrollAmount);
-    };
+            const scrollPrev = () =>
+            {
+                if (!carouselRef.value) { return; }
+                if (props.vertical)
+                {
+                    carouselRef.value.scrollTop -= scrollAmount;
+                }
+                else
+                {
+                    carouselRef.value.scrollLeft -= scrollAmount;
+                }
+            };
 
-    const scrollPrev = () => {
-      if (!carouselRef.value) return;
-      props.vertical
-        ? (carouselRef.value.scrollTop -= scrollAmount)
-        : (carouselRef.value.scrollLeft -= scrollAmount);
-    };
+            expose({ scrollNext, scrollPrev });
 
-    expose({ scrollNext, scrollPrev });
+            const onWheel = (e: WheelEvent) =>
+            {
+                if (!carouselRef.value) { return; }
+                if (props.vertical)
+                {
+                    carouselRef.value.scrollTop += e.deltaY;
+                }
+                else
+                {
+                    carouselRef.value.scrollLeft += e.deltaY;
+                }
+            };
 
-    const onWheel = (e: WheelEvent) => {
-      if (!carouselRef.value) return;
-      props.vertical
-        ? (carouselRef.value.scrollTop += e.deltaY)
-        : (carouselRef.value.scrollLeft += e.deltaY);
-    };
+            const onDragStart = (e: MouseEvent) =>
+            {
+                if (!carouselRef.value) { return; }
+                isDragging.value = true;
+                carouselRef.value.classList.add("dragging");
+                startPos.value = props.vertical ?
+                    e.pageY - carouselRef.value.offsetTop :
+                    e.pageX - carouselRef.value.offsetLeft;
+                scrollStart.value = props.vertical ?
+                    carouselRef.value.scrollTop :
+                    carouselRef.value.scrollLeft;
+            };
 
-    const onDragStart = (e: MouseEvent) => {
-      if (!carouselRef.value) return;
-      isDragging.value = true;
-      carouselRef.value.classList.add('dragging');
-      startPos.value = props.vertical
-        ? e.pageY - carouselRef.value.offsetTop
-        : e.pageX - carouselRef.value.offsetLeft;
-      scrollStart.value = props.vertical
-        ? carouselRef.value.scrollTop
-        : carouselRef.value.scrollLeft;
-    };
+            const onDragMove = (e: MouseEvent) =>
+            {
+                if (!isDragging.value || !carouselRef.value) { return; }
+                const current = props.vertical ?
+                    e.pageY - carouselRef.value.offsetTop :
+                    e.pageX - carouselRef.value.offsetLeft;
+                const walk = current - startPos.value;
+                if (props.vertical)
+                {
+                    carouselRef.value.scrollTop = scrollStart.value - walk;
+                }
+                else
+                {
+                    carouselRef.value.scrollLeft = scrollStart.value - walk;
+                }
+            };
 
-    const onDragMove = (e: MouseEvent) => {
-      if (!isDragging.value || !carouselRef.value) return;
-      const current = props.vertical
-        ? e.pageY - carouselRef.value.offsetTop
-        : e.pageX - carouselRef.value.offsetLeft;
-      const walk = current - startPos.value;
-      props.vertical
-        ? (carouselRef.value.scrollTop = scrollStart.value - walk)
-        : (carouselRef.value.scrollLeft = scrollStart.value - walk);
-    };
+            const onDragEnd = () =>
+            {
+                if (!carouselRef.value) { return; }
+                isDragging.value = false;
+                carouselRef.value.classList.remove("dragging");
+            };
 
-    const onDragEnd = () => {
-      if (!carouselRef.value) return;
-      isDragging.value = false;
-      carouselRef.value.classList.remove('dragging');
-    };
-
-    return {
-      images,
-      carouselRef,
-      onWheel,
-      onDragStart,
-      onDragMove,
-      onDragEnd,
-      isVertical: props.vertical,
-    };
-  },
-});
+            return {
+                images,
+                carouselRef,
+                onWheel,
+                onDragStart,
+                onDragMove,
+                onDragEnd,
+                scrollNext,
+                scrollPrev
+            };
+        }
+    });
 </script>
 
 <template>
-  <div class="clay-carosel" :class="{ vertical: isVertical }">
-    <div
-      class="clay-carosel__container"
-      ref="carouselRef"
-      @wheel.prevent="onWheel"
-      @mousedown="onDragStart"
-      @mousemove="onDragMove"
-      @mouseup="onDragEnd"
-      @mouseleave="onDragEnd"
-    >
-      <div
-        v-for="(image, index) in images"
-        :key="index"
-        class="clay-carosel__item"
-        :class="{ vertical: isVertical }"
-      >
-        <ClayCard :style="{ background: 'none', boxShadow: 'var(--clay-shadow)' }">
-          <img :src="image" alt="Image" class="clay-carosel__image" @mousedown.prevent />
-        </ClayCard>
-      </div>
+    <div class="clay-carosel"
+         :class="{ vertical }"
+         style="position: relative;">
+        <ClayButton v-if="withButtons"
+                    class="clay-carosel__button left"
+                    aria-label="Scroll previous"
+                    @click="scrollPrev">
+            ←
+        </ClayButton>
+
+        <div ref="carouselRef"
+             class="clay-carosel__container"
+             @wheel.prevent="onWheel"
+             @mousedown="onDragStart"
+             @mousemove="onDragMove"
+             @mouseup="onDragEnd"
+             @mouseleave="onDragEnd">
+            <div v-for="(image, index) in images"
+                 :key="index"
+                 class="clay-carosel__item"
+                 :class="{ vertical }">
+                <ClayCard :style="{ background: 'none', boxShadow: 'var(--clay-shadow)' }">
+                    <img :src="image"
+                         alt="Image"
+                         class="clay-carosel__image"
+                         @mousedown.prevent />
+                </ClayCard>
+            </div>
+        </div>
+
+        <ClayButton v-if="withButtons"
+                    class="clay-carosel__button right"
+                    aria-label="Scroll next"
+                    @click="scrollNext">
+            →
+        </ClayButton>
     </div>
-  </div>
 </template>
 
 <style scoped>
