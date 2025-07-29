@@ -1,23 +1,23 @@
 <template>
-  <ClayCard>
-    <nav class="clay-navbar">
-      <div class="clay-navbar__brand">
-        <span class="clay-navbar__brand-text">BRAND<sup>™</sup></span>
-      </div>
-      <ul class="clay-navbar__links">
-        <li><a href="#" class="active">Page 1</a></li>
-        <li><a href="#">Page 2</a></li>
-        <li><a href="#">Page 3</a></li>
-      </ul>
-      <div class="clay-navbar__button">
-        <button>Button</button>
-      </div>
-    </nav>
-  </ClayCard>
+    <ClayCard>
+        <nav class="clay-navbar">
+            <div class="clay-navbar__brand">
+                <span class="clay-navbar__brand-text">BRAND<sup>™</sup></span>
+            </div>
+            <ul class="clay-navbar__links">
+                <li><a href="#" class="active">Page 1</a></li>
+                <li><a href="#">Page 2</a></li>
+                <li><a href="#">Page 3</a></li>
+            </ul>
+            <div class="clay-navbar__button">
+                <button>Button</button>
+            </div>
+        </nav>
+    </ClayCard>
 </template>
 
 <script lang="ts" setup>
-import ClayCard from "./ClayCard.vue";
+    import ClayCard from "./ClayCard.vue";
 </script>
 
 <style lang="scss">
