@@ -300,16 +300,30 @@
                 border-right: none;
                 border-bottom: none;
                 transform: scaleX(1) translateX(var(--clay-tabs-squash-factor)) rotateY(-5deg) scale(1.02);
+                position: relative;
                 box-shadow:
                     var(--clay-tabs-shadow-glow),
                     var(--clay-tabs-shadow-base),
                     0 0.2em 0.5em -0.1em rgba(from var(--clay-tabs-color-shadow) r g b / 0.85),
-                    inset 0.3em 0.3em 0.6em rgba(from var(--clay-tabs-color-shadow-light) r g b / 0.5),
-                    inset -0.3em -0.3em 0.6em rgba(from var(--clay-tabs-color-shadow) r g b / 0.4),
                     0 var(--clay-tabs-depth) calc(var(--clay-tabs-depth) * 1.5)
                         rgba(from var(--clay-tabs-color-shadow) r g b / 0.7),
                     0 calc(var(--clay-tabs-depth) * 0.5) calc(var(--clay-tabs-depth) * 2)
                         rgba(from var(--clay-tabs-color-shadow) r g b / 0.4);
+
+                &::after {
+                    content: '';
+                    position: absolute;
+                    top: 0;
+                    left: 0;
+                    right: 0;
+                    bottom: 0;
+                    border-radius: var(--clay-tabs-roundness) 0 0 var(--clay-tabs-roundness);
+                    box-shadow:
+                        inset 0.3em 0.3em 0.6em rgba(from var(--clay-tabs-color-shadow-light) r g b / 0.5),
+                        inset -0.3em -0.3em 0.6em rgba(from var(--clay-tabs-color-shadow) r g b / 0.4);
+                    pointer-events: none;
+                    z-index: 2;
+                }
 
                 &:focus-visible {
                     outline: none;
@@ -319,9 +333,7 @@
                         0 0 1em 0.3em rgba(from var(--clay-tabs-color-outline) r g b / 0.5),
                         0 0 1.5em 0.4em rgba(from var(--clay-tabs-color-outline) r g b / 0.3),
                         0 0 2.5em 0.6em rgba(from var(--clay-tabs-color-outline) r g b / 0.15),
-                        var(--clay-tabs-shadow-glow),
-                        inset 0.3em 0.3em 0.6em rgba(from var(--clay-tabs-color-shadow-light) r g b / 0.5),
-                        inset -0.3em -0.3em 0.6em rgba(from var(--clay-tabs-color-shadow) r g b / 0.4);
+                        var(--clay-tabs-shadow-glow);
                     transform:
                         scaleX(1)
                         translateX(calc(var(--clay-tabs-squash-factor) + 0.0625em))
@@ -329,6 +341,12 @@
                         scale(1.04);
                     z-index: 10;
                     position: relative;
+
+                    &::after {
+                        box-shadow:
+                            inset 0.3em 0.3em 0.6em rgba(from var(--clay-tabs-color-shadow-light) r g b / 0.5),
+                            inset -0.3em -0.3em 0.6em rgba(from var(--clay-tabs-color-shadow) r g b / 0.4);
+                    }
                 }
             }
 
