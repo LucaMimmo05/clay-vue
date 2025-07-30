@@ -1,68 +1,95 @@
 <template>
-  <ClayCard>
-    <aside class="clay-sidebar">
-      <nav class="clay-sidebar__nav">
-        <ul>
-          <li><a href="#"><i class="icon-home"></i> Dashboard</a></li>
-          <li><a href="#"><i class="icon-folder"></i> Projects</a></li>
-          <li>
-            <a href="#" class="active">
-              <i class="icon-message"></i>
-              Messages
-              <span class="badge">6</span>
-            </a>
-          </li>
-          <li><a href="#"><i class="icon-gear"></i> Services</a></li>
-          <li><a href="#"><i class="icon-users"></i> Customers</a></li>
-        </ul>
-      </nav>
+    <ClayCard>
+        <aside class="clay-sidebar">
+            <nav class="clay-sidebar__nav">
+                <ul>
+                    <li>
+                        <a href="#">
+                            <i class="icon-home"></i> Dashboard
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#">
+                            <i class="icon-folder"></i> Projects
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#" class="active">
+                            <i class="icon-message"></i> Messages
+                            <span class="badge">6</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#">
+                            <i class="icon-gear"></i> Services
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#">
+                            <i class="icon-users"></i> Customers
+                        </a>
+                    </li>
+                </ul>
+            </nav>
 
-      <hr class="divider" />
+            <hr class="divider" />
 
-      <div class="clay-sidebar__contacts">
-        <div class="contacts-header">
-          <span>Contacts</span>
-          <span class="badge">3</span>
-        </div>
-        <ul class="contacts-list">
-          <li>
-            <img src="../assets/avatar1.jpg" alt="Marie" />
-            <div>
-              <p>Marie Claire</p>
-              <small>Paris, FR</small>
+            <div class="clay-sidebar__contacts">
+                <div class="contacts-header">
+                    <span>Contacts</span>
+                    <span class="badge">3</span>
+                </div>
+                <ul class="contacts-list">
+                    <li>
+                        <img src="../assets/avatar1.jpg" alt="Marie" />
+                        <div>
+                            <p>Marie Claire</p>
+                            <small>Paris, FR</small>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="avatar">
+                            MJ
+                        </div>
+                        <div>
+                            <p>Michael Jordan</p>
+                            <small>Bucharest, RO</small>
+                        </div>
+                    </li>
+                    <li>
+                        <img src="../assets/avatar2.jpg" alt="Heather" />
+                        <div>
+                            <p>Heather Wright</p>
+                            <small>London, UK</small>
+                        </div>
+                    </li>
+                </ul>
             </div>
-          </li>
-          <li>
-            <div class="avatar">MJ</div>
-            <div>
-              <p>Michael Jordan</p>
-              <small>Bucharest, RO</small>
-            </div>
-          </li>
-          <li>
-            <img src="../assets/avatar2.jpg" alt="Heather" />
-            <div>
-              <p>Heather Wright</p>
-              <small>London, UK</small>
-            </div>
-          </li>
-        </ul>
-      </div>
 
-      <div class="clay-sidebar__footer">
-        <ClayButton class="w-full mb-4">Upgrade to PRO</ClayButton>
-        <ul>
-          <li><a href="#"><i class="icon-user"></i> Account</a></li>
-          <li><a href="#"><i class="icon-logout"></i> Logout</a></li>
-        </ul>
-      </div>
-    </aside>
-  </ClayCard>
+            <div class="clay-sidebar__footer">
+                <ClayButton class="w-full mb-4">
+                    Upgrade to PRO
+                </ClayButton>
+                <ul>
+                    <li>
+                        <a href="#">
+                            <i class="icon-user"></i> Account
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#">
+                            <i class="icon-logout"></i> Logout
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </aside>
+    </ClayCard>
 </template>
 
 <script lang="ts" setup>
-import ClayCard from './ClayCard.vue'
-import ClayButton from './ClayButton.vue'
+    import ClayCard from "./ClayCard.vue";
+    import ClayButton from "./ClayButton.vue";
 </script>
 
 <style lang="scss">
@@ -106,7 +133,7 @@ import ClayButton from './ClayButton.vue'
         &:hover {
           background: #fff;
           color: $primary-color;
-          border-color:  rgba($primary-color, 0.5);
+          border-color: rgba($primary-color, 0.5);
           box-shadow: none;
         }
 
@@ -114,7 +141,7 @@ import ClayButton from './ClayButton.vue'
           outline: none;
           background: transparent;
           color: $primary-color;
-          border-color:  rgba($primary-color, 0.5);
+          border-color: rgba($primary-color, 0.5);
           box-shadow: 0 0 0 4px rgba($primary-color, 0.3);
         }
 
