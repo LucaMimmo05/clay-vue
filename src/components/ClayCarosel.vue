@@ -30,7 +30,6 @@
     const scrollNext = (): void =>
     {
         if (!carouselRef.value) { return; }
-
         if (props.vertical)
         {
             carouselRef.value.scrollTop += scrollAmount;
@@ -44,7 +43,6 @@
     const scrollPrev = (): void =>
     {
         if (!carouselRef.value) { return; }
-
         if (props.vertical)
         {
             carouselRef.value.scrollTop -= scrollAmount;
@@ -60,7 +58,6 @@
     const onWheel = (e: WheelEvent): void =>
     {
         if (!carouselRef.value) { return; }
-
         if (props.vertical)
         {
             carouselRef.value.scrollTop += e.deltaY;
@@ -74,7 +71,6 @@
     const onDragStart = (e: MouseEvent): void =>
     {
         if (!carouselRef.value) { return; }
-
         isDragging.value = true;
         carouselRef.value.classList.add("dragging");
 
@@ -95,7 +91,6 @@
         if (!isDragging.value || !carouselRef.value) { return; }
 
         let current = 0;
-
         if (props.vertical)
         {
             current = e.pageY - carouselRef.value.offsetTop;
@@ -106,7 +101,6 @@
         }
 
         const walk = current - startPos.value;
-
         if (props.vertical)
         {
             carouselRef.value.scrollTop = scrollStart.value - walk;
@@ -120,7 +114,6 @@
     const onDragEnd = (): void =>
     {
         if (!carouselRef.value) { return; }
-
         isDragging.value = false;
         carouselRef.value.classList.remove("dragging");
     };
@@ -150,6 +143,10 @@
             </div>
         </div>
 
+        <!-- Fade overlay -->
+        <div class="clay-carosel__fade" :class="{ vertical }"></div>
+
+        <!-- Buttons -->
         <ClayButton v-if="withButtons"
                     class="clay-carosel__button prev"
                     :class="{ vertical: props.vertical }"
@@ -241,7 +238,7 @@
 .clay-carosel__button {
   padding: 8px 12px;
   transition: transform 0.2s ease;
-  z-index: 2;
+  z-index: 5;
 
   &.prev,
   &.next {
@@ -270,6 +267,34 @@
     top: 60%;
     right: -24px;
     transform: translateY(-50%);
+  }
+}
+
+.clay-carosel__fade {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 1;
+
+  background: linear-gradient(
+    to right,
+    var(--clay-color-background) 0%,
+    transparent 20%,
+    transparent 80%,
+    var(--clay-color-background) 100%
+  );
+
+  &.vertical {
+    background: linear-gradient(
+      to bottom,
+    var(--clay-color-background) 0%,
+      transparent 20%,
+      transparent 80%,
+    var(--clay-color-background) 100%
+    );
   }
 }
 </style>
